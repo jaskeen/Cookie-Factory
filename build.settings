@@ -1,0 +1,17 @@
+settings =
+{
+	orientation=
+	{
+		default = "landscape"
+	},
+	ipad =
+	{
+		plist=
+		{
+			UIAppFonts = 
+			{
+				"Harrowprint.ttf"
+			},
+		},
+	},
+}
