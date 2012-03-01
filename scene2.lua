@@ -21,7 +21,7 @@ local factoryBG= display.newImageRect("images/factoryBG.png", _W, _H)
 	factoryBG.y = _H/2
 	factoryBG.scene="menu"
 	
-local deliveryTitle=display.newImageRect("images/deliveryMode.png", _W, _H)
+local deliveryTitle=display.newImageRect("images/deliveryMode.png",300, 60)
 	deliveryTitle:setReferencePoint( display.CenterReferencePoint )
 	deliveryTitle.x = _W/2 
 	deliveryTitle.y = _H/2 

@@ -19,7 +19,7 @@ local factoryBG= display.newImageRect("images/factoryBG.png", _W, _H)
 	factoryBG.x = _W/2
 	factoryBG.y = _H/2
 	factoryBG.scene="menu"
-local supervisorTitle=display.newImageRect("images/supervisorMode.png", _W, _H)
+local supervisorTitle=display.newImageRect("images/supervisorMode.png", 300, 60)
 	supervisorTitle:setReferencePoint( display.CenterReferencePoint )
 	supervisorTitle.x = _W/2 
 	supervisorTitle.y = _H/2 

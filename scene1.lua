@@ -20,7 +20,7 @@ function new()
 	factoryBG.y = _H/2
 	factoryBG.scene="menu"
 	
-	local trainingTitle=display.newImageRect("images/trainingMode.png", _W, _H)
+	local trainingTitle=display.newImageRect("images/trainingMode.png", 300, 60)
 	trainingTitle:setReferencePoint( display.CenterReferencePoint )
 	trainingTitle.x = _W/2 
 	trainingTitle.y = _H/2 
