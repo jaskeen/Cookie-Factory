@@ -1,17 +1,11 @@
-settings =
+--Cookie Factory Build Settingssettings =
 {
-	orientation=
+		orientation =
 	{
-		default = "landscape"
-	},
-	ipad =
-	{
-		plist=
-		{
-			UIAppFonts = 
-			{
-				"Harrowprint.ttf"
-			},
-		},
-	},
-}
+						default ="landscape",
+				supported =
+{					"landscape"
+				},
+		},
+
+}

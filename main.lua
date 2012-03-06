@@ -1,19 +1,16 @@
---COOKIE FACTORY MAIN--
-
+-----------------------------------------------------------------------------------------
+--
+-- main.lua
+--
+-----------------------------------------------------------------------------------------
 _W=display.contentWidth
 _H=display.contentHeight
 
 -- hide the status bar
 display.setStatusBar( display.HiddenStatusBar )
 
-local director= require "director"
+-- include the Corona "storyboard" module
+local storyboard = require "storyboard"
 
-local mainGroup=display.newGroup()
-
-local function main()
-	--mainGroup:insert(director.directorView)
-	director:changeScene("menu")
-	return true
-end
-
-main()
+-- load menu screen
+storyboard.gotoScene( "menu" )

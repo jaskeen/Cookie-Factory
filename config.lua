@@ -1,10 +1,1 @@
-application =
-{
-	content =
-	{
-		width = 1024,
-		height = 768,
-		scale = "zoomStretch",
-		fps = 60
-	},
-}
+-- config file for Cookie Factoryapplication ={	content =	{		width = 1024,		height = 768,		scale = 100,		fps = 60,		}}

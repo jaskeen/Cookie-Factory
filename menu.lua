@@ -1,56 +1,149 @@
---COOKIE FACTORY MENU--
+-----------------------------------------------------------------------------------------
+--
+-- menu.lua
+--
+-----------------------------------------------------------------------------------------
 
-module(..., package.seeall)
 
-_W=display.contentWidth
-_H=display.contentHeight
+local storyboard = require( "storyboard" )
+local scene = storyboard.newScene()
 
---this "new" method is required here
-function new()
-	local localGroup= display.newGroup()
-			
-	local background = display.newImageRect( "images/Splash-background.png", _W, _H )
+-- include Corona's "widget" library
+local widget = require "widget"
+
+--------------------------------------------
+
+
+-- forward declarations and other locals
+local trainingBtn
+local deliveryBtn
+local supervisorBtn
+--local onTrainingBtnRelease={}
+
+
+-- 'onRelease' event listener for trainingBtn
+function onBtnRelease(event)
+	
+	-- go to scene1.lua scene
+	storyboard.gotoScene( event.target.scene)
+	print ("width:".._W, "height:".._H)
+	return true	-- indicates successful touch
+end
+
+-----------------------------------------------------------------------------------------
+-- BEGINNING OF YOUR IMPLEMENTATION
+-- 
+-- NOTE: Code outside of listener functions (below) will only be executed once,
+--		 unless storyboard.removeScene() is called.
+-- 
+-----------------------------------------------------------------------------------------
+
+-- Called when the scene's view does not exist:
+function scene:createScene( event )
+	local group = self.view
+
+	-- display a background image
+	local background = display.newImageRect( "images/Splash-background.png", _H, _W)
 	background:setReferencePoint( display.CenterReferencePoint )
 	background.x=_W/2
 	background.y=_H/2
 	
-	print("heloo")
 	
-	local trainingBtn = display.newImageRect("images/trainingMode.png", 300, 60)
-	trainingBtn:setReferencePoint(display.CenterReferencePoint)
+	-- create a widget button (which will loads scene1.lua on release)
+	trainingBtn = widget.newButton{
+		--label="Play Now",
+		--labelColor = { default={255}, over={128} },
+		default="images/trainingMode.png",
+		--over="images/trainingModeOVER.png",
+		--width=154, height=40,
+		onRelease = onBtnRelease	-- event listener function
+		}
+	trainingBtn:setReferencePoint( display.CenterReferencePoint )
 	trainingBtn.x = _W/2 - 60
 	trainingBtn.y = _H/2 - 60
-	trainingBtn.scene="scene1"
-	
-	
-	local deliveryBtn = display.newImageRect("images/deliveryMode.png", 300,60)
-	deliveryBtn:setReferencePoint(display.CenterReferencePoint )
-	deliveryBtn.x = _W/2 - 60
+	trainingBtn.scene="training"
+
+
+	deliveryBtn = widget.newButton{
+		--label="Play Now",
+		--labelColor = { default={255}, over={128} },
+		default="images/deliveryMode.png",
+		--over="images/deliveryModeOVER.png",
+		--width=154, height=40,
+		onRelease = onBtnRelease	-- event listener function
+	}
+	deliveryBtn:setReferencePoint( display.CenterReferencePoint )
+	deliveryBtn.x = _W*0.5 - 60
 	deliveryBtn.y = _H/2 + 15
-	deliveryBtn.scene = "scene2"
+	deliveryBtn.scene= "delivery"
 	
-	local supervisorBtn = display.newImageRect("images/supervisorMode.png", 300,60)
-	supervisorBtn:setReferencePoint(display.CenterReferencePoint)
-	supervisorBtn.x = _W/2 - 60
+	
+	supervisorBtn = widget.newButton{
+		--label="Play Now",
+		--labelColor = { default={255}, over={128} },
+		default="images/supervisorMode.png",
+		--over="images/supervisorModeOVER.png",
+		--width=154, height=40,
+		onRelease = onBtnRelease	-- event listener function
+	}
+	supervisorBtn:setReferencePoint( display.CenterReferencePoint )
+	supervisorBtn.x = _W*0.5 - 60
 	supervisorBtn.y = _H/2 + 90
-	supervisorBtn.scene = "scene3"
+	supervisorBtn.scene= "supervisor"
+
+	-- all display objects must be inserted into group
+	group:insert( background )
+	group:insert( trainingBtn )
+	group:insert( deliveryBtn )
+	group:insert( supervisorBtn )
+
+end
+
+-- Called immediately after scene has moved onscreen:
+function scene:enterScene( event )
+	local group = self.view
 	
-	function changeScene(event)
-		if(event.phase=="ended") then
-			director:changeScene(event.target.scene)
-		end
-		
-	end
-	
-	localGroup:insert(background)
-	localGroup:insert(trainingBtn)
-	localGroup:insert(deliveryBtn)
-	localGroup:insert(supervisorBtn)
-	
-	trainingBtn:addEventListener("touch", changeScene)
-	deliveryBtn:addEventListener("touch", changeScene)
-	supervisorBtn:addEventListener("touch", changeScene)
-	
-	return localGroup
+	-- INSERT code here (e.g. start timers, load audio, start listeners, etc.)
 	
 end
+
+-- Called when scene is about to move offscreen:
+function scene:exitScene( event )
+	local group = self.view
+	
+	-- INSERT code here (e.g. stop timers, remove listenets, unload sounds, etc.)
+	
+end
+
+-- If scene's view is removed, scene:destroyScene() will be called just prior to:
+function scene:destroyScene( event )
+	local group = self.view
+	
+	if playBtn then
+		print "playBtn exists"
+		playBtn:removeSelf( )	-- widgets must be manually removed
+		playBtn = nil
+	end
+end
+
+-----------------------------------------------------------------------------------------
+-- END OF YOUR IMPLEMENTATION
+-----------------------------------------------------------------------------------------
+
+-- "createScene" event is dispatched if scene's view does not exist
+scene:addEventListener( "createScene", scene )
+
+-- "enterScene" event is dispatched whenever scene transition has finished
+scene:addEventListener( "enterScene", scene )
+
+-- "exitScene" event is dispatched whenever before next scene's transition begins
+scene:addEventListener( "exitScene", scene )
+
+-- "destroyScene" event is dispatched before view is unloaded, which can be
+-- automatically unloaded in low memory situations, or explicitly via a call to
+-- storyboard.purgeScene() or storyboard.removeScene().
+scene:addEventListener( "destroyScene", scene )
+
+-----------------------------------------------------------------------------------------
+
+return scene
