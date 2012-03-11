@@ -58,6 +58,10 @@ local function showEvent( event )
 	txtPhase.text = "Phase: " .. event.phase
 	txtXY.text = "(" .. event.x .. "," .. event.y .. ")"
 	txtId.text = "Id: " .. tostring( event.id )
+	--Create a similar piece in the function, but you'll need to know the start and 
+	--end of each x and y for each object to calculate their distance
+	--for example A(5,20) B(10,30) Distance= square root of ((x1-x2)squared + (y2-y1)squared)
+	txtDist.text= "Distance: "..(event.x - event.y)
 end
 
 local function onTouch( event )
@@ -89,12 +93,14 @@ local function onTouch( event )
 		-- Store initial position
 		t.x0 = event.x - t.x
 		t.y0 = event.y - t.y
+	
 	elseif t.isFocus then
 		if "moved" == phase then
 			-- Make object move (we subtract t.x0,t.y0 so that moves are
 			-- relative to initial grab point, rather than object "snapping").
 			t.x = event.x - t.x0
 			t.y = event.y - t.y0
+		
 		elseif "ended" == phase or "cancelled" == phase then
 			if not(nil == t.id) then
 --				print("Removing object from stage")
@@ -168,6 +174,9 @@ txtXY:setTextColor( 255,255,255 )
 txtId = display.newText( "Id: ______", 300, _H-80, "Verdana-Bold", 24 )
 txtId:setTextColor( 255,255,255 )
 
+txtDist = display.newText( "Distance: ______", 20, _H-120, "Verdana-Bold", 24 )
+txtId:setTextColor( 255,255,255 )
+
 
 --Runtime:addEventListener( "touch", otherTouch )
 --	Runtime:addEventListener( "touch", printTouch2 )	-- **tjn No longer used                  
@@ -193,5 +202,6 @@ circle:addEventListener( "touch", onTouch )
 --detect if distance increasing, then it's considered a pinch
 --detect a pinch
 --------------------
-
+--***Go to line 63 for the distance formula so far, detecting the distance between 2 points
+--if this number decreases we can call it a "pinch" OR we can just place physics and when they touch call it a collide
 
