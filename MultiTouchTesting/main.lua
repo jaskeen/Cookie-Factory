@@ -14,19 +14,15 @@
 ------------------
 system.activate( "multitouch" )
 
+--Adding Physics to enable us to recognize touch of two objects
+local physics=require "physics"
+physics.start()
+physics.setDrawMode("hybrid")
+
+
 --globals
 _W=display.contentWidth
 _H=display.contentHeight
-
---Creating squares on the screen
---[[
-local arguments =
-{
-	{ x=50, y=10, w=100, h=100, r=10, red=255, green=0, blue=128 },
-	{ x=10, y=50, w=100, h=100, r=10, red=0, green=128, blue=255 },
-	{ x=90, y=90, w=100, h=100, r=10, red=255, green=255, blue=0 }
-}
-]]
 
 --display objects
 local background=display.newImageRect("images/background.png", _W, _H)
@@ -43,7 +39,13 @@ local circle=display.newImageRect("images/circle.png", 100, 100)
 	circle:setReferencePoint(display.CenterReferencePoint)
 	circle.x=250
 	circle.y=150
-	
+
+
+--Add Physics to objects
+physics.addBody(square, "static", {density=5.0, friction=0.5, bounce=0.2})
+physics.addBody(circle, "static", {density=5.0, friction=0.5, radius=50, bounce=0.2})
+
+
 
 --function that indicates where the objects are located
 local function printTouch( event )
@@ -61,7 +63,7 @@ local function showEvent( event )
 	--Create a similar piece in the function, but you'll need to know the start and 
 	--end of each x and y for each object to calculate their distance
 	--for example A(5,20) B(10,30) Distance= square root of ((x1-x2)squared + (y2-y1)squared)
-	txtDist.text= "Distance: "..(event.x - event.y)
+	txtDist.text= "Relationship: "..(event.x - event.y)
 end
 
 local function onTouch( event )
@@ -174,7 +176,7 @@ txtXY:setTextColor( 255,255,255 )
 txtId = display.newText( "Id: ______", 300, _H-80, "Verdana-Bold", 24 )
 txtId:setTextColor( 255,255,255 )
 
-txtDist = display.newText( "Distance: ______", 20, _H-120, "Verdana-Bold", 24 )
+txtDist = display.newText( "Relationship: ______", 20, _H-120, "Verdana-Bold", 24 )
 txtId:setTextColor( 255,255,255 )
 
 
