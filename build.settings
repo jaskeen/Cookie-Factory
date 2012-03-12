@@ -1,11 +1,2 @@
 --Cookie Factory Build Settingssettings =
-{
-		orientation =
-	{
-						default ="landscape",
-				supported =
-{					"landscape"
-				},
-		},
-
-}
+	{	orientation=	{		default = "landscape"	},	}

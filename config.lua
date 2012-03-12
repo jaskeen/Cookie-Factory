@@ -1,1 +1,1 @@
--- config file for Cookie Factoryapplication ={	content =	{		width = 1024,		height = 768,		scale = 100,		fps = 60,		}}
+-- config file for Cookie Factoryapplication ={	content =	{		fps = 100,		width = 768,		height = 1024,		scale = "letterbox", --other settings could crop edges						imageSuffix=		{			["@2"]=2		},	},}

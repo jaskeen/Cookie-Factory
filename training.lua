@@ -3,8 +3,6 @@
 -- scenetemplate.lua
 --
 ----------------------------------------------------------------------------------
-_W=display.contentHeight
-_H=display.contentWidth
 
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
@@ -21,24 +19,17 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
---init vars and functions
-local factoryBG, trainingTitle
-
---[[local function goBack(event)
-	print "hello"
-end
-]]
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local group = self.view
-	factoryBG= display.newImage("images/factoryBG.png",0,0, 1024, 768)
-	--factoryBG:setReferencePoint(display.CenterReferencePoint)
-	--factoryBG.x = _W/2
-	--factoryBG.y = _H/2
+	local factoryBG= display.newImageRect("images/factoryBG.png", _W, _H)
+	factoryBG:setReferencePoint(display.CenterReferencePoint)
+	factoryBG.x = _W/2
+	factoryBG.y = _H/2
 	factoryBG.scene="menu"
 	
-	trainingTitle=display.newImageRect("images/trainingMode.png", 300, 60)
+	local trainingTitle=display.newImageRect("images/trainingMode.png", 300, 60)
 	trainingTitle:setReferencePoint( display.CenterReferencePoint )
 	trainingTitle.x = _W/2 
 	trainingTitle.y = _H/2 
@@ -53,14 +44,12 @@ function scene:createScene( event )
 end
 
 
-
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	local group = self.view
 	
 	-----------------------------------------------------------------------------
-
-	
+		
 	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
 	
 	-----------------------------------------------------------------------------

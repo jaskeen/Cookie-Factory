@@ -43,7 +43,7 @@ function scene:createScene( event )
 	local group = self.view
 
 	-- display a background image
-	local background = display.newImageRect( "images/Splash-background.png", _H, _W)
+	local background = display.newImageRect( "images/Splash-background.png", _W, _H)
 	background:setReferencePoint( display.CenterReferencePoint )
 	background.x=_W/2
 	background.y=_H/2
