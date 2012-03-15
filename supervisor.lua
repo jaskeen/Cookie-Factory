@@ -9,6 +9,7 @@ local widget=require "widget"
 local scene = storyboard.newScene()
 local onBtnRelease
 local factoryBG
+local homeBtn
 
 
 ----------------------------------------------------------------------------------
@@ -38,16 +39,22 @@ end
 function scene:createScene( event )
 	local group = self.view
 	
-	factoryBG= widget.newButton{
-		default="images/factoryBG.png",
-		width=_W,
-		height=_H,
-		onRelease = onBtnRelease	-- event listener function
-		}
+	factoryBG= display.newImageRect("images/factoryBG.png", _W, _H)
 	factoryBG:setReferencePoint(display.CenterReferencePoint)
 	factoryBG.x = _W/2
 	factoryBG.y = _H/2
 	factoryBG.scene="menu"
+	
+	homeBtn=widget.newButton{
+		default="images/homeBtn.png",
+		width=80,
+		height=80,
+		onRelease = onBtnRelease	-- event listener function
+		}
+	homeBtn:setReferencePoint(display.CenterReferencePoint)
+	homeBtn.x = _W*.06
+	homeBtn.y = _H*.07
+	homeBtn.scene="menu"
 	
 	local supervisorTitle=display.newImageRect("images/supervisorMode.png", 300, 60)
 	supervisorTitle:setReferencePoint( display.CenterReferencePoint )
@@ -62,7 +69,7 @@ function scene:createScene( event )
 	-----------------------------------------------------------------------------
 	group:insert(factoryBG)
 	group:insert(supervisorTitle)
-
+	group:insert(homeBtn)
 end
 
 
