@@ -51,11 +51,7 @@ function scene:createScene( event )
 	
 	-- create a widget button (which will loads scene1.lua on release)
 	trainingBtn = widget.newButton{
-		--label="Play Now",
-		--labelColor = { default={255}, over={128} },
 		default="images/trainingMode.png",
-		--over="images/trainingModeOVER.png",
-		--width=154, height=40,
 		onRelease = onBtnRelease	-- event listener function
 		}
 	trainingBtn:setReferencePoint( display.CenterReferencePoint )
@@ -65,11 +61,7 @@ function scene:createScene( event )
 
 
 	deliveryBtn = widget.newButton{
-		--label="Play Now",
-		--labelColor = { default={255}, over={128} },
 		default="images/deliveryMode.png",
-		--over="images/deliveryModeOVER.png",
-		--width=154, height=40,
 		onRelease = onBtnRelease	-- event listener function
 	}
 	deliveryBtn:setReferencePoint( display.CenterReferencePoint )
@@ -79,11 +71,7 @@ function scene:createScene( event )
 	
 	
 	supervisorBtn = widget.newButton{
-		--label="Play Now",
-		--labelColor = { default={255}, over={128} },
 		default="images/supervisorMode.png",
-		--over="images/supervisorModeOVER.png",
-		--width=154, height=40,
 		onRelease = onBtnRelease	-- event listener function
 	}
 	supervisorBtn:setReferencePoint( display.CenterReferencePoint )

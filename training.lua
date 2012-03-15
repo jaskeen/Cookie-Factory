@@ -5,8 +5,10 @@
 ----------------------------------------------------------------------------------
 
 local storyboard = require( "storyboard" )
+local widget= require "widget"
 local scene = storyboard.newScene()
-
+local onBtnRelease
+local factoryBG
 ----------------------------------------------------------------------------------
 -- 
 --	NOTE:
@@ -21,14 +23,31 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
+-- 'onRelease' event listener for return to main menu
+function onBtnRelease(event)
+	
+	-- go to scene1.lua scene
+	print (event.target.scene)
+	storyboard.gotoScene(event.target.scene)
+	return true	-- indicates successful touch
+end
+	
+
 function scene:createScene( event )
 	local group = self.view
-	local factoryBG= display.newImageRect("images/factoryBG.png", _W, _H)
+	
+	factoryBG= widget.newButton{
+		default="images/factoryBG.png",
+		width=_W,
+		height=_H,
+		onRelease = onBtnRelease	-- event listener function
+		}
 	factoryBG:setReferencePoint(display.CenterReferencePoint)
 	factoryBG.x = _W/2
 	factoryBG.y = _H/2
 	factoryBG.scene="menu"
 	
+
 	local trainingTitle=display.newImageRect("images/trainingMode.png", 300, 60)
 	trainingTitle:setReferencePoint( display.CenterReferencePoint )
 	trainingTitle.x = _W/2 
@@ -40,8 +59,12 @@ function scene:createScene( event )
 	--	Example use-case: Restore 'group' from previously saved state.
 	
 	-----------------------------------------------------------------------------
+	group:insert(factoryBG)
+	group:insert(trainingTitle)
 	
 end
+
+
 
 
 -- Called immediately after scene has moved onscreen:
@@ -55,6 +78,7 @@ function scene:enterScene( event )
 	-----------------------------------------------------------------------------
 	
 end
+
 
 
 -- Called when scene is about to move offscreen:
