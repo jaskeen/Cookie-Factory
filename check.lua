@@ -5,18 +5,13 @@
 ----------------------------------------------------------------------------------
 
 local storyboard = require( "storyboard" )
-local widget= require"widget"
+local widget=require "widget"
 local scene = storyboard.newScene()
 local onBtnRelease
 local factoryBG
 local homeBtn
-local checkBtn
-local selectionA
-local selectionB
-local selectionC
-local numberSelect
-local text
-
+local check
+local checkText
 
 ----------------------------------------------------------------------------------
 -- 
@@ -37,27 +32,16 @@ function onBtnRelease(event)
 	
 	-- go to scene1.lua scene
 	print (event.target.scene)
-		storyboard.gotoScene(event.target.scene)
+	storyboard.gotoScene(event.target.scene)
 	return true	-- indicates successful touch
 end
-	
-function numberSelect(event)
-	
-	-- go to scene1.lua scene
-	print (event.target.id)
-		
-	if event.target.id==700 then 
-		print("correct!")
-		storyboard.number=event.target.id
-		storyboard.gotoScene(event.target.scene)
-		
-	elseif event.target.id~=700 then 
-		print("you are off by "..700-event.target.id)
-		storyboard.gotoScene(event.target.scene)
-		
+
+function check(event)
+	if delivery.numberSelect.id==700
+		then print("correct!")
+	elseif delivery.numberSelect.id~=700
+		then print("you are off by"..700-deliver.numberSelect.id)
 	end
-	
-	return true	-- indicates successful touch
 end
 
 function scene:createScene( event )
@@ -80,62 +64,10 @@ function scene:createScene( event )
 	homeBtn.y = _H*.07
 	homeBtn.scene="menu"
 	
-	checkBtn=widget.newButton{
-		id="check",
-		default="images/checkBtn.png",
-		width=80,
-		height=80,
-		onRelease = onBtnRelease	-- event listener function
-		}
-	checkBtn:setReferencePoint(display.CenterReferencePoint)
-	checkBtn.x = _W*.06
-	checkBtn.y = _H*.93
-	checkBtn.scene="check"
-	
-	selectionA=widget.newButton{
-		id=700,
-		default="images/700.png",
-		width=100,
-		height=100,
-		onRelease = numberSelect	-- event listener function
-		}
-	selectionA:setReferencePoint(display.CenterReferencePoint)
-	selectionA.x = _W/2
-	selectionA.y = _H*.7
-	selectionA.scene="check"
-	
-	selectionB=widget.newButton{
-		id=420,
-		default="images/420.png",
-		width=100,
-		height=100,
-		onRelease = numberSelect	-- event listener function
-		}
-	selectionB:setReferencePoint(display.CenterReferencePoint)
-	selectionB.x = _W/2+150
-	selectionB.y = _H*.7
-	selectionB.scene="check"
-	
-	selectionC=widget.newButton{
-		id=232,
-		default="images/232.png",
-		width=100,
-		height=100,
-		onRelease = numberSelect	-- event listener function
-		}
-	selectionC:setReferencePoint(display.CenterReferencePoint)
-	selectionC.x = _W/2-150
-	selectionC.y = _H*.7
-	selectionC.scene="check"
-	
-	text=display.newText("Select the number Seven-Hundred below:", _W*.07, _H/2-200, native.systemFont, 40)
-		text:setTextColor(255,255,255)
-	
-	local deliveryTitle=display.newImageRect("images/deliveryMode.png", 300, 60)
-	deliveryTitle:setReferencePoint( display.CenterReferencePoint )
-	deliveryTitle.x = _W/2 
-	deliveryTitle.y = _H/2 
+	checkText=display.newText("Checking for correctness", _W/2, _H/2, native.systemFont, 24)
+		checkText:setTextColor(255,255,255)
 
+	print(storyboard.number)
 	-----------------------------------------------------------------------------
 		
 	--	CREATE display objects and add them to 'group' here.
@@ -143,14 +75,8 @@ function scene:createScene( event )
 	
 	-----------------------------------------------------------------------------
 	group:insert(factoryBG)
-	group:insert(deliveryTitle)
+	group:insert(checkText)
 	group:insert(homeBtn)
-	group:insert(checkBtn)
-	group:insert(selectionA)
-	group:insert(selectionB)
-	group:insert(selectionC)
-	group:insert(text)
-	
 end
 
 
