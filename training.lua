@@ -1,44 +1,55 @@
 ----------------------------------------------------------------------------------
---
--- scenetemplate.lua
---
+--  PURPOSE:  To allow users to "build" and combine combinations of units to answer place value questions
+-- note: uses official scenetemplate.lua
 ----------------------------------------------------------------------------------
 
 local storyboard = require( "storyboard" )
 local widget= require "widget"
 local scene = storyboard.newScene()
-local onBtnRelease
-local factoryBG
-local homeBtn
+local onBtnRelease, factoryBG, homeBtn
 ----------------------------------------------------------------------------------
--- 
---	NOTE:
---	
---	Code outside of listener functions (below) will only be executed once,
---	unless storyboard.removeScene() is called.
--- 
+--	NOTE:	Code outside of listener functions (below) will only be executed once, unless storyboard.removeScene() is called.
 ---------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
+----------------- VARIABLES --------------------------
+_H = display.contentHeight
+_W = display.contentWidth
+local moveRate = 2 -- how fast the cookie moves across the screen
+local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
+local level = 4; local thisLevel
+local showValue = display.newRetinaText("",-200,-200, "Arial",48) --for showing value of the dragged item
+local cloud = display.newImageRect("cloud.png",256,256) --cloud for transformations
+cloud.x = -200
+cloud.y = -200 
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel --forward reference fcns
 
 --first, set the name of the current scene, so we can get it later, if needed
 storyboard.currentScene = "training"
 
 -- 'onRelease' event listener for return to main menu
 function onBtnRelease(event)
-	
 	-- go to scene1.lua scene
 	print (event.target.scene)
 	storyboard.gotoScene(event.target.scene)
 	return true	-- indicates successful touch
 end
 	
-
-function scene:createScene( event ) -- Called when the scene's view does not exist:
-	local group = self.view
+-- Called when the scene's view does not exist:
+function scene:createScene( event ) 
+	local group = self.view  --insert all display objects into this
 	
+	local bg = display.newImageRect("images/factoryBG.png",1024,768)
+	bg.x = _W/2; bg.y = _H/2
+	--local conveyorBelt = display.newImageRect("images/conveyorSprite.png",930, 190)
+	--conveyorBelt:setReferencePoint(display.TopLeftReferencePoint)
+	--conveyorBelt.x = 10; conveyorBelt.y = 70;
+	local ipad = display.newImageRect("images/iPad.png",250, 200)
+	ipad:setReferencePoint(display.TopLeftReferencePoint);
+	ipad.x = 30; ipad.y = 550
+
 	factoryBG= display.newImageRect("images/factoryBG.png", _W, _H)
 	factoryBG:setReferencePoint(display.CenterReferencePoint)
 	factoryBG.x = _W/2
