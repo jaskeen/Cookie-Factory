@@ -23,7 +23,9 @@ local homeBtn
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
--- Called when the scene's view does not exist:
+--first, set the name of the current scene, so we can get it later, if needed
+storyboard.currentScene = "training"
+
 -- 'onRelease' event listener for return to main menu
 function onBtnRelease(event)
 	
@@ -34,7 +36,7 @@ function onBtnRelease(event)
 end
 	
 
-function scene:createScene( event )
+function scene:createScene( event ) -- Called when the scene's view does not exist:
 	local group = self.view
 	
 	factoryBG= display.newImageRect("images/factoryBG.png", _W, _H)
