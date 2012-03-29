@@ -8,6 +8,7 @@
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
+
 -- include Corona's "widget" library
 local widget = require "widget"
 
@@ -37,7 +38,6 @@ end
 --		 unless storyboard.removeScene() is called.
 -- 
 -----------------------------------------------------------------------------------------
-
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local group = self.view
@@ -90,7 +90,6 @@ end
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	local group = self.view
-	
 	-- INSERT code here (e.g. start timers, load audio, start listeners, etc.)
 	
 end

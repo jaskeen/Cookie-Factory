@@ -393,7 +393,7 @@ function scene:exitScene( event )
 	timer.cancel(spawnTimer)
 	Runtime:removeEventListener("enterFrame",enterFrame)
 	-----------------------------------------------------------------------------
-	--storyboard.purgeScene("training")
+	--storyboard.purgeScene(storyboard.currentScene)
 end
 
 
