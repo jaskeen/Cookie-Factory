@@ -17,6 +17,7 @@ storyboard.currentScene = "training"
 ---------------------------------------------------------------------------------
 display.setStatusBar( display.HiddenStatusBar )  -- hide the status bar
 --import physics,  gameUI, activate multitouch
+local convert = require ("convertNumToText")
 local physics = require("physics")
 physics.start()
 physics.setGravity(0,0)
@@ -44,10 +45,12 @@ function onBtnRelease(event)
 	storyboard.gotoScene(event.target.scene)
 	return true	-- indicates successful touch and stops propagation
 end
-	
+
+
 ---------------------  CREATE SCENE: Called when the scene's view does not exist: ---------------------
 	--	CREATE display objects and add them to 'group' here.
 function scene:createScene( event ) 
+	
 	local group = self.view  --insert all display objects into this
 	group:insert(cloud)
 	group:insert(showValue)
@@ -341,16 +344,6 @@ function scene:createScene( event )
 		return cookie
 	end
 	
-	--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
-	function generator()
-		local newCookie = math.random(#thisLevel)
-		local c = thisLevel[newCookie]
-		--print (c.name)
-		local cookieSpawn = spawnCookie(c.name,c.value, c.w,c.h,c.units, c.radius, c.shape)
-		group:insert(cookieSpawn)
-	end
-
-	
 end
 
 
@@ -359,7 +352,17 @@ end
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	local group = self.view
-	
+		--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
+	function generator()
+		local randNum = math.random(0,1000)
+		print (randNum)
+		print (convert.convertNumToText(randNum))
+		local newCookie = math.random(#thisLevel)
+		local c = thisLevel[newCookie]
+		--print (c.name)
+		local cookieSpawn = spawnCookie(c.name,c.value, c.w,c.h,c.units, c.radius, c.shape)
+		group:insert(cookieSpawn)
+	end
 	-----------------------------------------------------------------------------
 		
 	--run the function right at the beginning so we don't have to wait for the first timer to go off
