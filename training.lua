@@ -347,13 +347,14 @@ function scene:createScene( event )
 end
 
 
-
+--something to erase
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	local group = self.view
 		--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
 	function generator()
+		-- make sure to move this code to a question controlling 
 		local randNum = math.random(0,1000)
 		print (randNum)
 		print (convert.convertNumToText(randNum))
