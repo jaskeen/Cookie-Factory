@@ -70,20 +70,20 @@ function scene:createScene( event )
 	deliveryBtn.scene= "delivery"
 	
 	
-	supervisorBtn = widget.newButton{
+	loadingDockBtn = widget.newButton{
 		default="images/supervisorMode.png",
 		onRelease = onBtnRelease	-- event listener function
 	}
-	supervisorBtn:setReferencePoint( display.CenterReferencePoint )
-	supervisorBtn.x = _W*0.5 - 60
-	supervisorBtn.y = _H/2 + 90
-	supervisorBtn.scene= "supervisor"
+	loadingDockBtn:setReferencePoint( display.CenterReferencePoint )
+	loadingDockBtn.x = _W*0.5 - 60
+	loadingDockBtn.y = _H/2 + 90
+	loadingDockBtn.scene= "loadingDock"
 
 	-- all display objects must be inserted into group
 	group:insert( background )
 	group:insert( trainingBtn )
 	group:insert( deliveryBtn )
-	group:insert( supervisorBtn )
+	group:insert( loadingDockBtn )
 
 end
 

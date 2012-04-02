@@ -4,11 +4,18 @@
 --
 ----------------------------------------------------------------------------------
 
-local storyboard = require( "storyboard" )
-local widget=require "widget"
-local physics = require("physics")
-physics.start()
+local storyboard = require "storyboard" 
+local widget= require "widget"
 local scene = storyboard.newScene()
+local physics = require "physics"
+physics.start()
+physics.setGravity(0,0)
+
+_H = display.contentHeight
+_W = display.contentWidth
+
+--Variables and Functions
+
 local onBtnRelease
 local factoryBG
 local homeBtn
@@ -36,46 +43,6 @@ local object3
 ---------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
---Drag Function
-local function startDrag( event )
-	local t = event.target
-
-	local phase = event.phase
-	if "began" == phase then
-		display.getCurrentStage():setFocus( t )
-		t.isFocus = true
-
-		-- Store initial position
-		t.x0 = event.x - t.x
-		t.y0 = event.y - t.y
-		
-		-- Make body type temporarily "kinematic" (to avoid gravitional forces)
-		event.target.bodyType = "kinematic"
-		
-		-- Stop current motion, if any
-		event.target:setLinearVelocity( 0, 0 )
-		event.target.angularVelocity = 0
-
-	elseif t.isFocus then
-		if "moved" == phase then
-			t.x = event.x - t.x0
-			t.y = event.y - t.y0
-
-		elseif "ended" == phase or "cancelled" == phase then
-			display.getCurrentStage():setFocus( nil )
-			t.isFocus = false
-			
-			-- Switch body type back to "dynamic", unless we've marked this sprite as a platform
-			if ( not event.target.isPlatform ) then
-				event.target.bodyType = "dynamic"
-			end
-
-		end
-	end
-	-- Stop further propagation of touch event!
-	return true
-end
-
 -- 'onRelease' event listener for return to main menu
 function onBtnRelease(event)
 	
@@ -88,7 +55,7 @@ end
 
 function scene:createScene( event )
 	local group = self.view
-	
+		
 	factoryBG= display.newImageRect("images/factoryBG.png", _W, _H)
 	factoryBG:setReferencePoint(display.CenterReferencePoint)
 	factoryBG.x = _W/2
@@ -106,80 +73,71 @@ function scene:createScene( event )
 	homeBtn.y = _H*.07
 	homeBtn.scene="menu"
 	
-	local supervisorTitle=display.newImageRect("images/supervisorMode.png", 300, 60)
-	supervisorTitle:setReferencePoint( display.CenterReferencePoint )
-	supervisorTitle.x = _W/2 
-	supervisorTitle.y = _H/2 
-
-	local truck1 = display.newImageRect( "images/truckTemp.png" )
-	truck1.x = 80
-	truck1.y = 200
-	physics.addBody( truck1, "kinematic", { friction=0.7 } )
-	truck1.isPlatform = true -- custom flag, used in drag function above
+	local loadingDockTitle=display.newImageRect("images/supervisorMode.png", 300, 60)
+	loadingDockTitle:setReferencePoint( display.CenterReferencePoint )
+	loadingDockTitle.x = _W/2 
+	loadingDockTitle.y = _H/2 
 	
-	local truck2= display.newImageRect( "images/truckTemp.png" )
-	truck2.x = 80
-	truck2.y = 200
-	physics.addBody( truck2, "kinematic", { friction=0.7 } )
-	truck2.isPlatform = true -- custom flag, used in drag function above
+	group:insert(factoryBG)
+	group:insert(loadingDockTitle)
+	group:insert(homeBtn)
 	
-	local truck3 = display.newImageRect( "images/truckTemp.png" )
-	truck3.x = 80
-	truck3.y = 200
-	physics.addBody( truck3, "kinematic", { friction=0.7 } )
-	truck3.isPlatform = true -- custom flag, used in drag function above
+----Create TRUCKS--------------------------------
 	
-	local truck4 = display.newImageRect( "images/truckTemp.png" )
-	truck4.x = 80
-	truck4.y = 200
-	physics.addBody( truck4, "kinematic", { friction=0.7 } )
-	truck4.isPlatform = true -- custom flag, used in drag function above
+	local truck1 = display.newImageRect( "images/truckTemp.png", 200, 150  )
+	truck1.x = _W/2
+	truck1.y = 85
+	--physics.addBody( truck1, "kinematic", { friction=0.7 } )
+	--truck1.isPlatform = true -- custom flag, used in drag function above
+	
+	local truck2= display.newImageRect( "images/truckTemp.png", 200, 150 )
+	truck2.x = _W/2
+	truck2.y = 285
+	--physics.addBody( truck2, "kinematic", { friction=0.7 } )
+	--truck2.isPlatform = true -- custom flag, used in drag function above
+	
+	local truck3 = display.newImageRect( "images/truckTemp.png", 200, 150 )
+	truck3.x = _W/2
+	truck3.y = 485
+	--physics.addBody( truck3, "kinematic", { friction=0.7 } )
+	--truck3.isPlatform = true -- custom flag, used in drag function above
+	
+	local truck4 = display.newImageRect( "images/truckTemp.png", 200, 150 )
+	truck4.x = _W/2
+	truck4.y = 675
+	--physics.addBody( truck4, "kinematic", { friction=0.7 } )
+	--truck4.isPlatform = true -- custom flag, used in drag function above
 
-
+----Create a truck group so they can move together-------------------------
+	
+	function truckNum1()
+		local randNum = math.random(0,1000)
+		print (randNum)
+		local truckNum1= display.newText(randNum,  _W/2, 75, native.systemFont, 16)
+			truckNum1:setTextColor(255, 255, 255)
+	end
+	
+	local truckGroup = display.newGroup()
+		truckGroup:insert(truck1)
+		truckGroup:insert(truck2)
+		truckGroup:insert(truck3)
+		truckGroup:insert(truck4)
+		--truckGroup:insert(truckNum1)
+	
+		truckGroup.x=300
+	
+	
 	-----------------------------------------------------------------------------
 		
 	--	CREATE display objects and add them to 'group' here.
 	--	Example use-case: Restore 'group' from previously saved state.
 	
 	-----------------------------------------------------------------------------
-	group:insert(factoryBG)
-	group:insert(supervisorTitle)
-	group:insert(homeBtn)
+	
 end
 
 
-
-
-
-
-local cube = display.newImage( "house_red.png" ) -- I'm making a note here: huge success
-cube.x = 80; cube.y = 150
-physics.addBody( cube, { density=5.0, friction=0.3, bounce=0.4 } )
-
-
-local crate = display.newImage( "crate.png" )
-crate.x = 90; crate.y = 90
-physics.addBody( crate, { density=3.0, friction=0.4, bounce=0.2 } )
-
-
-local platform2 = display.newImage( "platform2.png" )
-platform2.x = 240; platform2.y = 150
-physics.addBody( platform2, "kinematic", { friction=0.7 } )
-platform2.isPlatform = true -- custom flag again
-
-
-local block = display.newImage( "books_red.png" )
-block.x = 240; block.y = 125
-physics.addBody( block, { density=1.0, bounce=0.4 } )
-block.isFixedRotation = true -- books blocks don't rotate, they just fall straight down
-
-
 -- Add touch event listeners to objects
-platform1:addEventListener( "touch", startDrag )
-platform2:addEventListener( "touch", startDrag )
-cube:addEventListener( "touch", startDrag )
-crate:addEventListener( "touch", startDrag )
-block:addEventListener( "touch", startDrag )
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
@@ -210,6 +168,7 @@ end
 -- Called prior to the removal of scene's "view" (display group)
 function scene:destroyScene( event )
 	local group = self.view
+	
 	
 	-----------------------------------------------------------------------------
 	
