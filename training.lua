@@ -355,7 +355,7 @@ function scene:enterScene( event )
 		--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
 	function generator()
 		-- make sure to move this code to a question controlling 
-		local randNum = math.random(0,1000)
+		local randNum = math.random(0,100000000)
 		print (randNum)
 		print (convert.convertNumToText(randNum))
 		local newCookie = math.random(#thisLevel)
