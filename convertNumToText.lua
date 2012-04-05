@@ -8,7 +8,7 @@ function convertNumToText(num)
     local ones = {"one","two","three","four","five","six","seven","eight","nine"}
     local teens = {"eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"}
     local  tens = {"ten","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"}
-    local tripletUnits = {"","thousand","million","billion","trillion","quadrillion","quintillion","sextillion","septillion","octillion","nonillion","decillion"}
+    local tripletUnits = {"","thousand","million","billion","trillion","quadrillion","quintillion","sextillion","septillion","octillion","nonillion","decillion", "undecillion","duodecillion"}
    
     local revNum = string.reverse(num)
    
@@ -17,7 +17,7 @@ function convertNumToText(num)
     local stop = 3
     local tripletTable = {}
    
-    local stringNum = tostring(num) --convert to string so you can use the string matching on it
+    local stringNum = tostring(num) --convert to string so you can use string matching on it
     local numLen = string.len(stringNum) -- find out how many digits the # is
     local numTriplets = math.ceil(numLen/3)
     for i = 1, numTriplets do
