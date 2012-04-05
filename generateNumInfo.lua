@@ -14,7 +14,7 @@ function genRandNum(level)
      end
 	
 	local numberT = {}
-	for i=1, level+1 do 
+	for i=1, level do 
 		table.insert(numberT,math.random(1,9))
 	end
 	local num = tonumber(table.concat(numberT))--concatentate all the items in the table to one string
@@ -36,6 +36,7 @@ function genRandNum(level)
 	numInfo.omittedValue = omitValue
 	numInfo.omittedReversedArray = numTReversedWithOmittedDigit
 	numInfo.place = places[omitPlace]
+	numInfo.omittedNum = string.reverse(table.concat(numTReversedWithOmittedDigit))
 	return numInfo
 end
 

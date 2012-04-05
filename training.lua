@@ -18,6 +18,7 @@ storyboard.currentScene = "training"
 display.setStatusBar( display.HiddenStatusBar )  -- hide the status bar
 --import physics,  gameUI, activate multitouch
 local convert = require ("convertNumToText")
+local generate = require ("generateNumInfo")
 local physics = require("physics")
 physics.start()
 physics.setGravity(0,0)
@@ -133,7 +134,7 @@ function scene:createScene( event )
 	--list which cookies are available on each level
 	local levelObjects = {
 		{items[1], items[1], items[1], items[10]},
-		{items[1], items[10],items[1], items[1], items[100]},
+		{items[1], items[10],items[1], items[1], items[100], items[10]},
 		{items[1], items[10],items[100], items[1], items[1], items[1000]},
 		{items[1], items[10],items[100], items[1], items[10], items[1], items[1000], items[10000]},
 	}
@@ -355,9 +356,9 @@ function scene:enterScene( event )
 		--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
 	function generator()
 		-- make sure to move this code to a question controlling 
-		local randNum = math.random(0,10000)
-		print (randNum)
-		print (convert.convertNumToText(randNum))
+		local randNum = generate.genRandNum(level)
+		print (randNum.number,randNum.omittedNum)
+		print (convert.convertNumToText(randNum.number))
 		local newCookie = math.random(#thisLevel)
 		local c = thisLevel[newCookie]
 		--print (c.name)

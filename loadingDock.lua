@@ -3,7 +3,7 @@
 -- scenetemplate.lua
 --
 ----------------------------------------------------------------------------------
-
+local generate = require "generateNumInfo"
 local storyboard = require "storyboard" 
 local widget= require "widget"
 local scene = storyboard.newScene()
@@ -254,7 +254,12 @@ Runtime:addEventListener("touch", cookie3)
 function scene:enterScene( event )
 	local group = self.view
 	
-	
+	local newList = generate.generateNumInfos(3,5)
+		--print the info about each num in the list
+	print ("Num list has: "..#newList.." items.")
+	for i=1,#newList do 
+		print ("Number: "..newList[i].number, "places used: "..newList[i].place, "Value: "..newList[i].omittedValue,"Omitted Num: "..string.reverse(table.concat(newList[i].omittedReversedArray)))
+	end
 	-----------------------------------------------------------------------------
 		
 	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
