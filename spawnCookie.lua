@@ -209,21 +209,30 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 			showValue.text = value
 			showValue.x = self.x 
 			showValue.y = self.y - offset
-			return true
-		elseif event.phase == "moved" then
-			--set a variable to know that the cookie has been moved and should no longer move across the screen
-			self.moved = "yes"
-			--move the cookie around the screen
-			self.x = event.x 
-			self.y = event.y
-			showValue.x = event.target.x 
-			showValue.y = event.target.y - offset 
-			return true
-		elseif event.phase == "ended"  or event.phase == "cancelled" then
-			--hide the item's value
-			showValue.x = -200
-			showValue.y = -200
-			return true
+			
+			display.getCurrentStage():setFocus( self, event.id)
+			self.isFocus = true
+			self.markX = self.x 
+			self.markY = self.y 
+			--return true
+		elseif self.isFocus then
+			if event.phase == "moved" then
+				--set a variable to know that the cookie has been moved and should no longer move across the screen
+				self.moved = "yes"
+				--move the cookie around the screen
+				self.x = event.x-event.xStart+self.markX 
+				self.y = event.y - event.yStart+self.markY
+				showValue.x = event.target.x 
+				showValue.y = event.target.y - offset 
+				return true
+			elseif event.phase == "ended"  or event.phase == "cancelled" then
+				--hide the item's value
+				showValue.x = -200
+				showValue.y = -200
+				display.getCurrentStage():setFocus(self,nil)
+				self.isFocus=false
+				return true
+			end
 		end
 		
 	end
