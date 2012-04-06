@@ -13,6 +13,8 @@ local showValue = display.newRetinaText("",-200,-200, "Arial",48) --for showing 
 local cloud = display.newImageRect("images/cloud.png",256,256) --cloud for transformations
 cloud.x = -200
 cloud.y = -200 
+generatedItems = {}
+
 
 
 --instead of creating an object for each cookie, let's only create objects that we'll actually use during this "round"
@@ -44,7 +46,15 @@ function createItemsForThisLevel(theme)
 	return items
 end
 
-
+local function inArray(array, value)
+    local is = false
+    for i, thisValue in ipairs(array) do
+        if thisValue == value then 
+        	is = true; break end
+    end
+    return is
+end
+	
 --handler for making a new item appear
 local function comboItem(x,y, remainder, newItems, newValue,units)
 	--cancel all the timers
@@ -68,6 +78,7 @@ local function comboItem(x,y, remainder, newItems, newValue,units)
 		local cookie1=spawnCookie(name, thisValue ,w,h, newUnits, radius, shape, x+i.w/2, y+i.h/3)
 		cookie1.moved="yes"
 		cookieGroup:insert(cookie1)
+		generatedItems[cookie1.key] = cookie1
 		return true
 	elseif (newItems == "twoItems") then
 		--get the info for an item 1 type up 
@@ -82,6 +93,7 @@ local function comboItem(x,y, remainder, newItems, newValue,units)
 		local newShape = n.shape
 		local cookie2 = spawnCookie(newName, units*10,newW,newH, newUnits, newRadius, newShape, x-30, y)
 		cookie2.moved ="yes"
+		generatedItems[cookie2.key] = cookie2
 		--now create the same kind of item, with the remaining value
 		local j = items[remainder]
 		local newUnits = j.units
@@ -94,6 +106,7 @@ local function comboItem(x,y, remainder, newItems, newValue,units)
 		cookie1.moved="yes"
 		cookieGroup:insert(cookie1)
 		cookieGroup:insert(cookie2)
+		generatedItems[cookie1.key] = cookie1
 		return true
 	end
 end
@@ -125,14 +138,18 @@ function disappear(x,y,obj1, obj2)
 	print ("units1: "..obj1.units,"units2: "..obj2.units)
 	--now get rid of the old items
 	if (obj1) then
+		generatedItems[obj1.key] = nil
 		obj1:removeSelf()
 		Runtime:removeEventListener("enterFrame", obj1)
 		obj1 = nil
+		collectgarbage("collect")
 	end
 	if (obj2 ~= nil) then
+		generatedItems[obj2.key] = nil
 		obj2:removeSelf()
 		Runtime:removeEventListener("enterFrame", obj2)
 		obj2 = nil
+		collectgarbage("collect")
 	end
 	cloud.x = -200
 	cloud.y = -200
@@ -183,6 +200,13 @@ function onLocalCollision(self, event)
 	return true
 end
 
+
+local function genKey(array)
+	local key = "cookie"..math.random(1,100000000)
+	if inArray(array,key) == true then return genKey(array) end
+	return key
+end
+
 --couldn't seem to get external classes to work, so I'm going to use Rafael Hernandez's method of spawning objects as seen in the Bubble Ball exercise
 function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	image = ("images/"..name..value..".png")
@@ -198,7 +222,13 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	cookie.linearDamping = 9
 	cookie.collision = onLocalCollision
 	cookie:addEventListener("collision",cookie)
-
+	--generate a unique key to refer to this cookie
+	cookie.key = genKey(generatedItems)
+	generatedItems[cookie.key] = cookie
+	
+	
+	--table.insert(generatedItems,cookie)
+	
 	function cookie:touch(event)
 		if event.phase == "began" then
 			cookie:setReferencePoint(display.CenterReferencePoint)
@@ -238,8 +268,10 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	end
 	
 	--make the cookie move across the screen
-	function cookie:enterFrame()
-		if cookie.y < 250-cookie.height/3 then --cookie is in conveyor area, so start it moving again
+	function cookie:enterFrame(event)
+		if cookie.y < 150 - cookie.height/2 then -- cookie is in the marquee area
+			cookie.y = 150 - cookie.height/2
+		elseif cookie.y < 250-cookie.height/3 then --cookie is in conveyor area, so start it moving again
 			cookie.moved = "no"
 		end
 		if (cookie.moved ~= "yes") then
@@ -247,6 +279,10 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 		end
 		if cookie.x < -50 then 
 			Runtime:removeEventListener("enterFrame",cookie)
+			--print (cookie.key .. " says goodbye")
+			print ("goodbye: "..cookie.key)
+			generatedItems[cookie.key] = nil
+			collectgarbage("collect")
 			cookie:removeSelf()
 			cookie = nil
 		end
@@ -255,4 +291,20 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	cookie:addEventListener("touch",cookie)
 	Runtime:addEventListener("enterFrame", cookie)
 	return cookie
+end
+
+function cleanUp()
+	for k, v in pairs(generatedItems) do 
+		print (k)
+	end
+	--delete all the cookies that were generated
+	for k, v in pairs(generatedItems) do 
+		print ("removing: "..k)
+		generatedItems[k] = nil
+		Runtime:removeEventListener("enterFrame", v)
+		v:removeSelf()
+		v = nil
+	end	
+	--generatedItems = nil
+	--generatedItems = {}
 end

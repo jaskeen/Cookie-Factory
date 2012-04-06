@@ -32,7 +32,7 @@ _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
 local level = 2; local thisLevel
 
-local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn --forward reference fcns
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, ipad --forward reference fcns
 
 
 
@@ -59,7 +59,7 @@ function scene:createScene( event )
 	--local conveyorBelt = display.newImageRect("images/conveyorSprite.png",930, 190)
 	--conveyorBelt:setReferencePoint(display.TopLeftReferencePoint)
 	--conveyorBelt.x = 10; conveyorBelt.y = 70;
-	local ipad = display.newImageRect("images/iPad.png",250, 200)
+	ipad = display.newImageRect("images/iPad.png",250, 200)
 	ipad:setReferencePoint(display.TopLeftReferencePoint);
 	ipad.x = 30; ipad.y = 550
 	group:insert(ipad)
@@ -110,9 +110,7 @@ function scene:createScene( event )
 	}
 	thisLevel = levelObjects[level]
 		
-	
-	----------------------------------------- FUNCTIONS ----------------------------------------------
-	
+
 end
 
 
@@ -125,11 +123,10 @@ function scene:enterScene( event )
 	function generator()
 		-- make sure to move this code to a question controlling 
 		local randNum = generate.genRandNum(level)
-		print (randNum.number,randNum.omittedNum)
-		print (convert.convertNumToText(randNum.number))
+		--print (randNum.number,randNum.omittedNum)
+		--print (convert.convertNumToText(randNum.number))
 		local newCookie = math.random(#thisLevel)
 		local c = thisLevel[newCookie]
-		--print (c.name)
 		local cookieSpawn = spawn.spawnCookie(c.name,c.value, c.w,c.h,c.units, c.radius, c.shape)
 		group:insert(cookieSpawn)
 	end
@@ -139,6 +136,13 @@ function scene:enterScene( event )
 	generator()
 	spawnTimer = timer.performWithDelay(createRate, generator,0)
 
+	function reset()
+		timer.pause(spawnTimer)
+		spawn.cleanUp()
+		timer.resume(spawnTimer)
+	end
+	--created a cleanup btn for testing purposes
+	ipad:addEventListener("tap",reset)
 
 	function enterFrame() 
 		--first, check for and clean up the garbage
@@ -160,6 +164,8 @@ end
 function scene:exitScene( event )
 	local group = self.view
 	
+	--get rid of all the cookies that were created
+	spawn.cleanUp()
 	-----------------------------------------------------------------------------
 	
 	--	INSERT code here (e.g. stop timers, remove listeners, unload sounds, etc.)
