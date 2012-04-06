@@ -125,7 +125,10 @@ function scene:createScene( event )
 			print("moved")
 		elseif(event.phase=="ended")then
 			print("ended")
+		
 		end
+		
+		return true	
 	end
 	
 	cookie1:addEventListener("touch", cookieTouch)
