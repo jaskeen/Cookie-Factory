@@ -2,6 +2,8 @@
 ---- loadingDock.lua
 ------------------------------------------------------------------------------------
 local generate = require "generateNumInfo"
+local number = require "generateNumber"
+local spawn= require "spawnCookie"
 local storyboard = require "storyboard" 
 local widget= require "widget"
 local scene = storyboard.newScene()
@@ -15,13 +17,25 @@ _W = display.contentWidth
 --Variables and Functions
 local onBtnRelease
 local factoryBG, homeBtn,truck1,truck2,truck3,truck4,object1,object2,object3
-local loadingDockTitle,truckNum,truckNum2,truckNum3,truckNum4,cookie,spawnCookies
+local loadingDockTitle,truckNum,truckNum2,truckNum3,truckNum4,cookie
 local cookie1,cookie2,cookie3
 local myObject
 local startDrag
 local level
+local totalTrucks
+local totalItems
+
 	--From generateNumInfo
 	local newList
+	local value
+	local omittedNum
+	
+	--From generateNumber
+	local generateNumber
+	
+	--From spawnCookie
+	local items
+	
 
 
 
@@ -39,7 +53,11 @@ local level
 ---------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
-level=5	
+
+--Get the level from the user's selection later... this controls the # trucks and items to spawn
+level=3	
+totalTrucks=level+2
+totalItems=level+1
 
 -- 'onRelease' event listener for return to main menu
 function onBtnRelease(event)
@@ -50,8 +68,6 @@ function onBtnRelease(event)
 	return true	-- indicates successful touch
 end
 	
-
-
 
 --Traffic light with the #of cookies as red circles
 	--when one correct match is made, one of the red circles becomes green
@@ -100,8 +116,27 @@ function startDrag( event )
 end
 
 --Spawn cookies, which should be the #trucks-1
+local themes= {"creme", "pb","jelly","chocchip"}
+local theme = themes[level]
+
+items=spawn.createItemsForThisLevel(theme)
+
 	--the omitted# from the trucks (with the exception of 1) will determine the cookie to appear
+
+--Spawn item/cookie VALUE(from generateNumInfo function)	
+--[[local function spawnTruck(level)
+	for i=1, #numList do
 	
+	end
+	
+
+end
+]]
+
+--time 
+tmr= timer.performWithDelay(20, SpawnBanana, total_bananas)
+
+
 --Create the Cookies
 	cookie1=display.newText("Value#1",  (_W/2)-50, 275, native.systemFontBold, 30)
 	physics.addBody( cookie1, "kinematic", { friction=0.7 } )
@@ -128,8 +163,9 @@ cookie3:addEventListener( "touch", startDrag )
 	----Create TRUCKS--------------------------------
 --Spawn trucks, which should either be a constant 4 trucks OR the level+2 trucks
 	--each truck will have a random number with one ommitted# displayed on it
+		--Display/Spawn omittedNum variable from generateNumInfo function	
 	--make trucks SENSORS
-	
+
 	truck1 = display.newImageRect( "images/truckTemp.png", 200, 150  )
 	truck1.x = _W/2
 	truck1.y = 85
@@ -159,6 +195,7 @@ cookie3:addEventListener( "touch", startDrag )
 		print (truckNum)
 		
 	end
+	
 	
 	truckNum= display.newText("Omitted#1",  (_W/2)-50, 75, native.systemFontBold, 20)
 			--I want truckNum from the function to be the text, not "truckNum"
@@ -240,12 +277,30 @@ end
 function scene:enterScene( event )
 	local group = self.view
 	
-	local newList = generate.generateNumInfos(3,5)
+	local newList = generate.generateNumInfos(level,level+2)
 		--print the info about each num in the list
 	print ("Num list has: "..#newList.." items.")
 	for i=1,#newList do 
+		valueTable=newList[i].omittedValue
+		omittedNumString=string.reverse(table.concat(newList[i].omittedReversedArray))
+		valW=150
+		valH=200*i
+		numW=(_W/2)-50
+		numH=75+200*(i-1)
+		display.newText(valueTable, valW, valH, native.SystemFontBold, 30)
+		display.newText(omittedNumString, numW, numH, native.SystemFontBold, 30)
+		print("VALUE TABLE: "..valueTable, "OMITTEDNUMSTRING: "..omittedNumString)
 		print ("Number: "..newList[i].number, "places used: "..newList[i].place, "Value: "..newList[i].omittedValue,"Omitted Num: "..string.reverse(table.concat(newList[i].omittedReversedArray)))
 	end
+	
+	
+	
+	--[[
+	for i=1,#newList do
+		numbers=string.sub(newList[i],i,i+5)
+		print("SubStrings: "..number..i)
+	end
+	]]
 	-----------------------------------------------------------------------------
 		
 	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
