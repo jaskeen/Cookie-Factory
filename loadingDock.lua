@@ -133,11 +133,11 @@ items=spawn.createItemsForThisLevel(theme)
 end
 ]]
 
---time 
-tmr= timer.performWithDelay(20, SpawnBanana, total_bananas)
+
 
 
 --Create the Cookies
+	--[[
 	cookie1=display.newText("Value#1",  (_W/2)-50, 275, native.systemFontBold, 30)
 	physics.addBody( cookie1, "kinematic", { friction=0.7 } )
 				cookie1.x=150
@@ -150,15 +150,11 @@ tmr= timer.performWithDelay(20, SpawnBanana, total_bananas)
 	physics.addBody( cookie3, "kinematic", { friction=0.7 } )
 		cookie3.x=150
 		cookie3.y=600
-
+	`]]
 
 -- Add touch event listeners to objects
 	--make cookies DRAGGABLE
-cookie1:addEventListener( "touch", startDrag )
-cookie2:addEventListener( "touch", startDrag )
-cookie3:addEventListener( "touch", startDrag )
-	
-	
+
 	
 	----Create TRUCKS--------------------------------
 --Spawn trucks, which should either be a constant 4 trucks OR the level+2 trucks
@@ -197,20 +193,6 @@ cookie3:addEventListener( "touch", startDrag )
 	end
 	
 	
-	truckNum= display.newText("Omitted#1",  (_W/2)-50, 75, native.systemFontBold, 20)
-			--I want truckNum from the function to be the text, not "truckNum"
-			--so it would be 4 random numbers concatinated
-			--truckNum".."truckNum".."truckNum".."truckNum".."truckNum
-			truckNum:setTextColor(255, 255, 255)
-			
-	truckNum2= display.newText("Omitted#2",  (_W/2)-50, 275, native.systemFontBold, 20)
-			truckNum:setTextColor(255, 255, 255)
-	
-	truckNum3= display.newText("Omitted#3",  (_W/2)-50, 475, native.systemFontBold, 20)
-			truckNum:setTextColor(255, 255, 255)
-			
-	truckNum4= display.newText("Omitted#4",  (_W/2)-50, 675, native.systemFontBold, 20)
-			truckNum:setTextColor(255, 255, 255)
 ----Create a truck group so they can move together-------------------------
 	
 	truckGroup = display.newGroup()
@@ -218,10 +200,7 @@ cookie3:addEventListener( "touch", startDrag )
 		truckGroup:insert(truck2)
 		truckGroup:insert(truck3)
 		truckGroup:insert(truck4)
-		truckGroup:insert(truckNum)
-		truckGroup:insert(truckNum2)
-		truckGroup:insert(truckNum3)
-		truckGroup:insert(truckNum4)
+	
 			
 	truckGroup.x=300
 	
@@ -253,12 +232,7 @@ cookie3:addEventListener( "touch", startDrag )
 	group:insert(factoryBG)
 	group:insert(loadingDockTitle)
 	group:insert(homeBtn)
-	group:insert(truckGroup)
-	group:insert(cookie1)
-	group:insert(cookie2)
-	group:insert(cookie3)
-	
-	
+	group:insert(truckGroup)	
 		
 	return true
 	-----------------------------------------------------------------------------
@@ -278,29 +252,41 @@ function scene:enterScene( event )
 	local group = self.view
 	
 	local newList = generate.generateNumInfos(level,level+2)
-		--print the info about each num in the list
-	print ("Num list has: "..#newList.." items.")
-	for i=1,#newList do 
-		valueTable=newList[i].omittedValue
-		omittedNumString=string.reverse(table.concat(newList[i].omittedReversedArray))
-		valW=150
-		valH=200*i
-		numW=(_W/2)-50
-		numH=75+200*(i-1)
-		display.newText(valueTable, valW, valH, native.SystemFontBold, 30)
-		display.newText(omittedNumString, numW, numH, native.SystemFontBold, 30)
-		print("VALUE TABLE: "..valueTable, "OMITTEDNUMSTRING: "..omittedNumString)
-		print ("Number: "..newList[i].number, "places used: "..newList[i].place, "Value: "..newList[i].omittedValue,"Omitted Num: "..string.reverse(table.concat(newList[i].omittedReversedArray)))
-	end
+			--print the info about each num in the list
+		print ("Num list has: "..#newList.." items.")
+		for i=1,#newList do 
+				
+			itemValues=newList[i].omittedValue
+				itemValuesID=newList[i].number
+				valW=150
+				valH=200*i
+			truckNumber=string.reverse(table.concat(newList[i].omittedReversedArray))
+				truckNumberID=newList[i].number
+				numW=(_W/2)+150
+				numH=75+200*(i-1)
+				
+			itemValues=display.newText(itemValues, valW, valH, native.SystemFontBold, 40)
+				physics.addBody(itemValues, "kitematic", {friction=0.7})
+				itemValues.isFixedRotation=true
+			
+			truckNumber=display.newText(truckNumber, numW, numH, native.SystemFontBold, 40)
+				physics.addBody( truckNumber, "kinematic", { isSensor=true } )
+			
+			print ("Number: "..newList[i].number, "places used: "..newList[i].place, "Value: "..newList[i].omittedValue,"Omitted Num: "..string.reverse(table.concat(newList[i].omittedReversedArray)))
+			
+			itemValues:addEventListener("touch", startDrag)
+			
+			function checkForMatchingNumbersAndValues()
+				if truckNumberID==itemValuesID then
+				print("MATCH!!!")
+				else
+				print("WRONG")
+				return true
+				end
+			end
+			
+		end	
 	
-	
-	
-	--[[
-	for i=1,#newList do
-		numbers=string.sub(newList[i],i,i+5)
-		print("SubStrings: "..number..i)
-	end
-	]]
 	-----------------------------------------------------------------------------
 		
 	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
