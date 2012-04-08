@@ -1,0 +1,10 @@
+---Build Settings for Testing Multitouch
+
+settings =
+{
+	orientation=
+	{
+		default = "landscape"
+	},
+	
+}

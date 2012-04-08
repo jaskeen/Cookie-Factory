@@ -30,7 +30,7 @@ system.activate("multitouch")
 _H = display.contentHeight
 _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
-local level = 4; local thisLevel
+local level = 1; local thisLevel
 
 local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, ipad, levelBar --forward reference fcns
 
@@ -102,7 +102,7 @@ function scene:createScene( event )
 	homeBtn.scene="menu"
 	group:insert(homeBtn)
 
-	local themes= {"creme", "pb","jelly","chocchip"}
+	local themes= {"oreo", "pb","jelly","chocchip"}
 	local theme = themes[level]
 	items=spawn.createItemsForThisLevel(theme)
 	
@@ -115,11 +115,22 @@ function scene:createScene( event )
 	}
 	thisLevel = levelObjects[level]
 		
+		--create an intro message
+		local intro = display.newGroup()
+		local introBg = display.newRoundedRect(0,0,640,400,5)
+		introBg.strokeWidth = 6
+		introBg:setFillColor(200,100,50)
+		introBg:setStrokeColor(255)
+		intro:insert(introBg)
+		local message = "Welcome to our factory. We need help packaging cookies for delivery, but someone seems to have forgotten to fill one of the places in each order.  Please help us by combining cookies to the right amount.  After combining them, drag the cookie to the empty spot below and they'll be packaged."
+		local introText = display.newRetinaText(message,20,20,600,400, "Helvetica", 30)
+		
+		intro:insert(introText)
+		intro:setReferencePoint(display.CenterReferencePoint)
+		intro.x = _W/2; intro.y = _H/2
+		group:insert(intro)
 
 end
-
-
---something to erase
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
