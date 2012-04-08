@@ -119,43 +119,50 @@ function disappear(x,y,obj1, obj2)
 	print ("total: "..total)
 	local newItems --use this to see how many and what type of new items I'll need to create
 	--check to see if we need to create 1 or 2 new objects
-	if (total > (obj1.units*10)) then
-		print ("create TWO items")
-		newItems = "twoItems"
+	if (total > (obj1.units*10)) then -- need to change each item.  Use those I've already got
+		print ("change BOTH items")
 		remainder = total - (obj1.units*10)
+		newUnits = obj1.units*10
+		obj1.image = display.newImageRect("images/"..obj1.name .. newUnits..".png",items[newUnits].w,items[newUnits].h)
+		obj1.badgeText.text = newUnits
+		obj1.badgeRect.width = obj1.badgeText.width+10
+		physics.addBody(obj1, {radius=items[newUnits].radius, shape=items[newUnits].shape})
+		--now change the second item
+		obj2.image = display.newImageRect("images/"..obj2.name .. remainder..".png",items[remainder].w,items[remainder].h)
+		obj2.badgeText.text = remainder
+		obj2.badgeRect.width = obj2.badgeText.width+10
+		physics.addBody(obj2, {radius=items[remainder].radius, shape=items[remainder].shape})
 	elseif (total == obj1.units*10) then 
-		newItems = "nextItem"
-		newValue = obj1.units*10
-		remainder = 0
-	elseif (total < obj1.units*10) then
-		newItems = "same"
-		newValue = total
-		remainder = 0
-	end
-	local units = obj1.units
-	--check to see if I got all of the needed values
-	print ("remainder: "..remainder,"newItems: "..newItems,"new value: "..newValue)
-	print ("units1: "..obj1.units,"units2: "..obj2.units)
-	--now get rid of the old items
-	if (obj1) then
-		generatedItems[obj1.key] = nil
-		obj1:removeSelf()
-		Runtime:removeEventListener("enterFrame", obj1)
-		obj1 = nil
-		collectgarbage("collect")
-	end
-	if (obj2 ~= nil) then
-		generatedItems[obj2.key] = nil
-		obj2:removeSelf()
-		Runtime:removeEventListener("enterFrame", obj2)
-		obj2 = nil
-		collectgarbage("collect")
+		newUnits = obj1.units*10		
+		obj1.image = display.newImageRect("images/"..obj1.name .. newUnits..".png",items[newUnits].w,items[newUnits].h)
+		obj1.badgeText.text = newUnits
+		obj1.badgeRect.width = obj1.badgeText.width+10
+		physics.addBody(obj1, {radius=items[newUnits].radius, shape=items[newUnits].shape})
+		--get rid of the other object
+		if (obj2 ~= nil) then
+			generatedItems[obj2.key] = nil
+			obj2:removeSelf()
+			Runtime:removeEventListener("enterFrame", obj2)
+			obj2 = nil
+			collectgarbage("collect")
+		end
+	elseif (total < obj1.units*10) then --same item, not regrouping
+		obj1.image = display.newImageRect("images/"..obj1.name .. total..".png",items[total].w,items[total].h)
+		obj1.badgeText.text = total
+		obj1.badgeRect.width = obj1.badgeText.width+10
+		physics.addBody(obj1, {radius=items[total].radius, shape=items[total].shape})
+		--get rid of the other object
+		if (obj2 ~= nil) then
+			generatedItems[obj2.key] = nil
+			obj2:removeSelf()
+			Runtime:removeEventListener("enterFrame", obj2)
+			obj2 = nil
+			collectgarbage("collect")
+		end
 	end
 	cloud.x = -200
 	cloud.y = -200
-	--closure for passing arguments in a fcn inside of a timer 
-	local closure = function() return comboItem(x,y,remainder,newItems,newValue,units) end
-	disappearTimer = timer.performWithDelay(300,closure,1)
+
 end
 
 --handler for when boxes collide
@@ -233,6 +240,8 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	badge.x=-25; badge.y = h*.3
 	
 	--cookie properties
+	cookie.w = w 
+	cookie.h = h
 	cookie.image = image
 	cookie.badgeText = badgeText
 	cookie.badgeRect = badgeRect
