@@ -30,9 +30,9 @@ system.activate("multitouch")
 _H = display.contentHeight
 _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
-local level = 2; local thisLevel
+local level = 4; local thisLevel
 
-local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, ipad --forward reference fcns
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, ipad, levelBar --forward reference fcns
 
 
 
@@ -63,6 +63,11 @@ function scene:createScene( event )
 	ipad:setReferencePoint(display.TopLeftReferencePoint);
 	ipad.x = 30; ipad.y = 550
 	group:insert(ipad)
+	
+	levelBar = display.newImageRect("images/levelbar.png",90,_H)
+	levelBar:setReferencePoint(display.TopRightReferencePoint)
+	levelBar.x = _W; levelBar.y=0
+	group:insert(levelBar)
 	---------------------------------------- Number BOXES ----------------------------------------
 	local tenThousandsTray = display.newRect(0,0, 130, 40)
 	tenThousandsTray:setFillColor(175)
@@ -123,12 +128,13 @@ function scene:enterScene( event )
 	function generator()
 		-- make sure to move this code to a question controlling 
 		local randNum = generate.genRandNum(level)
-		--print (randNum.number,randNum.omittedNum)
+		--print (randNum.n`umber,randNum.omittedNum)
 		--print (convert.convertNumToText(randNum.number))
 		local newCookie = math.random(#thisLevel)
 		local c = thisLevel[newCookie]
 		local cookieSpawn = spawn.spawnCookie(c.name,c.value, c.w,c.h,c.units, c.radius, c.shape)
 		group:insert(cookieSpawn)
+		group:insert(levelBar)
 	end
 	-----------------------------------------------------------------------------
 		

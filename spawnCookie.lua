@@ -209,12 +209,37 @@ end
 
 --couldn't seem to get external classes to work, so I'm going to use Rafael Hernandez's method of spawning objects as seen in the Bubble Ball exercise
 function spawnCookie(name, value,w,h, units, radius, shape,x,y)
-	image = ("images/"..name..value..".png")
-	local cookie = display.newImageRect(image, w,h)
+	--create a group to insert everything into about that cookie
+	local cookie = display.newGroup()
+	
+	--cookie image
+	local image = display.newImageRect("images/"..name..value..".png",w,h)
+	image.x = 0; image.y = 0;
+	cookie:insert(image)
+	
+	--cookie badge (needs text and a rounded rectangle grouped together)
+	local badge = display.newGroup()
+	local badgeText = display.newRetinaText(value,5,-2,"Helvetica",24)
+	badgeText:setTextColor(255,255,255)
+	local badgeRect = display.newRoundedRect(0,0,badgeText.width+10,badgeText.height, 12)
+	badgeRect:setReferencePoint(display.TopLeftReferencePoint)
+	badgeRect.strokeWidth = 4
+	badgeRect:setFillColor(255,0,0)
+	badgeRect:setStrokeColor(255)
+	
+	badge:insert(badgeRect)
+	badge:insert(badgeText)
+	cookie:insert(badge)
+	badge.x=-25; badge.y = h*.3
+	
+	--cookie properties
+	cookie.image = image
+	cookie.badgeText = badgeText
+	cookie.badgeRect = badgeRect
 	cookie:setReferencePoint(display.BottomRightReferencePoint)
 	cookie.name = name
 	cookie.value = value or 1
-	cookie.x = x or(_W + 100)
+	cookie.x = x or(_W)
 	cookie.y = y or 200
 	cookie.units = units
 	physics.addBody(cookie, {radius=radius, shape=shape})
