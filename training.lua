@@ -91,7 +91,7 @@ function scene:createScene( event )
 	--group:insert(cloud)
 	--group:insert(showValue)
 	
-	local bg = display.newImageRect("images/factoryBG.png",1024,768)
+	local bg = display.newImageRect("images/BG.png",1024,768)
 	bg.x = _W/2; bg.y = _H/2
 	--local conveyorBelt = display.newImageRect("images/conveyorSprite.png",930, 190)
 	--conveyorBelt:setReferencePoint(display.TopLeftReferencePoint)
