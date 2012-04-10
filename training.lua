@@ -116,24 +116,28 @@ function scene:createScene( event )
 	local thousandsTray = display.newRect(140,0, 140, 40)
 	thousandsTray:setFillColor(216,101,88)
 	local thousandsText = display.newEmbossedText("thousands",145,10,"BellGothicStd-Black", 22)
+	thousandsText:setTextColor(255,255,255)
 	thousandsText:setReferencePoint(display.CenterReferencePoint)
 	thousandsText.x = 210
 	--100s
 	local hundredsTray = display.newRect(280, 0, 140, 40)
 	hundredsTray:setFillColor(225,203,60)
 	local hundredsText = display.newEmbossedText("hundreds",285,10,"BellGothicStd-Black", 22)
+	hundredsText:setTextColor(255,255,255)
 	hundredsText:setReferencePoint(display.CenterReferencePoint)
 	hundredsText.x = 355
 	--10s
 	local tensTray = display.newRect(420, 0, 140, 40)
 	tensTray:setFillColor(82,148,100)
 	local tensText = display.newEmbossedText("tens",425,10,"BellGothicStd-Black", 22)
+	tensText:setTextColor(255,255,255)
 	tensText:setReferencePoint(display.CenterReferencePoint)
 	tensText.x = 495
 	--1s
 	local onesTray = display.newRect(560, 0, 140, 40)
 	onesTray:setFillColor(54, 158,251)
 	local onesText = display.newEmbossedText("ones",565,10,"BellGothicStd-Black", 22)
+	onesText:setTextColor(255,255,255)
 	onesText:setReferencePoint(display.CenterReferencePoint)
 	onesText.x = 635
 
@@ -181,7 +185,7 @@ function scene:createScene( event )
 
 	 --marquee
 		questionText = "seven million, seven hundred seventy-seven thousand, seven hundred seventy-seven"
-		lcdText = display.newRetinaText(questionText,135, 30, "BellGothicStd-Black", 18,{255,0,0})
+		lcdText = display.newRetinaText(questionText,135, 30, "BellGothicStd-Black", 19,{255,0,0})
 		lcdText:setTextColor(0,255,0)
 		
 		-- time display 
