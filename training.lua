@@ -5,6 +5,7 @@
 
 local storyboard = require( "storyboard" )
 local widget= require "widget"
+local itemInfo = require ("items")
 local scene = storyboard.newScene()
 --first, set the name of the current scene, so we can get it later, if needed
 storyboard.currentScene = "training"
@@ -32,7 +33,7 @@ _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
 local level = 4; local thisLevel
 
-local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, ipad, levelBar, nextQuestion, lcd, lcdText, questionText, startSession, genQ --forward reference fcns
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, questionText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay --forward reference fcns
 
 
 
@@ -88,17 +89,13 @@ end
 function scene:createScene( event ) 
 	
 	local group = self.view  --insert all display objects into this
-	--group:insert(cloud)
-	--group:insert(showValue)
 	
 	local bg = display.newImageRect("images/BG.png",1024,768)
 	bg.x = _W/2; bg.y = _H/2
-	--local conveyorBelt = display.newImageRect("images/conveyorSprite.png",930, 190)
-	--conveyorBelt:setReferencePoint(display.TopLeftReferencePoint)
-	--conveyorBelt.x = 10; conveyorBelt.y = 70;
-	ipad = display.newImageRect("images/iPad.png",250, 200)
-	ipad:setReferencePoint(display.TopLeftReferencePoint);
-	ipad.x = 30; ipad.y = 550
+	local conveyor = display.newImageRect("images/conveyor.png",912, 158)
+	conveyor:setReferencePoint(display.TopLeftReferencePoint)
+	conveyor.x = 35; conveyor.y = 200;
+	--	physics.addBody(conveyor, "static", {shape=-360, 632,   360, 632,   456, 527,   456, 474,   -456, 474,   -456, 527})
 	
 	levelBar = display.newImageRect("images/levelbar.png",90,_H)
 	levelBar:setReferencePoint(display.TopRightReferencePoint)
@@ -107,16 +104,34 @@ function scene:createScene( event )
 	
 	
 	---------------------------------------- Number BOXES ----------------------------------------
-	local tenThousandsTray = display.newRect(0,0, 130, 40)
-	tenThousandsTray:setFillColor(175)
-	local thousandsTray = display.newRect(130,0, 130, 40)
-	thousandsTray:setFillColor(100)
-	local hundredsTray = display.newRect(260, 0, 130, 40)
-	hundredsTray:setFillColor(200)
-	local tensTray = display.newRect(390, 0, 130, 40)
-	tensTray:setFillColor(150)
-	local onesTray = display.newRect(520, 0, 130, 40)
-	onesTray:setFillColor(255)
+	
+	--10,000s
+	local tenThousandsTray = display.newRect(0,0, 140, 40)
+	tenThousandsTray:setFillColor(182,61,91)
+	local tenThousandsText = display.newRetinaText("ten thousands",5,0,"Helvetica",18)
+	tenThousandsText.height = 40
+	--1,000s
+	local thousandsTray = display.newRect(140,0, 140, 40)
+	thousandsTray:setFillColor(216,101,88)
+	local thousandsText = display.newRetinaText("thousands",145,0,"Helvetica",18)
+	thousandsText.height = 40
+	--100s
+	local hundredsTray = display.newRect(280, 0, 140, 40)
+	hundredsTray:setFillColor(225,203,60)
+	local hundredsText = display.newRetinaText("hundreds",285,0,"Helvetica",18)
+	hundredsText.height = 40
+	--10s
+	local tensTray = display.newRect(420, 0, 140, 40)
+	tensTray:setFillColor(82,148,100)
+	local tensText = display.newRetinaText("tens",425,0,"Helvetica",18)
+	tensText.height = 40
+	--1s
+	local onesTray = display.newRect(560, 0, 140, 40)
+	onesTray:setFillColor(54, 158,251)
+	local onesText = display.newRetinaText("ones",565,0,"Helvetica",18)
+	onesText.height = 40
+	onesText.align = "right"
+
 	--now put them all into a group so you can move the group around with ease
 	local trayGroup = display.newGroup()
 	trayGroup:insert(tenThousandsTray)
@@ -124,24 +139,17 @@ function scene:createScene( event )
 	trayGroup:insert(hundredsTray)
 	trayGroup:insert(tensTray)
 	trayGroup:insert(onesTray)
-	trayGroup.x = 298; trayGroup.y = 645
-	
-	
-	homeBtn=widget.newButton{
-		default="images/homeBtn.png",
-		width=80,
-		height=80,
-		onRelease = onBtnRelease	-- event listener function
-		}
-	homeBtn:setReferencePoint(display.CenterReferencePoint)
-	homeBtn.x = 45
-	homeBtn.y = 35
-	homeBtn.scene="menu"
+	trayGroup:insert(tenThousandsText)
+	trayGroup:insert(thousandsText)
+	trayGroup:insert(hundredsText)
+	trayGroup:insert(tensText)
+	trayGroup:insert(onesText)
+	trayGroup.x = 240; trayGroup.y = 665
 
 
 	local themes= {"oreo", "pb","jelly","chocchip"}
 	local theme = themes[level]
-	items=spawn.createItemsForThisLevel(theme)
+	items=itemInfo.createItemsForThisLevel(theme)
 	
 	--list which cookies are available on each level
 	local levelObjects = {
@@ -166,19 +174,43 @@ function scene:createScene( event )
 		intro:setReferencePoint(display.CenterReferencePoint)
 		intro.x = _W/2; intro.y = _H/2
 
-		lcd = display.newImageRect("images/lcd.png",850,60)
-		lcd:setReferencePoint(display.TopLeftReferencePoint)
-		lcd.x = 80; lcd.y = 5
-	
+	 --marquee
 		questionText = "Seven million, seven hundred seventy-seven thousand, seven hundred seventy-seven"
-		lcdText = display.newRetinaText(questionText,110, 20, "Score Board", 19,{255,0,0})
-		lcdText:setTextColor(255,0,0)
+		lcdText = display.newRetinaText(questionText,135, 33, "Score Board", 16.5,{255,0,0})
+		lcdText:setTextColor(0,255,0)
+		
+		-- time display 
+		local feedbackGroup = display.newGroup()
+		local timeBox = display.newRect(0,0,200,50)
+		timeBox:setReferencePoint(display.TopLeftReferencePoint)
+		timeBox.x = 0; timeBox.y = 0;
+		timeBox:setFillColor(0)
+		timeBox.strokeWidth = 3
+		timeBox:setStrokeColor(0,255,0)
+		timeDisplay = display.newText("Time: ",5,10, "Score Board",24 )
+		timeDisplay:setTextColor(0,255,0)
+		local countBox = display.newRect(0,0,200,50)
+		countBox:setReferencePoint(display.TopLeftReferencePoint)
+		countBox.x = 0; countBox.y = 65;
+		countBox:setFillColor(0)
+		countBox.strokeWidth = 3
+		countBox:setStrokeColor(0,255,0)		
+		countDisplay = display.newText("Orders: ",5,75, "Score Board",24)
+		countDisplay:setTextColor(0,255,0)
+		
+		--insert them all into one group
+		feedbackGroup:insert(timeBox)
+		feedbackGroup:insert(timeDisplay)
+		feedbackGroup:insert(countBox)
+		feedbackGroup:insert(countDisplay)
+		feedbackGroup.x = 30; feedbackGroup.y = _H-135
+		--orders display (i.e., count)
+	
 	--insert everything into group in the desired order
-	group:insert(bg)
-	group:insert(lcd)
 	group:insert(lcdText)
-	group:insert(ipad)
-	group:insert(homeBtn)	
+	group:insert(bg)
+	group:insert(conveyor)
+	group:insert(feedbackGroup)
 	group:insert(intro)
 	group:insert(trayGroup)
 	group:insert(levelBar)
@@ -188,6 +220,27 @@ end
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	local group = self.view
+	
+		leftGroup = display.newGroup()
+		--left  wall slice is not part of the storyboard group so that it remains on top of everything.  Have to remove and add it when you leave/enter the screen
+		leftSlice = display.newImageRect("images/BGsliceLeft.png",35,413)
+		leftSlice:setReferencePoint(display.TopLeftReferencePoint)
+		leftSlice.x = 0; leftSlice.y = 0;		
+		
+		homeBtn=widget.newButton{
+		default="images/homeBtn.png",
+		width=80,
+		height=80,
+		onRelease = onBtnRelease	-- event listener function
+		}
+		homeBtn:setReferencePoint(display.CenterReferencePoint)
+		homeBtn.x = 35
+		homeBtn.y = 40
+		homeBtn.scene="menu"
+		
+		leftGroup:insert(leftSlice)
+		leftGroup:insert(homeBtn)
+	
 		--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
 	function generator()
 		-- make sure to move this code to a question controlling 
@@ -212,8 +265,7 @@ function scene:enterScene( event )
 		spawn.cleanUp()
 		timer.resume(spawnTimer)
 	end
-	--created a cleanup btn for testing purposes
-	ipad:addEventListener("tap",reset)
+
 
 	function enterFrame() 
 		--first, check for and clean up the garbage
@@ -237,6 +289,9 @@ function scene:exitScene( event )
 	
 	--get rid of all the cookies that were created
 	spawn.cleanUp()
+	--have to remove the leftSlice b/c it's not actually part of the storyboard group so that it always remains on top
+	leftGroup:removeSelf()
+	leftGroup = nil
 	-----------------------------------------------------------------------------
 	
 	--	INSERT code here (e.g. stop timers, remove listeners, unload sounds, etc.)
@@ -251,6 +306,7 @@ end
 function scene:destroyScene( event )
 	local group = self.view
 	
+
 	-----------------------------------------------------------------------------
 	
 	--	INSERT code here (e.g. remove listeners, widgets, save state, etc.)
