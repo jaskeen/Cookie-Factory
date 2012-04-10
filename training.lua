@@ -169,6 +169,7 @@ function scene:createScene( event )
 	}
 	thisLevel = levelObjects[level]
 		
+		--[[
 		--create an intro message
 		local intro = display.newGroup()
 		local introBg = display.newRoundedRect(0,0,640,400,5)
@@ -182,7 +183,7 @@ function scene:createScene( event )
 		intro:insert(introText)
 		intro:setReferencePoint(display.CenterReferencePoint)
 		intro.x = _W/2; intro.y = _H/2
-
+]]
 	 --marquee
 		questionText = "seven million, seven hundred seventy-seven thousand, seven hundred seventy-seven"
 		lcdText = display.newRetinaText(questionText,135, 30, "BellGothicStd-Black", 19,{255,0,0})
@@ -220,7 +221,7 @@ function scene:createScene( event )
 	group:insert(bg)
 	group:insert(conveyor)
 	group:insert(feedbackGroup)
-	group:insert(intro)
+	--group:insert(intro)
 	group:insert(trayGroup)
 	group:insert(levelBar)
 
