@@ -3,6 +3,7 @@
 ------------------------------------------------------------------------------------
 local generate = require "generateNumInfo"
 local number = require "generateNumber"
+local itemInfo= require "items"
 local spawn= require "spawnCookie"
 local storyboard = require "storyboard" 
 local widget= require "widget"
@@ -168,8 +169,14 @@ function scene:enterScene( event )
 -----------------------------------------------------------------------------
 --1 Generate 4 truck numbers (SessionNumbers)
 createdItems={}
-
 usedPositions={}
+
+newList = generate.generateNumInfos(4,5)
+themes= {"oreo", "pb","jelly","chocchip"}
+level=3
+theme = themes[level]
+items=itemInfo.createItemsForThisLevel(theme)
+
 
 function inArray(array, value)
 	local is = false
@@ -195,7 +202,7 @@ function palletPositionsTaken(array)
 end
 ]]
 
-newList = generate.generateNumInfos(4,5)
+
 		
 --Create a function that generates trucks
 function createTruck(truckX,truckY, numObj)
@@ -230,10 +237,16 @@ end
 function createPallet(palletY, numObj)
 	pallet=display.newGroup()
 	pallet:setReferencePoint(display.TopRightReferencePoint)
+	local num = numObj.omittedValue
 	local imagePallet=display.newImageRect("images/Palette.png", 213, 79)
 	--local imageCookie=display.newImageRect()
 		pallet:insert(imagePallet)
-	local numberText=display.newRetinaText(tostring(numObj.omittedValue), 0,0, native.systemFontBold, 40)
+	local itemImage=display.newImageRect("images/"..theme..tostring(num)..".png", items[num].w, items[num].h)
+		itemImage.y=-50
+		pallet:insert(itemImage)
+	numberText=tostring(numObj.omittedValue)
+	print("numberText:"..numberText)
+	local numberText=display.newRetinaText(numberText, 0,0, native.systemFontBold, 40)
 		numberText.x=15 
 		numberText.y=0
 		pallet:insert(numberText)
@@ -246,58 +259,17 @@ function createPallet(palletY, numObj)
 	pallet.value=numObj.omittedValue--should this actually be the omittedValue so it can be compared to the truck?
 	pallet.x=120
 	pallet.y=palletY
-	physics.addBody(pallet,"kinetic", {friction=0.7})
+		physics.addBody(pallet,"kinetic", {friction=0.7})
 end
 
 for i=1, #newList-1 do
-	createPallet(palletPositions[i], newList[i])
+	createPallet(palletPositions[i], newList[i], items[i])
 	print(palletPositions[i])
+	print(items[i])
 	pallet:addEventListener("touch", startDrag)
 end
 
 
-
-		--print the info about each num in the list
-		--[[print ("Num list has: "..#newList.." items.")
-		
-		for i=1,#newList do 
-				
-			itemValues=newList[i].omittedValue
-				--itemValuesID=newList[i].number
-				--itemCreated[item.key] = item
-				valW=150
-				valH=200*i
-						
-			truckNumbers=string.reverse(table.concat(newList[i].omittedReversedArray))
-				--truckNumberID=newList[i].number
-				--itemsCreated[item.key] = item
-				numW=(_W/2)+175
-				numH=75+175*(i-1)
-			
-			itemValues=display.newText(itemValues, valW, valH, native.SystemFontBold, 40)
-				physics.addBody(itemValues, "kitematic", {friction=0.7})
-				itemValues.isFixedRotation=true
-			
-			
-			
-			truckNumbers=display.newText(truckNumbers, numW, numH, native.SystemFontBold, 40)
-				physics.addBody( truckNumbers, "kinematic", { isSensor=true } )
-		
-			
-			print ("Number: "..newList[i].number, "places used: "..newList[i].place, "Value: "..newList[i].omittedValue,"Omitted Num: "..string.reverse(table.concat(newList[i].omittedReversedArray)))
-			
-			itemValues:addEventListener("touch", startDrag)
-
-	
-
-
-
-
-
-
-		
-		
-	]]
 	-----------------------------------------------------------------------------
 		
 	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
