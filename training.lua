@@ -108,29 +108,34 @@ function scene:createScene( event )
 	--10,000s
 	local tenThousandsTray = display.newRect(0,0, 140, 40)
 	tenThousandsTray:setFillColor(182,61,91)
-	local tenThousandsText = display.newRetinaText("ten thousands",5,0,"Helvetica",18)
-	tenThousandsText.height = 40
+	local tenThousandsText = display.newEmbossedText("ten thousands",5,10,"BellGothicStd-Black", 22)
+	tenThousandsText:setTextColor(255,255,255)
+	tenThousandsText:setReferencePoint(display.CenterReferencePoint)
+	tenThousandsText.x = 70
 	--1,000s
 	local thousandsTray = display.newRect(140,0, 140, 40)
 	thousandsTray:setFillColor(216,101,88)
-	local thousandsText = display.newRetinaText("thousands",145,0,"Helvetica",18)
-	thousandsText.height = 40
+	local thousandsText = display.newEmbossedText("thousands",145,10,"BellGothicStd-Black", 22)
+	thousandsText:setReferencePoint(display.CenterReferencePoint)
+	thousandsText.x = 210
 	--100s
 	local hundredsTray = display.newRect(280, 0, 140, 40)
 	hundredsTray:setFillColor(225,203,60)
-	local hundredsText = display.newRetinaText("hundreds",285,0,"Helvetica",18)
-	hundredsText.height = 40
+	local hundredsText = display.newEmbossedText("hundreds",285,10,"BellGothicStd-Black", 22)
+	hundredsText:setReferencePoint(display.CenterReferencePoint)
+	hundredsText.x = 355
 	--10s
 	local tensTray = display.newRect(420, 0, 140, 40)
 	tensTray:setFillColor(82,148,100)
-	local tensText = display.newRetinaText("tens",425,0,"Helvetica",18)
-	tensText.height = 40
+	local tensText = display.newEmbossedText("tens",425,10,"BellGothicStd-Black", 22)
+	tensText:setReferencePoint(display.CenterReferencePoint)
+	tensText.x = 495
 	--1s
 	local onesTray = display.newRect(560, 0, 140, 40)
 	onesTray:setFillColor(54, 158,251)
-	local onesText = display.newRetinaText("ones",565,0,"Helvetica",18)
-	onesText.height = 40
-	onesText.align = "right"
+	local onesText = display.newEmbossedText("ones",565,10,"BellGothicStd-Black", 22)
+	onesText:setReferencePoint(display.CenterReferencePoint)
+	onesText.x = 635
 
 	--now put them all into a group so you can move the group around with ease
 	local trayGroup = display.newGroup()
@@ -175,8 +180,8 @@ function scene:createScene( event )
 		intro.x = _W/2; intro.y = _H/2
 
 	 --marquee
-		questionText = "Seven million, seven hundred seventy-seven thousand, seven hundred seventy-seven"
-		lcdText = display.newRetinaText(questionText,135, 33, "Score Board", 16.5,{255,0,0})
+		questionText = "seven million, seven hundred seventy-seven thousand, seven hundred seventy-seven"
+		lcdText = display.newRetinaText(questionText,135, 30, "BellGothicStd-Black", 18,{255,0,0})
 		lcdText:setTextColor(0,255,0)
 		
 		-- time display 
@@ -187,7 +192,7 @@ function scene:createScene( event )
 		timeBox:setFillColor(0)
 		timeBox.strokeWidth = 3
 		timeBox:setStrokeColor(0,255,0)
-		timeDisplay = display.newText("Time: ",5,10, "Score Board",24 )
+		timeDisplay = display.newText("Time: ",5,10, "BellGothicStd-Black",24 )
 		timeDisplay:setTextColor(0,255,0)
 		local countBox = display.newRect(0,0,200,50)
 		countBox:setReferencePoint(display.TopLeftReferencePoint)
@@ -195,7 +200,7 @@ function scene:createScene( event )
 		countBox:setFillColor(0)
 		countBox.strokeWidth = 3
 		countBox:setStrokeColor(0,255,0)		
-		countDisplay = display.newText("Orders: ",5,75, "Score Board",24)
+		countDisplay = display.newText("Orders: ",5,75, "BellGothicStd-Black",24)
 		countDisplay:setTextColor(0,255,0)
 		
 		--insert them all into one group
