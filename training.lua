@@ -156,7 +156,7 @@ function scene:createScene( event )
 	trayGroup.x = 240; trayGroup.y = 665
 
 
-	local themes= {"oreo", "pb","jelly","chocchip"}
+	local themes= {"oreo", "pb","chocchip","jelly"}
 	local theme = themes[level]
 	items=itemInfo.createItemsForThisLevel(theme)
 	
