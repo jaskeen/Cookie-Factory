@@ -16,14 +16,17 @@ _W = display.contentWidth
 
 --Variables and Functions
 local onBtnRelease
-local factoryBG, homeBtn,truck1,truck2,truck3,truck4,object1,object2,object3
-local loadingDockTitle,truckNum,truckNum2,truckNum3,truckNum4,cookie
-local cookie1,cookie2,cookie3
+local factoryBG, homeBtn
+local pallet
 local myObject
 local startDrag
 local level
 local totalTrucks
 local totalItems
+local itemsCreated
+local newList
+local inArray
+local createKey
 
 	--From generateNumInfo
 	local newList
@@ -55,9 +58,11 @@ local totalItems
 -- Called when the scene's view does not exist:
 
 --Get the level from the user's selection later... this controls the # trucks and items to spawn
-level=3	
-totalTrucks=level+2
-totalItems=level+1
+level=4	
+totalTrucks=level
+totalItems=level-1
+palletPositions={320, 470, 620}
+print(palletPositions[3])
 
 -- 'onRelease' event listener for return to main menu
 function onBtnRelease(event)
@@ -67,13 +72,9 @@ function onBtnRelease(event)
 	storyboard.gotoScene(event.target.scene)
 	return true	-- indicates successful touch
 end
-	
 
---Traffic light with the #of cookies as red circles
-	--when one correct match is made, one of the red circles becomes green
-	--when all of the circles are green, the timer stops and the game is finished
---Timer: the amount of time it takes to get all of the trucks loaded correctly
-	
+
+
 function scene:createScene( event )
 	local group = self.view
 
@@ -123,90 +124,11 @@ items=spawn.createItemsForThisLevel(theme)
 
 	--the omitted# from the trucks (with the exception of 1) will determine the cookie to appear
 
---Spawn item/cookie VALUE(from generateNumInfo function)	
---[[local function spawnTruck(level)
-	for i=1, #numList do
-	
-	end
-	
-
-end
-]]
 
 
-
-
---Create the Cookies
-	--[[
-	cookie1=display.newText("Value#1",  (_W/2)-50, 275, native.systemFontBold, 30)
-	physics.addBody( cookie1, "kinematic", { friction=0.7 } )
-				cookie1.x=150
-		cookie1.y=200
-	cookie2=display.newText("Value#2",  (_W/2)-50, 275, native.systemFontBold, 30)
-	physics.addBody( cookie2, "kinematic", { friction=0.7 } )
-		cookie2.x=150
-		cookie2.y=400
-	cookie3=display.newText("Value#3",  (_W/2)-50, 275, native.systemFontBold, 30)
-	physics.addBody( cookie3, "kinematic", { friction=0.7 } )
-		cookie3.x=150
-		cookie3.y=600
-	`]]
-
--- Add touch event listeners to objects
-	--make cookies DRAGGABLE
-
-	
-	----Create TRUCKS--------------------------------
---Spawn trucks, which should either be a constant 4 trucks OR the level+2 trucks
-	--each truck will have a random number with one ommitted# displayed on it
-		--Display/Spawn omittedNum variable from generateNumInfo function	
-	--make trucks SENSORS
-
-	truck1 = display.newImageRect( "images/truckTemp.png", 200, 150  )
-	truck1.x = _W/2
-	truck1.y = 85
-	physics.addBody( truck1, "kinematic", { isSensor=true } )
-	--truck1.isPlatform = true -- custom flag, used in drag function above
-	
-	truck2= display.newImageRect( "images/truckTemp.png", 200, 150 )
-	truck2.x = _W/2
-	truck2.y = 285
-	physics.addBody( truck2, "kinematic", { isSensor=true } )
-	--truck2.isPlatform = true -- custom flag, used in drag function above
-	
-	truck3 = display.newImageRect( "images/truckTemp.png", 200, 150 )
-	truck3.x = _W/2
-	truck3.y = 485
-	physics.addBody( truck3, "kinematic", { isSensor=true } )
-	--truck3.isPlatform = true -- custom flag, used in drag function above
-	
-	truck4 = display.newImageRect( "images/truckTemp.png", 200, 150 )
-	truck4.x = _W/2
-	truck4.y = 675
-	physics.addBody( truck4, "kinematic", { isSensor=true } )
-	--truck4.isPlatform = true -- custom flag, used in drag function above
-
-	function truckNum()
-		truckNum = math.random(0,9)
-		print (truckNum)
-		
-	end
-	
-	
-----Create a truck group so they can move together-------------------------
-	
-	truckGroup = display.newGroup()
-		truckGroup:insert(truck1)
-		truckGroup:insert(truck2)
-		truckGroup:insert(truck3)
-		truckGroup:insert(truck4)
-	
-			
-	truckGroup.x=300
-	
 -------------------General Scene Images-----------------
 
-	factoryBG= display.newImageRect("images/factoryBG.png", _W, _H)
+	factoryBG= display.newImageRect("images/TruckBG.png", _W, _H)
 	factoryBG:setReferencePoint(display.CenterReferencePoint)
 	factoryBG.x = _W/2
 	factoryBG.y = _H/2
@@ -223,16 +145,9 @@ end
 	homeBtn.y = _H*.07
 	homeBtn.scene="menu"
 	
-	loadingDockTitle=display.newText("Loading Dock",  (_W/2)-50, 275, native.systemFontBold, 40)
-	loadingDockTitle:setReferencePoint( display.CenterReferencePoint )
-	loadingDockTitle.x = _W/2 
-	loadingDockTitle.y = _H/2 
-	
 	
 	group:insert(factoryBG)
-	group:insert(loadingDockTitle)
 	group:insert(homeBtn)
-	group:insert(truckGroup)	
 		
 	return true
 	-----------------------------------------------------------------------------
@@ -244,49 +159,145 @@ end
 	
 end
 
--- Add touch event listeners to objects
-
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	local group = self.view
+-----------------------------------------------------------------------------
+-------ENTER SCENE----------
+-----------------------------------------------------------------------------
+--1 Generate 4 truck numbers (SessionNumbers)
+createdItems={}
+
+usedPositions={}
+
+function inArray(array, value)
+	local is = false
+	for i, thisValue in ipairs(array) do
+		if thisValue == value then 
+			is = true; break end
+	end
+	return is
+end
+    
 	
-	local newList = generate.generateNumInfos(level,level+2)
-			--print the info about each num in the list
-		print ("Num list has: "..#newList.." items.")
+function createKey(array)
+	local key = "object"..math.random(1,100000000)
+	if inArray(array,key) == true then return createKey(array) end
+	return key
+end
+
+--[[
+function palletPositionsTaken(array)
+	local position = "position"..math.random(1,100000000)
+	if inArray(array,position) == true then return palletPositionsTaken(array) end
+	return position
+end
+]]
+
+newList = generate.generateNumInfos(4,5)
+		
+--Create a function that generates trucks
+function createTruck(truckX,truckY, numObj)
+	local truck=display.newGroup()
+	truck:setReferencePoint(display.TopRightReferencePoint)
+	local image=display.newImageRect("images/TruckOrange.png", 440, 272)
+		truck:insert(image)
+	local numberText=display.newEmbossedText(numObj.omittedNum, 0, 0, native.systemFontBold, 40)
+		numberText.x = 0; numberText.y = -75
+		numberText:setTextColor(75)
+		truck:insert(numberText)
+	truck.value=numObj.omittedValue
+	key=createKey(createdItems)
+	truck.key=key
+	createdItems[key]=truck
+	truck.x=truckX
+	truck.y=truckY
+
+	physics.addBody(truck, "static", {isSensor=true})
+end
+
+truckX=_W/2+35 --increase by 100
+truckY=250 --increase by 125
+
+for i=1, #newList do
+	createTruck(truckX, truckY, newList[i])
+	truckX=truckX+80
+	truckY=truckY+125
+end
+	
+--2 Generate 3 of the 4 cookie objects 		
+function createPallet(palletY, numObj)
+	pallet=display.newGroup()
+	pallet:setReferencePoint(display.TopRightReferencePoint)
+	local imagePallet=display.newImageRect("images/Palette.png", 213, 79)
+	--local imageCookie=display.newImageRect()
+		pallet:insert(imagePallet)
+	local numberText=display.newRetinaText(tostring(numObj.omittedValue), 0,0, native.systemFontBold, 40)
+		numberText.x=15 
+		numberText.y=0
+		pallet:insert(numberText)
+	key=createKey(createdItems)
+		pallet.key=key
+		createdItems[key]=pallet
+	--position=palletPositionsTaken(usedPositions)
+	--	pallet.position=position
+	--	usedPositions[position]=pallet
+	pallet.value=numObj.omittedValue--should this actually be the omittedValue so it can be compared to the truck?
+	pallet.x=120
+	pallet.y=palletY
+	physics.addBody(pallet,"kinetic", {friction=0.7})
+end
+
+for i=1, #newList-1 do
+	createPallet(palletPositions[i], newList[i])
+	print(palletPositions[i])
+	pallet:addEventListener("touch", startDrag)
+end
+
+
+
+		--print the info about each num in the list
+		--[[print ("Num list has: "..#newList.." items.")
+		
 		for i=1,#newList do 
 				
 			itemValues=newList[i].omittedValue
-				itemValuesID=newList[i].number
+				--itemValuesID=newList[i].number
+				--itemCreated[item.key] = item
 				valW=150
 				valH=200*i
-			truckNumber=string.reverse(table.concat(newList[i].omittedReversedArray))
-				truckNumberID=newList[i].number
-				numW=(_W/2)+150
-				numH=75+200*(i-1)
-				
+						
+			truckNumbers=string.reverse(table.concat(newList[i].omittedReversedArray))
+				--truckNumberID=newList[i].number
+				--itemsCreated[item.key] = item
+				numW=(_W/2)+175
+				numH=75+175*(i-1)
+			
 			itemValues=display.newText(itemValues, valW, valH, native.SystemFontBold, 40)
 				physics.addBody(itemValues, "kitematic", {friction=0.7})
 				itemValues.isFixedRotation=true
 			
-			truckNumber=display.newText(truckNumber, numW, numH, native.SystemFontBold, 40)
-				physics.addBody( truckNumber, "kinematic", { isSensor=true } )
+			
+			
+			truckNumbers=display.newText(truckNumbers, numW, numH, native.SystemFontBold, 40)
+				physics.addBody( truckNumbers, "kinematic", { isSensor=true } )
+		
 			
 			print ("Number: "..newList[i].number, "places used: "..newList[i].place, "Value: "..newList[i].omittedValue,"Omitted Num: "..string.reverse(table.concat(newList[i].omittedReversedArray)))
 			
 			itemValues:addEventListener("touch", startDrag)
-			
-			function checkForMatchingNumbersAndValues()
-				if truckNumberID==itemValuesID then
-				print("MATCH!!!")
-				else
-				print("WRONG")
-				return true
-				end
-			end
-			
-		end	
+
 	
+
+
+
+
+
+
+		
+		
+	]]
 	-----------------------------------------------------------------------------
 		
 	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
@@ -300,7 +311,23 @@ end
 function scene:exitScene( event )
 	local group = self.view
 
+		function cleanUp()
+		 for key, value in pairs(createdItems) do
+			  --first, remove the item from the array
+			  createdItems[key] = nil
+			  -- then, remove any event listeners that might be on or related to the item
+			  --Runtime:removeEventListener("enterFrame", value)
+			  --now, remove the item itself from the display
+			  value:removeSelf()
+			 --finally, destroy the item so it can get cleaned from memory
+			 value = nil
+			end
+			
+			usedPositions=nil
+			
+		end
 	
+	cleanUp()
 	-----------------------------------------------------------------------------
 	
 	--	INSERT code here (e.g. stop timers, remove listeners, unload sounds, etc.)
