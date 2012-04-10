@@ -30,9 +30,9 @@ system.activate("multitouch")
 _H = display.contentHeight
 _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
-local level = 1; local thisLevel
+local level = 4; local thisLevel
 
-local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, ipad, levelBar --forward reference fcns
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, ipad, levelBar, nextQuestion, lcd, lcdText, questionText, startSession, genQ --forward reference fcns
 
 
 
@@ -42,6 +42,44 @@ function onBtnRelease(event)
 	print (event.target.scene)
 	storyboard.gotoScene(event.target.scene)
 	return true	-- indicates successful touch and stops propagation
+end
+
+--generate the list of questions in the list per the current condition
+function startSession(mode, timeLimit, totalQuestions)
+	--first, determine what mode this is 
+	--then, start timer 
+	--then, start counter 
+    -- if mode == counter then
+	      -- show total number
+	      -- on each question answered, reduce total by 1
+	      -- when total reaches 0, end session
+	      -- on session end, show how many they got right and how many they got wrong
+	      --report session data to ACCEL
+    -- if mode == timer then
+    	-- start a count-down (i.e., initiate another time )
+	if mode=="time" then -- as many qs as can be answered in a fixed amount of time 
+		local timedGame = timer.performWithDelay()
+	end
+end
+
+--generate a question
+function genQ()
+	-- gen random #
+	-- convert # to textual format
+	--place textual # in marquee
+	-- iterate over omitted # array (in itemInfo object) and create the trays
+	  -- if the item value is "_" make the tray a sensor
+end
+
+--check user's answer
+function checkQ(mode, correctAnswer)
+	--if the item is over a sensor
+	    -- highlight the tray with a border (or something else to call attention to it)
+	  -- if the event is  an ended event on the item, then animate it to the tray (reduce its size)
+	  -- then change the # to the value of what was placed in the tray
+	  -- mark the answer
+	  --check the answer against the correct answer
+	  --update the count accordingly (either up or down depending on  mode)
 end
 
 
@@ -55,19 +93,19 @@ function scene:createScene( event )
 	
 	local bg = display.newImageRect("images/factoryBG.png",1024,768)
 	bg.x = _W/2; bg.y = _H/2
-	group:insert(bg)
 	--local conveyorBelt = display.newImageRect("images/conveyorSprite.png",930, 190)
 	--conveyorBelt:setReferencePoint(display.TopLeftReferencePoint)
 	--conveyorBelt.x = 10; conveyorBelt.y = 70;
 	ipad = display.newImageRect("images/iPad.png",250, 200)
 	ipad:setReferencePoint(display.TopLeftReferencePoint);
 	ipad.x = 30; ipad.y = 550
-	group:insert(ipad)
 	
 	levelBar = display.newImageRect("images/levelbar.png",90,_H)
 	levelBar:setReferencePoint(display.TopRightReferencePoint)
 	levelBar.x = _W; levelBar.y=0
-	group:insert(levelBar)
+	
+	
+	
 	---------------------------------------- Number BOXES ----------------------------------------
 	local tenThousandsTray = display.newRect(0,0, 130, 40)
 	tenThousandsTray:setFillColor(175)
@@ -87,7 +125,6 @@ function scene:createScene( event )
 	trayGroup:insert(tensTray)
 	trayGroup:insert(onesTray)
 	trayGroup.x = 298; trayGroup.y = 645
-	group:insert(trayGroup)
 	
 	
 	homeBtn=widget.newButton{
@@ -100,7 +137,7 @@ function scene:createScene( event )
 	homeBtn.x = 45
 	homeBtn.y = 35
 	homeBtn.scene="menu"
-	group:insert(homeBtn)
+
 
 	local themes= {"oreo", "pb","jelly","chocchip"}
 	local theme = themes[level]
@@ -128,7 +165,23 @@ function scene:createScene( event )
 		intro:insert(introText)
 		intro:setReferencePoint(display.CenterReferencePoint)
 		intro.x = _W/2; intro.y = _H/2
-		group:insert(intro)
+
+		lcd = display.newImageRect("images/lcd.png",850,60)
+		lcd:setReferencePoint(display.TopLeftReferencePoint)
+		lcd.x = 80; lcd.y = 5
+	
+		questionText = "Seven million, seven hundred seventy-seven thousand, seven hundred seventy-seven"
+		lcdText = display.newRetinaText(questionText,110, 20, "Score Board", 19,{255,0,0})
+		lcdText:setTextColor(255,0,0)
+	--insert everything into group in the desired order
+	group:insert(bg)
+	group:insert(lcd)
+	group:insert(lcdText)
+	group:insert(ipad)
+	group:insert(homeBtn)	
+	group:insert(intro)
+	group:insert(trayGroup)
+	group:insert(levelBar)
 
 end
 
@@ -148,11 +201,12 @@ function scene:enterScene( event )
 		group:insert(levelBar)
 	end
 	-----------------------------------------------------------------------------
-		
+	
 	--run the function right at the beginning so we don't have to wait for the first timer to go off
 	generator()
-	spawnTimer = timer.performWithDelay(createRate, generator,0)
-
+	spawnTimer = timer.performWithDelay(createRate, generator,0)	
+	
+	
 	function reset()
 		timer.pause(spawnTimer)
 		spawn.cleanUp()

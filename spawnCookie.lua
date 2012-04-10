@@ -304,8 +304,6 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 		end
 		if cookie.x < -50 then 
 			Runtime:removeEventListener("enterFrame",cookie)
-			--print (cookie.key .. " says goodbye")
-			print ("goodbye: "..cookie.key)
 			generatedItems[cookie.key] = nil
 			collectgarbage("collect")
 			cookie:removeSelf()
