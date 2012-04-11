@@ -62,7 +62,7 @@ local createKey
 level=4	
 totalTrucks=level
 totalItems=level-1
-palletPositions={320, 470, 620}
+palletPositions={330, 500, 670}
 print(palletPositions[3])
 
 -- 'onRelease' event listener for return to main menu
@@ -79,43 +79,57 @@ end
 function scene:createScene( event )
 	local group = self.view
 
+	--DRAG FUNCTION	
+	function startDrag( event )
+		local t = event.target
 	
+		local phase = event.phase
+		if "began" == phase then
+			display.getCurrentStage():setFocus( t )
+			t.isFocus = true
 	
---DRAG FUNCTION	
-function startDrag( event )
-	local t = event.target
-
-	local phase = event.phase
-	if "began" == phase then
-		display.getCurrentStage():setFocus( t )
-		t.isFocus = true
-
-		-- Store initial position
-		t.x0 = event.x - t.x
-		t.y0 = event.y - t.y
-		
-		-- Make body type temporarily "kinematic" (to avoid gravitional forces)
-		event.target.bodyType = "kinematic"
-		event.target.isFixedRotation= true
-		
-	elseif t.isFocus then
-		if "moved" == phase then
-			t.x = event.x - t.x0
-			t.y = event.y - t.y0
-
-		elseif "ended" == phase or "cancelled" == phase then
-			display.getCurrentStage():setFocus( nil )
-			t.isFocus = false
+			-- Store initial position
+			t.x0 = event.x - t.x
+			t.y0 = event.y - t.y
 			
-			-- Switch body type back to "dynamic", unless we've marked this sprite as a platform
-			if ( not event.target.isPlatform ) then
-				event.target.bodyType = "dynamic"
+			-- Make body type temporarily "kinematic" (to avoid gravitional forces)
+			event.target.bodyType = "kinematic"
+			event.target.isFixedRotation= true
+			
+		elseif t.isFocus then
+			if "moved" == phase then
+				t.x = event.x - t.x0
+				t.y = event.y - t.y0
+	
+			elseif "ended" == phase or "cancelled" == phase then
+				display.getCurrentStage():setFocus( nil )
+				t.isFocus = false
+				
+				-- Switch body type back to "dynamic", unless we've marked this sprite as a platform
+				if ( not event.target.isPlatform ) then
+					event.target.bodyType = "dynamic"
+				end
 			end
 		end
+		--end the touch event when ended
+		return true
 	end
-	--end the touch event when ended
-	return true
-end
+	
+	 
+	function onLocalCollision( self, touch )
+		if ( touch.phase == "began" ) then
+			print( self.value.."collision BEGAN with" .. touch.other.value )
+				if self.value==touch.other.value then
+					print("MATCH")
+				else 
+					print("No Match")
+				end
+		elseif ( touch.phase == "ended" ) then
+			print( self.value .. " ended a collision with " .. touch.other.value )
+			return true
+		end
+	end
+ 
 
 --Spawn cookies, which should be the #trucks-1
 local themes= {"creme", "pb","jelly","chocchip"}
@@ -202,11 +216,10 @@ function palletPositionsTaken(array)
 end
 ]]
 
-
 		
 --Create a function that generates trucks
 function createTruck(truckX,truckY, numObj)
-	local truck=display.newGroup()
+	truck=display.newGroup()
 	truck:setReferencePoint(display.TopRightReferencePoint)
 	local image=display.newImageRect("images/TruckOrange.png", 440, 272)
 		truck:insert(image)
@@ -215,13 +228,16 @@ function createTruck(truckX,truckY, numObj)
 		numberText:setTextColor(75)
 		truck:insert(numberText)
 	truck.value=numObj.omittedValue
+	TV=truck.value
+		--print("TV: "..TV)
 	key=createKey(createdItems)
 	truck.key=key
 	createdItems[key]=truck
 	truck.x=truckX
 	truck.y=truckY
-
-	physics.addBody(truck, "static", {isSensor=true})
+	physics.addBody(truck, "static", {friction=0.7})
+	truck.collision=onLocalCollision
+	truck:addEventListener( "collision", truck )
 end
 
 truckX=_W/2+35 --increase by 100
@@ -231,6 +247,9 @@ for i=1, #newList do
 	createTruck(truckX, truckY, newList[i])
 	truckX=truckX+80
 	truckY=truckY+125
+	
+	--truck:addEventListener("touch", truck)
+	
 end
 	
 --2 Generate 3 of the 4 cookie objects 		
@@ -239,38 +258,64 @@ function createPallet(palletY, numObj)
 	pallet:setReferencePoint(display.TopRightReferencePoint)
 	local num = numObj.omittedValue
 	local imagePallet=display.newImageRect("images/Palette.png", 213, 79)
-	--local imageCookie=display.newImageRect()
 		pallet:insert(imagePallet)
-	local itemImage=display.newImageRect("images/"..theme..tostring(num)..".png", items[num].w, items[num].h)
+	local itemImage=display.newImageRect("images/"..theme..tostring(num)..".png", items[num].w*0.9, items[num].h*0.9)
 		itemImage.y=-50
 		pallet:insert(itemImage)
 	numberText=tostring(numObj.omittedValue)
 	print("numberText:"..numberText)
-	local numberText=display.newRetinaText(numberText, 0,0, native.systemFontBold, 40)
-		numberText.x=15 
-		numberText.y=0
+	local numberText=display.newRetinaText(numberText, 0,0, native.systemFontBold, 30)
+		numberText:setReferencePoint(TopLeftReferencePoint)
+		numberText:setTextColor(50)
+		numberText.x=-20 
+		numberText.y=10
 		pallet:insert(numberText)
 	key=createKey(createdItems)
 		pallet.key=key
 		createdItems[key]=pallet
-	--position=palletPositionsTaken(usedPositions)
-	--	pallet.position=position
-	--	usedPositions[position]=pallet
 	pallet.value=numObj.omittedValue--should this actually be the omittedValue so it can be compared to the truck?
+		PV=pallet.value
+		--print("PV: "..PV)
 	pallet.x=120
 	pallet.y=palletY
-		physics.addBody(pallet,"kinetic", {friction=0.7})
+	physics.addBody(pallet,"kinetic", {friction=0.7})
+	pallet.isFixedRotation=true
 end
 
 for i=1, #newList-1 do
 	createPallet(palletPositions[i], newList[i], items[i])
 	print(palletPositions[i])
 	print(items[i])
+	pallet.collision=onLocalCollision
+	pallet:addEventListener( "collision", pallet)
 	pallet:addEventListener("touch", startDrag)
+
 end
 
 
-	-----------------------------------------------------------------------------
+	
+
+
+--Create a Function that will check that the numObjects are the same for the Pallets and Trucks (matching omitted numbers)
+function checkForMatchingValues(TV, PV)
+	if PV==TV then
+	print("match")
+	else
+	print("try again")
+	end
+	return true
+end
+
+--Create a new group of objects so they can collide with one another for the check function
+
+
+
+onLocalCollision(self, event)
+checkForMatchingValues(TV, PV)
+
+
+
+-----------------------------------------------------------------------------
 		
 	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
 	

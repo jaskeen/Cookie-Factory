@@ -50,40 +50,41 @@ function scene:createScene( event )
 	
 	
 	-- create a widget button (which will loads scene1.lua on release)
-	trainingBtn = widget.newButton{
-		default="images/trainingMode.png",
+	packagingBtn = widget.newButton{
+		default="images/btnPacking.png",
 		onRelease = onBtnRelease	-- event listener function
 		}
-	trainingBtn:setReferencePoint( display.CenterReferencePoint )
-	trainingBtn.x = _W/2 - 60
-	trainingBtn.y = _H/2 - 60
-	trainingBtn.scene="training"
+	packagingBtn:setReferencePoint( display.CenterReferencePoint )
+	packagingBtn.x = _W*0.5 - 116
+	packagingBtn.y = _H/2 - 60
+	packagingBtn.scene="training"
 
 
-	deliveryBtn = widget.newButton{
-		default="images/deliveryMode.png",
-		onRelease = onBtnRelease	-- event listener function
-	}
-	deliveryBtn:setReferencePoint( display.CenterReferencePoint )
-	deliveryBtn.x = _W*0.5 - 60
-	deliveryBtn.y = _H/2 + 15
-	deliveryBtn.scene= "delivery"
-	
-	
 	loadingDockBtn = widget.newButton{
-		default="images/supervisorMode.png",
+		default="images/btnLoading.png",
 		onRelease = onBtnRelease	-- event listener function
 	}
 	loadingDockBtn:setReferencePoint( display.CenterReferencePoint )
-	loadingDockBtn.x = _W*0.5 - 60
-	loadingDockBtn.y = _H/2 + 90
+	loadingDockBtn.x = _W*0.5 - 80
+	loadingDockBtn.y = _H/2 + 15
 	loadingDockBtn.scene= "loadingDock"
+	
+	
+	standardsBtn = widget.newButton{
+		default="images/btnStandards.png",
+		onRelease = onBtnRelease	-- event listener function
+	}
+	standardsBtn:setReferencePoint( display.CenterReferencePoint )
+	standardsBtn.x = _W*0.5 - 61
+	standardsBtn.y = _H/2 + 90
+	standardsBtn.scene= "delivery"
+	
 
 	-- all display objects must be inserted into group
 	group:insert( background )
-	group:insert( trainingBtn )
-	group:insert( deliveryBtn )
+	group:insert( packagingBtn )
 	group:insert( loadingDockBtn )
+	group:insert( standardsBtn )
 
 end
 
