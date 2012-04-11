@@ -41,7 +41,7 @@ function onBtnRelease(event)
 	return true	-- indicates successful touch
 end
 	
-function numberSelect(event)
+--[[function numberSelect(event)
 	
 	-- go to scene1.lua scene
 	print (event.target.id)
@@ -56,10 +56,10 @@ function numberSelect(event)
 		storyboard.gotoScene(event.target.scene)
 		
 	end
-	
+
 	return true	-- indicates successful touch
 end
-
+]]
 function scene:createScene( event )
 	local group = self.view
 	
@@ -80,7 +80,7 @@ function scene:createScene( event )
 	homeBtn.y = _H*.07
 	homeBtn.scene="menu"
 	
-	checkBtn=widget.newButton{
+	--[[checkBtn=widget.newButton{
 		id="check",
 		default="images/checkBtn.png",
 		width=80,
@@ -130,8 +130,8 @@ function scene:createScene( event )
 	
 	text=display.newText("Select the number Seven-Hundred below:", _W*.07, _H/2-200, native.systemFont, 40)
 		text:setTextColor(255,255,255)
-	
-	local deliveryTitle=display.newImageRect("images/deliveryMode.png", 300, 60)
+	]]
+	local deliveryTitle=display.newImageRect("images/btnStandards.png", 300, 60)
 	deliveryTitle:setReferencePoint( display.CenterReferencePoint )
 	deliveryTitle.x = _W/2 
 	deliveryTitle.y = _H/2 
@@ -145,11 +145,11 @@ function scene:createScene( event )
 	group:insert(factoryBG)
 	group:insert(deliveryTitle)
 	group:insert(homeBtn)
-	group:insert(checkBtn)
-	group:insert(selectionA)
-	group:insert(selectionB)
-	group:insert(selectionC)
-	group:insert(text)
+	--group:insert(checkBtn)
+	--group:insert(selectionA)
+	--group:insert(selectionB)
+	--group:insert(selectionC)
+	--group:insert(text)
 	
 end
 
