@@ -33,6 +33,7 @@ function genRandNum(digits)
 	numTReversedWithOmittedDigit[omitPlace] = "_"
 	local numInfo = {}
 	numInfo.number = num
+	numInfo.numberT = numberT
 	numInfo.omittedValue = omitValue
 	numInfo.omittedReversedArray = numTReversedWithOmittedDigit
 	numInfo.place = places[omitPlace]

@@ -35,15 +35,14 @@ local thisLevel
 
 local currLevel = 6
 local levels = {}
-levels[1] = { digits= 2, theme = "oreo", unlock = "next level" }
-levels[2] = { digits = 3, theme= "pb", unlock = "next level"}
-levels[3] = { digits = 3, theme= "jelly", unlock = "multiplier"}
-levels[4] = { digits = 4, theme= "jelly", unlock= "next level"}
-levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor" }
-levels[6] = { digits = 5, theme= "chocchip", unlock = "next level"}
-print ("current digits: "..levels[currLevel].digits)
+levels[1] = { digits= 2, theme = "oreo", unlock = "next level", stars=1 }
+levels[2] = { digits = 3, theme= "pb", unlock = "next level", stars = 2}
+levels[3] = { digits = 3, theme= "jelly", unlock = "multiplier", stars = 2}
+levels[4] = { digits = 4, theme= "jelly", unlock= "next level", stars = 3}
+levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor", stars = 4 }
+levels[6] = { digits = 5, theme= "chocchip", unlock = "next level", stars = 4}
 
-local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup --forward reference fcns
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup, genStars,generatedBlocks,spawnBlock,inArray,genKey --forward reference fcns
 
 
 
@@ -73,6 +72,49 @@ function startSession(mode, timeLimit, totalQuestions)
 	end
 end
 
+--check if a value is in an array (http://developer.anscamobile.com/forum/2011/08/21/urgent-custom-fonts-ios-31)
+function inArray(array, value)
+    local is = false
+    for i, thisValue in ipairs(array) do
+        if thisValue == value then 
+        	is = true; break end
+    end
+    return is
+end
+	
+function genKey(array)
+	local key = "item"..math.random(1,100000000)
+	if inArray(array,key) == true then return genKey(array) end
+	return key
+end
+
+table.invert = function( tbl, rangesize )
+        rangesize = rangesize or 1
+        local reversed = {}
+        for i=1, #tbl-rangesize+1, rangesize do
+                for t=rangesize-1, 0, -1 do
+                        table.insert( reversed, 1, tbl[ i+t ] )
+                end
+        end
+        return reversed
+end
+
+generatedBlocks = {}
+
+function spawnBlock(x)
+	local block = display.newGroup()
+	local image = display.newRect(0, 0, 14,40)
+	image:setReferencePoint(display.TopRightReferencePoint)
+	image.y = -42; image.x = x;
+	image:setFillColor(255)
+	image:setStrokeColor(0)
+	image.strokeWidth=2
+	block:insert(image)
+	block.key = genKey(generatedBlocks)
+	generatedBlocks[block.key] = block
+	trayGroup:insert(block)
+	return block
+end
 --generate a question
 function genQ()
 	-- gen random #
@@ -83,9 +125,26 @@ function genQ()
 	lcdText:setReferencePoint(display.TopLeftReferencePoint)
 	lcdText.x = 135; lcdText.y = 30
 	-- iterate over omitted # array (in itemInfo object) and create the trays
+	local reverseNumT = table.invert(newNum.numberT,1)
+  --clear out all the old blocks
+		for k, v in pairs(generatedBlocks) do 
+			print ("removing: "..k)
+			generatedBlocks[k] = nil
+			v:removeSelf()
+			v = nil
+		end
 	for i=1, #newNum.omittedReversedArray do 
 		numDisplay[i].text:setText(tostring(newNum.omittedReversedArray[i]))
-		-- if the item value is "_" make the tray a sensor
+		--generate counting blocks (starting at x=700?)
+		local startingX = 700 - (i-1)*140
+		for j=1, reverseNumT[i] do 
+			if (newNum.omittedReversedArray[i] ~= "_") then
+				spawnBlock(startingX)
+				startingX = startingX - 14
+			else 	-- if the item value is "_" make the tray a sensor
+				
+			end
+		end
 	end
 end
 
@@ -129,7 +188,6 @@ function scene:createScene( event )
 		numDisplay[i] = {}
 		numDisplay[i].value = values[i]
 		numDisplay[i].text = display.newEmbossedText("0",digTextX,40,"BellGothicStd-Black",48)
-		print (i,numDisplay[i].text.text)
 		numDisplay[i].text:setTextColor(255)
 		digTextX = digTextX - 140
 		trayGroup:insert(numDisplay[i].text)
@@ -228,7 +286,7 @@ function scene:createScene( event )
 	}
 	thisLevel = levelObjects[currLevel]
 		
-		
+		--[[
 		--create an intro message
 		local intro = display.newGroup()
 		local introBg = display.newRoundedRect(0,0,640,400,5)
@@ -243,7 +301,7 @@ function scene:createScene( event )
 		intro:insert(introText)
 		intro:setReferencePoint(display.CenterReferencePoint)
 		intro.x = _W/2; intro.y = _H/2
-
+]]
 	 --marquee
 		lcdText = display.newRetinaText("",135, 30, "BellGothicStd-Black", 28)
 		lcdText:setReferencePoint(display.TopLeftReferencePoint)
@@ -276,7 +334,16 @@ function scene:createScene( event )
 		feedbackGroup.x = 30; feedbackGroup.y = _H-135
 
 	
-	
+	local stars = {"black"}
+	local starY = _H - 50
+	function genStars()
+		for i=1, #stars do 
+			local star = display.newImageRect("images/"..stars[i].."_star.png",66,67)
+			star.x = _W-41; star.y = starY;
+			starY = starY - 90
+		end
+	end
+	genStars()
 	
 	--insert everything into group in the desired order
 	group:insert(lcdText)
@@ -316,10 +383,7 @@ function scene:enterScene( event )
 		--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
 	function generator()
 		-- make sure to move this code to a question controlling 
-		print ("digits: "..levels[currLevel].digits)
 		local randNum = generate.genRandNum(levels[currLevel].digits)
-		--print (randNum.n`umber,randNum.omittedNum)
-		--print (convert.convertNumToText(randNum.number))
 		local newCookie = math.random(#thisLevel)
 		local c = thisLevel[newCookie]
 		local cookieSpawn = spawn.spawnCookie(c.name,c.value, c.w,c.h,c.units, c.radius, c.shape)
@@ -330,6 +394,7 @@ function scene:enterScene( event )
 	-----------------------------------------------------------------------------
 	
 	--run the function right at the beginning so we don't have to wait for the first timer to go off
+	genQ()
 	generator()
 	spawnTimer = timer.performWithDelay(createRate, generator,0)	
 	
