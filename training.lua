@@ -341,9 +341,9 @@ function scene:createScene( event )
 			local star = display.newImageRect("images/"..stars[i].."_star.png",66,67)
 			star.x = _W-41; star.y = starY;
 			starY = starY - 90
+			group:insert(star)
 		end
 	end
-	genStars()
 	
 	--insert everything into group in the desired order
 	group:insert(lcdText)
@@ -405,6 +405,7 @@ function scene:enterScene( event )
 		timer.resume(spawnTimer)
 	end
 
+	genStars()
 
 	function enterFrame() 
 		--first, check for and clean up the garbage
