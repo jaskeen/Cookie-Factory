@@ -4,6 +4,14 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>BellGothicStd-Black.otf</key>
+		<data>
+		IuRQpFEO5gyojhELifMe2nj6jeU=
+		</data>
+		<key>Cookie Music.mp3</key>
+		<data>
+		NBVBhjLV0hqgp7x87QrzmoDvsOM=
+		</data>
 		<key>Cookie-Factory-template.jpg</key>
 		<data>
 		pUhXdlc5sBgWtK2SCvpNiAoobs4=
@@ -14,7 +22,7 @@
 		</data>
 		<key>Cookie-Factory.app/Cookie-Factory</key>
 		<data>
-		Tqg/5+DbYjrFeMFTJdQ0txXZtz4=
+		uoeHHSFXZOV778dkMav97gl7B/k=
 		</data>
 		<key>Cookie-Factory.app/CoronaSDK3rdPartyLicenses.txt</key>
 		<data>
@@ -74,7 +82,7 @@
 		</data>
 		<key>Cookie-Factory.app/resource.car</key>
 		<data>
-		gqHjC1FSAn1ePDvgA5V0dmqkWfg=
+		X0DfG0Uhy32jFGu+Jw7U5k3sT1g=
 		</data>
 		<key>Cookie-Factory.app/sr_free_icon.png</key>
 		<data>
@@ -148,6 +156,10 @@
 		<data>
 		O10PJ3vPkAdypNUGk3PgmTOlWLg=
 		</data>
+		<key>Gothic 45.ttf</key>
+		<data>
+		7RtU6fAUcYdy0u0sReUxXQUkoxw=
+		</data>
 		<key>MainWindow-iPad.nib</key>
 		<data>
 		J7UN5+7vUPCLdQWTwG4wM2BGeFo=
@@ -187,6 +199,10 @@
 		<key>PkgInfo</key>
 		<data>
 		n57qDP4tZfLD1rCS43W0B4LQjzE=
+		</data>
+		<key>PublicGothicCircular.suit</key>
+		<data>
+		2jmj7l5rSw0yVb/vlWAYkK/YBwk=
 		</data>
 		<key>SRCustomCell.nib</key>
 		<data>
@@ -280,6 +296,46 @@
 		<data>
 		NtPUPQzY/kztFGsX6KlpSEPHGPE=
 		</data>
+		<key>images/BG.png</key>
+		<data>
+		i8IN6t5sFoYMG91hiv+d98Rfceo=
+		</data>
+		<key>images/BG@2x.png</key>
+		<data>
+		r8AO84tt5ulAk+LO6fF64MxUbQ0=
+		</data>
+		<key>images/BGMockup.png</key>
+		<data>
+		bzP0ZY2x8L03yvUI/k1AavXtTi0=
+		</data>
+		<key>images/BGlevelBar.png</key>
+		<data>
+		Ri5wchXJ4wZ5Lf6SHfGA3SFFmjA=
+		</data>
+		<key>images/BGlevelBar@2x.png</key>
+		<data>
+		tiBaBd18QykuDuvHuOw4T7Fhg10=
+		</data>
+		<key>images/BGsliceLeft.png</key>
+		<data>
+		eTelJA8CXkuf6e5PZ7thANgb5Ko=
+		</data>
+		<key>images/BGsliceLeft@2x.png</key>
+		<data>
+		eaxa0ZVp9MtI8tMY5MjURnsY8SA=
+		</data>
+		<key>images/BGsliceRight.png</key>
+		<data>
+		wbzcryLEI9yXrEdBVPbWL+/l4AU=
+		</data>
+		<key>images/BGsliceRight@2x.png</key>
+		<data>
+		u21XdVXvAohGrauA8kHPK7xE/ac=
+		</data>
+		<key>images/Delivery-mode-mockup.png</key>
+		<data>
+		/S/+7AfG8mR35SwTsfGwlz2uV0c=
+		</data>
 		<key>images/Introduction-packaging.png</key>
 		<data>
 		KtzmIswpiEfvvKZAN52cOLec9Tg=
@@ -287,6 +343,14 @@
 		<key>images/Introduction-packaging.psd</key>
 		<data>
 		T3ECHEzOWYanSShwkJigmDyQ83I=
+		</data>
+		<key>images/IntroscreenMockup.png</key>
+		<data>
+		Q8pryhHWZDBxOeB6IML9BjeQQYs=
+		</data>
+		<key>images/IntroscreenMockup@2.png</key>
+		<data>
+		7ryV94n8UzKNooHGXbWM5zs/ing=
 		</data>
 		<key>images/JellyButton.png</key>
 		<data>
@@ -304,6 +368,14 @@
 		<data>
 		2zbbbiGNIP3gNtPFATYCWZe2vQQ=
 		</data>
+		<key>images/Palette.png</key>
+		<data>
+		/JcTn84FRteQvq4g2vO87VyzLFg=
+		</data>
+		<key>images/Palette@2.png</key>
+		<data>
+		qTUnHIdxWVBFWTkHiLPxIU/wNjg=
+		</data>
 		<key>images/Splash-background.png</key>
 		<data>
 		c4C8Qz9eWEAxmAQxCc11XoJ4j4o=
@@ -311,6 +383,54 @@
 		<key>images/Splash-background@2x.png</key>
 		<data>
 		ka8dtnuRhvqLZHKGKx+LJCz+q3c=
+		</data>
+		<key>images/TruckBG.png</key>
+		<data>
+		OvQzNquzfvorGpgKR1WP7agKOgs=
+		</data>
+		<key>images/TruckBG@2.png</key>
+		<data>
+		8fQgYL0hbiyszt0X/ebi70DZOIg=
+		</data>
+		<key>images/TruckBlue.png</key>
+		<data>
+		aj/DIAag+5ivnu4MrHymPqL1fXk=
+		</data>
+		<key>images/TruckBlue@2.png</key>
+		<data>
+		7lp2o4PhYYtMU/IEXn0pZuq3d70=
+		</data>
+		<key>images/TruckGreen.png</key>
+		<data>
+		zFMY2bkH30vH3JNO1iQwxeRy3zE=
+		</data>
+		<key>images/TruckGreen@2.png</key>
+		<data>
+		fBqHjrfMfezTIaYQLwn2FxpPRmk=
+		</data>
+		<key>images/TruckOrange.png</key>
+		<data>
+		KzUFyVAe1eqoGA6sg+OzyqhnVIU=
+		</data>
+		<key>images/TruckOrange@2.png</key>
+		<data>
+		fsMCUOAa/wP/T//aVINNM6CXMIY=
+		</data>
+		<key>images/TruckRed.png</key>
+		<data>
+		ZRE3a4VmLYmhnpHDRW9pn0e9HJk=
+		</data>
+		<key>images/TruckRed@2.png</key>
+		<data>
+		JepesdbB5OTmR2xbhPJq8idYPA4=
+		</data>
+		<key>images/TruckYellow.png</key>
+		<data>
+		vlVmCbgFUH7JstihhrjTOg0hJW4=
+		</data>
+		<key>images/TruckYellow@2.png</key>
+		<data>
+		2rs/eccT9wCu2S2H30YRVODmio8=
 		</data>
 		<key>images/bars1.png</key>
 		<data>
@@ -400,6 +520,14 @@
 		<data>
 		G34VRFnNJgGzkw4tjQYqdzaS9V0=
 		</data>
+		<key>images/black_star.png</key>
+		<data>
+		o7a3f5epfnuT7bNM+hC9yzjg6Zk=
+		</data>
+		<key>images/black_star@2x.png</key>
+		<data>
+		PONwlIgd0FO34dvF4HB7dwk0hW0=
+		</data>
 		<key>images/brickBackground.png</key>
 		<data>
 		YMsCN9faasJv40iyWk0iERq4qKU=
@@ -407,6 +535,54 @@
 		<key>images/brickBackground@2x.png</key>
 		<data>
 		DPQKGGc7RA0ckcuj4eiObbHmma0=
+		</data>
+		<key>images/btnHome.png</key>
+		<data>
+		bvrbyaEISHf7T7zpB2wnbVIm1jI=
+		</data>
+		<key>images/btnHome@2.png</key>
+		<data>
+		+KO4DFWiAxg2tqEAeP5f1R8KpGY=
+		</data>
+		<key>images/btnLoading.png</key>
+		<data>
+		7yTsCi7j53MitCVlh96uhqS5ayw=
+		</data>
+		<key>images/btnLoading@2.png</key>
+		<data>
+		0TIKGFYztcwxBphQyn3ndrtqNzo=
+		</data>
+		<key>images/btnMusicOff.png</key>
+		<data>
+		KWYdE9h+zwIHHRe2cq6Tp4jrMEA=
+		</data>
+		<key>images/btnMusicOff@2.png</key>
+		<data>
+		nNhXhgo8Y6FYfFtAsXUZ7sOpaMA=
+		</data>
+		<key>images/btnMusicOn.png</key>
+		<data>
+		9Twegvawn6webGxus0wp4U/CpiU=
+		</data>
+		<key>images/btnMusicOn@2.png</key>
+		<data>
+		bk29W8dlWQg7ppH/pJ0vO+a/6Uw=
+		</data>
+		<key>images/btnPacking.png</key>
+		<data>
+		7vdE9G5EFW+iHkca9w5LHsCU0RI=
+		</data>
+		<key>images/btnPacking@2.png</key>
+		<data>
+		P1jmGXLJsajECOSlI4U3LDlzo6Y=
+		</data>
+		<key>images/btnStandards.png</key>
+		<data>
+		j8CqUy+ZeZJIjEA4uzqCpSceU88=
+		</data>
+		<key>images/btnStandards@2.png</key>
+		<data>
+		d7RafN+uns4JjJ/88M1FeImn5/Y=
 		</data>
 		<key>images/checkBtn.png</key>
 		<data>
@@ -452,6 +628,14 @@
 		<data>
 		MCp+RIgXQAu+he2OG6PDXScdElw=
 		</data>
+		<key>images/chocbar_star.png</key>
+		<data>
+		7MTswRaR+qIgrBM6qCRU7goah70=
+		</data>
+		<key>images/chocbar_star@2x.png</key>
+		<data>
+		Kt725V87fbmQEzBibb5TJBo2c/I=
+		</data>
 		<key>images/chocchip1.png</key>
 		<data>
 		5mK87vtksGi9iXQI6lpPYsOaEII=
@@ -472,23 +656,23 @@
 		<data>
 		B6TtoW3ZkU6KHCkgpJHmPUdZ4as=
 		</data>
-		<key>images/chocchip10000@2.png</key>
+		<key>images/chocchip10000@2x.png</key>
 		<data>
 		zMn9OiM7TcD+cYwucC/jFUA3WEE=
 		</data>
-		<key>images/chocchip1000@2.png</key>
+		<key>images/chocchip1000@2x.png</key>
 		<data>
 		UwxqsV6CcN0PY3DADDwDrEZdowY=
 		</data>
-		<key>images/chocchip100@2.png</key>
+		<key>images/chocchip100@2x.png</key>
 		<data>
 		R8lXnhTQO3IdSv7U06Rg0Si7CtY=
 		</data>
-		<key>images/chocchip10@2.png</key>
+		<key>images/chocchip10@2x.png</key>
 		<data>
 		VWAXlFQb/GOS+sRgYZE+halMTOI=
 		</data>
-		<key>images/chocchip1@2.png</key>
+		<key>images/chocchip1@2x.png</key>
 		<data>
 		ec8JSxQ0LUInSweTyMyAeXwb1mk=
 		</data>
@@ -508,19 +692,27 @@
 		<data>
 		mmJR/KAp3fApqQZUA0Se6NHu1sg=
 		</data>
-		<key>images/chocchip2000@2.png</key>
+		<key>images/chocchip20000.png</key>
+		<data>
+		kDzruvzGOx6GK2tWrCPNEEPg/mw=
+		</data>
+		<key>images/chocchip20000@2.psd</key>
+		<data>
+		54/HifQ+m0+gUwm1IRar8zW2B70=
+		</data>
+		<key>images/chocchip2000@2x.png</key>
 		<data>
 		OMTo9UsBCbj+jri1INZyOuwlelw=
 		</data>
-		<key>images/chocchip200@2.png</key>
+		<key>images/chocchip200@2x.png</key>
 		<data>
 		KfGgWEXFZz80JAUpnZwtBN53VlQ=
 		</data>
-		<key>images/chocchip20@2.png</key>
+		<key>images/chocchip20@2x.png</key>
 		<data>
 		UJGSiVfICRtvAVu4a6HUd3bFXRo=
 		</data>
-		<key>images/chocchip2@2.png</key>
+		<key>images/chocchip2@2x.png</key>
 		<data>
 		7B5XngOFOzBFl1swXqwZ+gU++UU=
 		</data>
@@ -540,19 +732,27 @@
 		<data>
 		w0xmvhbz8/HgpBKOrBhUQLsT6mI=
 		</data>
-		<key>images/chocchip3000@2.png</key>
+		<key>images/chocchip30000.png</key>
+		<data>
+		mLCwSiT3fU1CyzhLL+SE6R6XE64=
+		</data>
+		<key>images/chocchip30000@2.png</key>
+		<data>
+		GU1d5aa0pGD4J+vU3F1DWXXvWlc=
+		</data>
+		<key>images/chocchip3000@2x.png</key>
 		<data>
 		DiTmlLYhBoZudgGwih6BQoKeWTc=
 		</data>
-		<key>images/chocchip300@2.png</key>
+		<key>images/chocchip300@2x.png</key>
 		<data>
 		RI/uqxmMZAxwGJ//1Kxci6lZPhk=
 		</data>
-		<key>images/chocchip30@2.png</key>
+		<key>images/chocchip30@2x.png</key>
 		<data>
 		CER4lTw3c4ar+xd2gNzFAWLI8jc=
 		</data>
-		<key>images/chocchip3@2.png</key>
+		<key>images/chocchip3@2x.png</key>
 		<data>
 		py6kqTERm2NomMmSPA4n7x7Iz7Y=
 		</data>
@@ -572,19 +772,27 @@
 		<data>
 		RfuppuLpG95QK+isuiEq3sT/RQ4=
 		</data>
-		<key>images/chocchip4000@2.png</key>
+		<key>images/chocchip40000.png</key>
+		<data>
+		Rf/2k4i7L2wgxLEH/Soi5wA3KH4=
+		</data>
+		<key>images/chocchip40000@2.png</key>
+		<data>
+		0pIsuB1qvapC2zQ51B+fUEZCan4=
+		</data>
+		<key>images/chocchip4000@2x.png</key>
 		<data>
 		lnWtk8ZQW66ggRbCFMPwpfigFUI=
 		</data>
-		<key>images/chocchip400@2.png</key>
+		<key>images/chocchip400@2x.png</key>
 		<data>
 		moe4TmMNjB8ihxHLYHtsbLcDWtk=
 		</data>
-		<key>images/chocchip40@2.png</key>
+		<key>images/chocchip40@2x.png</key>
 		<data>
 		N7M6+IH4/aWxYImRBL2urxusbuY=
 		</data>
-		<key>images/chocchip4@2.png</key>
+		<key>images/chocchip4@2x.png</key>
 		<data>
 		Ri+ma3PpoEKrsJXvwE18LNB2ECc=
 		</data>
@@ -604,19 +812,27 @@
 		<data>
 		azyehtOU/jiSLpwQURkqzj/VHF8=
 		</data>
-		<key>images/chocchip5000@2.png</key>
+		<key>images/chocchip50000.png</key>
+		<data>
+		gpyvvavMhRarI4GMP8IHXvZ6Oek=
+		</data>
+		<key>images/chocchip50000@2.png</key>
+		<data>
+		nHxOVLDuKpQzNFtjojaIm4GnfQ0=
+		</data>
+		<key>images/chocchip5000@2x.png</key>
 		<data>
 		8gUfunk1A3aGGMzr5NpS680YLJ0=
 		</data>
-		<key>images/chocchip500@2.png</key>
+		<key>images/chocchip500@2x.png</key>
 		<data>
 		iWfTxAdPIY8G8aIOXEUEdo/d+Tk=
 		</data>
-		<key>images/chocchip50@2.png</key>
+		<key>images/chocchip50@2x.png</key>
 		<data>
 		j6x+mWdPH93MK/QizzC26Vvkxec=
 		</data>
-		<key>images/chocchip5@2.png</key>
+		<key>images/chocchip5@2x.png</key>
 		<data>
 		hJL35Ua43U/9o8slg01PrWVIwxI=
 		</data>
@@ -636,19 +852,27 @@
 		<data>
 		quQGRjOvBBjRC5hqjfyB/vhqf48=
 		</data>
-		<key>images/chocchip6000@2.png</key>
+		<key>images/chocchip60000.png</key>
+		<data>
+		qhF8RahFmAGmoMsh3tm/AlDdXyM=
+		</data>
+		<key>images/chocchip60000@2.png</key>
+		<data>
+		40MXR0SBLHQfXooU67jVr6pSoZ0=
+		</data>
+		<key>images/chocchip6000@2x.png</key>
 		<data>
 		E/RjuzmS73aiTGOPsqXV7rX5cAI=
 		</data>
-		<key>images/chocchip600@2.png</key>
+		<key>images/chocchip600@2x.png</key>
 		<data>
 		yPfQTFqq9Nq4IAFfPhF6cTo9Dfs=
 		</data>
-		<key>images/chocchip60@2.png</key>
+		<key>images/chocchip60@2x.png</key>
 		<data>
 		ccde6ugFPwMFQ3GphYBQH/yCZVc=
 		</data>
-		<key>images/chocchip6@2.png</key>
+		<key>images/chocchip6@2x.png</key>
 		<data>
 		T+j8S6wfjMRdl1XZptOToDjHw4Y=
 		</data>
@@ -668,19 +892,27 @@
 		<data>
 		cOno9u8JfFwEfGCGlQv/YzFrPXA=
 		</data>
+		<key>images/chocchip70000.png</key>
+		<data>
+		6tBhuI7U4Yzk51fjYhIqlMiHT4w=
+		</data>
+		<key>images/chocchip70000@2.png</key>
+		<data>
+		0Ul5eSUslag7TCxL/fg4CneRKSQ=
+		</data>
 		<key>images/chocchip7000@2x.png</key>
 		<data>
 		y9eqmg5fsJFC6ANTyygL3vqUF14=
 		</data>
-		<key>images/chocchip700@2.png</key>
+		<key>images/chocchip700@2x.png</key>
 		<data>
 		S4KPHlYucDgINdJK4fk7lt6zLvI=
 		</data>
-		<key>images/chocchip70@2.png</key>
+		<key>images/chocchip70@2x.png</key>
 		<data>
 		wCclgU+KC1BhSHpxGFMAT+i2y4A=
 		</data>
-		<key>images/chocchip7@2.png</key>
+		<key>images/chocchip7@2x.png</key>
 		<data>
 		m2M/wF4uaz2QOJuMsBKMuaDoLwQ=
 		</data>
@@ -700,19 +932,27 @@
 		<data>
 		vyrUE/iJv/fQCkXmsh49txDlyCE=
 		</data>
+		<key>images/chocchip80000.png</key>
+		<data>
+		CH7/wFfzHkfL3CXTS7/bxzk/o88=
+		</data>
+		<key>images/chocchip80000@2.png</key>
+		<data>
+		wBaRoZi0aPj5EJuFtjU2wXtpGq0=
+		</data>
 		<key>images/chocchip8000@2x.png</key>
 		<data>
 		+kL4tBdjznazQfVUW6Fi/92EEjI=
 		</data>
-		<key>images/chocchip800@2.png</key>
+		<key>images/chocchip800@2x.png</key>
 		<data>
 		zcZuB5g/fK9HoOH9D5EPeyludiM=
 		</data>
-		<key>images/chocchip80@2.png</key>
+		<key>images/chocchip80@2x.png</key>
 		<data>
 		xCStteroeuHBtmrpaF6AS8lPWoA=
 		</data>
-		<key>images/chocchip8@2.png</key>
+		<key>images/chocchip8@2x.png</key>
 		<data>
 		iskvHDdUQ8Hg5sUJp2rJlS3edqw=
 		</data>
@@ -732,19 +972,27 @@
 		<data>
 		XdCNRN+DoBIRoTyx1Gzz9DX+WzQ=
 		</data>
-		<key>images/chocchip9000@2.png</key>
+		<key>images/chocchip90000.png</key>
+		<data>
+		z5eb2CWdulVk0xxzR0MaXNCPHoc=
+		</data>
+		<key>images/chocchip90000@2.png</key>
+		<data>
+		8rpQrk7rY8idBfkP0ZmXs6VTP70=
+		</data>
+		<key>images/chocchip9000@2x.png</key>
 		<data>
 		zNqaeYFvGvJ70gYu2Dl3aWsPRv8=
 		</data>
-		<key>images/chocchip900@2.png</key>
+		<key>images/chocchip900@2x.png</key>
 		<data>
 		UNNRJSXvhro+RA4BN8EhwqqziMQ=
 		</data>
-		<key>images/chocchip90@2.png</key>
+		<key>images/chocchip90@2x.png</key>
 		<data>
 		JYLPHPuS3M9qhdh3URR9Ksc+EVg=
 		</data>
-		<key>images/chocchip9@2.png</key>
+		<key>images/chocchip9@2x.png</key>
 		<data>
 		e1+sp8d86Nct4OPPY5IMY6z41Eg=
 		</data>
@@ -755,6 +1003,14 @@
 		<key>images/chocchipTray1@2x.png</key>
 		<data>
 		dZZo7G2QtVAMJDEyYxVo8YRTlE4=
+		</data>
+		<key>images/chocchip_star.png</key>
+		<data>
+		8AeftKlWz0qo4ps6LTKlQvW+t+Y=
+		</data>
+		<key>images/chocchip_star@2x.png</key>
+		<data>
+		fCqhMVazwyJKz8TbNN5IMM9iAUg=
 		</data>
 		<key>images/cleaver.png</key>
 		<data>
@@ -767,6 +1023,14 @@
 		<key>images/cloud.png</key>
 		<data>
 		otSCTnDfcNTGWOoS395memvhCik=
+		</data>
+		<key>images/conveyor.png</key>
+		<data>
+		u7DXq732+GvEVRWWe84nHzwCKCo=
+		</data>
+		<key>images/conveyor@2.png</key>
+		<data>
+		zIAUXCd/h/CAoNz4YiyrF7wvDPw=
 		</data>
 		<key>images/crateChocBar.png</key>
 		<data>
@@ -800,6 +1064,10 @@
 		<data>
 		kRrTkgdS7p0g8styobCURcuc5MA=
 		</data>
+		<key>images/factory-sidewalls.psd</key>
+		<data>
+		m5bRBKJyTmWj2hohgGSwprZ5Q8w=
+		</data>
 		<key>images/factoryBG-newMockup.jpg</key>
 		<data>
 		4yMe4QH7Rtr/th7KxHw5SMy3mBM=
@@ -828,6 +1096,18 @@
 		<data>
 		nDnc6CU/MBQ6otDDvp79t8J9kas=
 		</data>
+		<key>images/icon57.png</key>
+		<data>
+		dXVOGuqnUp+J9IGFhIOsXkQnhyM=
+		</data>
+		<key>images/icon72.png</key>
+		<data>
+		Z8K/yQ/ve3EzgUScoOtft9t2OlQ=
+		</data>
+		<key>images/iconForStore.png</key>
+		<data>
+		yEypFKTqL0y7HINcl1vSdViduDo=
+		</data>
 		<key>images/jelly1.png</key>
 		<data>
 		bN5XqFQ2vvLbs/fAelNaK2I/cuQ=
@@ -848,23 +1128,23 @@
 		<data>
 		AzS3XfShTOdlwD5fWQ1f5gC1LYc=
 		</data>
-		<key>images/jelly10000@2.png</key>
+		<key>images/jelly10000@2x.png</key>
 		<data>
 		K64XCEqhTU6swsfRXsiEw+vTmrA=
 		</data>
-		<key>images/jelly1000@2.png</key>
+		<key>images/jelly1000@2x.png</key>
 		<data>
 		HpOhgbAWkpgc55nJj2c0LB8+ZlQ=
 		</data>
-		<key>images/jelly100@2.png</key>
+		<key>images/jelly100@2x.png</key>
 		<data>
 		V8w5qKW8hH49AHANX1ZkOz7DPPI=
 		</data>
-		<key>images/jelly10@2.png</key>
+		<key>images/jelly10@2x.png</key>
 		<data>
 		oLE6YOC4yOKcSRi/diVT+7p+X1c=
 		</data>
-		<key>images/jelly1@2.png</key>
+		<key>images/jelly1@2x.png</key>
 		<data>
 		SEkdJQKhKEDauiDRL5B2xRZMPuA=
 		</data>
@@ -884,19 +1164,27 @@
 		<data>
 		osJ+e+uwzKTPRC/kj6S1GnAYYT4=
 		</data>
-		<key>images/jelly2000@2.png</key>
+		<key>images/jelly20000.png</key>
+		<data>
+		S7Rurjz+NkfCKDPVPXsF9SEUhnM=
+		</data>
+		<key>images/jelly20000@2.png</key>
+		<data>
+		cgoJn3SbhtvvfIXZTPGjqgyS1Wc=
+		</data>
+		<key>images/jelly2000@2x.png</key>
 		<data>
 		eS8W8MQDpUGDwftiKYhlIRkwnuI=
 		</data>
-		<key>images/jelly200@2.png</key>
+		<key>images/jelly200@2x.png</key>
 		<data>
 		D6czp1O80Yd8DdLXHuw25DhDrgg=
 		</data>
-		<key>images/jelly20@2.png</key>
+		<key>images/jelly20@2x.png</key>
 		<data>
 		5msy05V/WirGfUAXcY0ocVwOLGQ=
 		</data>
-		<key>images/jelly2@2.png</key>
+		<key>images/jelly2@2x.png</key>
 		<data>
 		zqNMzzjGfNJrTRhj5E2CkQXOh2U=
 		</data>
@@ -916,19 +1204,27 @@
 		<data>
 		9J/toyoWSg4nwoI3b8pBkpVYtzI=
 		</data>
-		<key>images/jelly3000@2.png</key>
+		<key>images/jelly30000.png</key>
+		<data>
+		KzQNBwbUuqiafI8st9tlwSPoNjQ=
+		</data>
+		<key>images/jelly30000@2.png</key>
+		<data>
+		rY8azzamf+LePUm/TbE/kuDwvWs=
+		</data>
+		<key>images/jelly3000@2x.png</key>
 		<data>
 		Vpk+TmeBry8dz+ISzdFDgkkhTCE=
 		</data>
-		<key>images/jelly300@2.png</key>
+		<key>images/jelly300@2x.png</key>
 		<data>
 		4sJcMDqjzbFIeeUxqo+myJUcZnk=
 		</data>
-		<key>images/jelly30@2.png</key>
+		<key>images/jelly30@2x.png</key>
 		<data>
 		IjbemwLzaGu7jvGdmmV5h7C3Sgw=
 		</data>
-		<key>images/jelly3@2.png</key>
+		<key>images/jelly3@2x.png</key>
 		<data>
 		UucUmeeP7Vsmdmh/TqRoRt74Wmw=
 		</data>
@@ -948,19 +1244,27 @@
 		<data>
 		muzKhsJ/zvpC850vyhqFG7F7Nic=
 		</data>
-		<key>images/jelly4000@2.png</key>
+		<key>images/jelly40000.png</key>
+		<data>
+		Ku521FKLScA4Zk2iOxfKy6Pk2M0=
+		</data>
+		<key>images/jelly40000@2.png</key>
+		<data>
+		aHnDraoYsFMBhhX4RlSjdWINmHo=
+		</data>
+		<key>images/jelly4000@2x.png</key>
 		<data>
 		huMzubybPHJ+jBhhgCPEqfcBov0=
 		</data>
-		<key>images/jelly400@2.png</key>
+		<key>images/jelly400@2x.png</key>
 		<data>
 		fripAY1H76nBRLJ3Ym69+0PZCdY=
 		</data>
-		<key>images/jelly40@2.png</key>
+		<key>images/jelly40@2x.png</key>
 		<data>
 		OLeeuiC5F1g423hFDKBxtSjIScs=
 		</data>
-		<key>images/jelly4@2.png</key>
+		<key>images/jelly4@2x.png</key>
 		<data>
 		SI0MQkFWOtALTBkE3jUkxpWx8rk=
 		</data>
@@ -980,19 +1284,27 @@
 		<data>
 		E62xq68aFDRD+RzVR/ErRfzZ3Ys=
 		</data>
-		<key>images/jelly5000@2.png</key>
+		<key>images/jelly50000.png</key>
+		<data>
+		JqVuAUEe2Kheoe1A6x78PfHmHOY=
+		</data>
+		<key>images/jelly50000@2.png</key>
+		<data>
+		Q+Xab+yHXrOTmq5VInvsk5y3z7E=
+		</data>
+		<key>images/jelly5000@2x.png</key>
 		<data>
 		uDVyiFbbRDXShVqJxXlfmkGRWQU=
 		</data>
-		<key>images/jelly500@2.png</key>
+		<key>images/jelly500@2x.png</key>
 		<data>
 		RQfgIqJZ395+nY0E+hmr1auTPLw=
 		</data>
-		<key>images/jelly50@2.png</key>
+		<key>images/jelly50@2x.png</key>
 		<data>
 		6XaiA7D7LAJ7s9IySH0vffNWUzc=
 		</data>
-		<key>images/jelly5@2.png</key>
+		<key>images/jelly5@2x.png</key>
 		<data>
 		+vvCp6h7+ah9t99X8VR1Tdohrag=
 		</data>
@@ -1012,19 +1324,27 @@
 		<data>
 		UGhIWmR707i2Q/Q0u3DUO1YjH2k=
 		</data>
-		<key>images/jelly6000@2.png</key>
+		<key>images/jelly60000.png</key>
+		<data>
+		RP9IZbl+qbflgzHGhZV4lIf8qQg=
+		</data>
+		<key>images/jelly60000@2.png</key>
+		<data>
+		XV5wStEAuLp0YrehwH+ut8iHV5E=
+		</data>
+		<key>images/jelly6000@2x.png</key>
 		<data>
 		2roTHbrNY96LEVWZC2VnWhthax0=
 		</data>
-		<key>images/jelly600@2.png</key>
+		<key>images/jelly600@2x.png</key>
 		<data>
 		t2hvzWEOpYdLiqvXKUqP65IoJ3Y=
 		</data>
-		<key>images/jelly60@2.png</key>
+		<key>images/jelly60@2x.png</key>
 		<data>
 		uISus9TS/wPsbSE9kVEJkLP1hJM=
 		</data>
-		<key>images/jelly6@2.png</key>
+		<key>images/jelly6@2x.png</key>
 		<data>
 		VrxrbZWf5RYYwqPGE3AbX2yz+OA=
 		</data>
@@ -1044,19 +1364,27 @@
 		<data>
 		v76I8/D+cjQg+oBtd4GD/yQcvlY=
 		</data>
-		<key>images/jelly7000@2.png</key>
+		<key>images/jelly70000.png</key>
+		<data>
+		R7oacQUv3tTKXja3c4DqafTJydc=
+		</data>
+		<key>images/jelly70000@2.png</key>
+		<data>
+		S7nbdPYgRY1M1yKMCNKEH5Z5qIs=
+		</data>
+		<key>images/jelly7000@2x.png</key>
 		<data>
 		0acs9WGZSaZtgC0ALr+bywNFxcU=
 		</data>
-		<key>images/jelly700@2.png</key>
+		<key>images/jelly700@2x.png</key>
 		<data>
 		Sjj7/yANC6zYYifqKeXP/T60DBE=
 		</data>
-		<key>images/jelly70@2.png</key>
+		<key>images/jelly70@2x.png</key>
 		<data>
 		JLFlAcvZokLTG0FV6punEJbJcig=
 		</data>
-		<key>images/jelly7@2.png</key>
+		<key>images/jelly7@2x.png</key>
 		<data>
 		qjhEKEoTG9nwAb2t1Z1RwM17vMw=
 		</data>
@@ -1076,19 +1404,27 @@
 		<data>
 		4nZ0ZlFNtHk1LCIYXvleDFyeOkA=
 		</data>
-		<key>images/jelly8000@2.png</key>
+		<key>images/jelly80000.png</key>
+		<data>
+		GqVfu55UtX6EhHWEk8/mVwDE4wU=
+		</data>
+		<key>images/jelly80000@2.png</key>
+		<data>
+		oE+NrpuMuwZ1/tKTPzZoh16iizA=
+		</data>
+		<key>images/jelly8000@2x.png</key>
 		<data>
 		OUlXyMI+RTOBhg0XJShXz7nk7B4=
 		</data>
-		<key>images/jelly800@2.png</key>
+		<key>images/jelly800@2x.png</key>
 		<data>
 		mGvul1kFwr+7rRPO4pf5OEAKV5c=
 		</data>
-		<key>images/jelly80@2.png</key>
+		<key>images/jelly80@2x.png</key>
 		<data>
 		4VL2hbn90UD1/69mZnwKuIAt0Kw=
 		</data>
-		<key>images/jelly8@2.png</key>
+		<key>images/jelly8@2x.png</key>
 		<data>
 		8FNSSYVXzBTnmjIk15LdE2TqYxM=
 		</data>
@@ -1108,19 +1444,27 @@
 		<data>
 		LZxC6I+/zhnUAZK5d82jBsTJCHQ=
 		</data>
-		<key>images/jelly9000@2.png</key>
+		<key>images/jelly90000.png</key>
+		<data>
+		ohguUdvaSwii5dYv+u6tl5W+g4U=
+		</data>
+		<key>images/jelly90000@2.png</key>
+		<data>
+		BY0KEyXluEf/dDgRzcaZ7IWYZ3E=
+		</data>
+		<key>images/jelly9000@2x.png</key>
 		<data>
 		GlBmycBjmbWMLLsqm4gzL3lTfSI=
 		</data>
-		<key>images/jelly900@2.png</key>
+		<key>images/jelly900@2x.png</key>
 		<data>
 		muQu/caSZdrq5DpNNoaY9zMsH9g=
 		</data>
-		<key>images/jelly90@2.png</key>
+		<key>images/jelly90@2x.png</key>
 		<data>
 		bu7I8NLnJ8qc9c7CQXc0XmazOKM=
 		</data>
-		<key>images/jelly9@2.png</key>
+		<key>images/jelly9@2x.png</key>
 		<data>
 		ZIeiNcNrUaQjpz7EoYRKNcyxg0g=
 		</data>
@@ -1132,11 +1476,31 @@
 		<data>
 		9YEyI2HE+N0A7AN8QT9rCw2QOSA=
 		</data>
+		<key>images/jelly_star.png</key>
+		<data>
+		6/EVIqMHRv/qH9+MLPxRHskiqto=
+		</data>
+		<key>images/jelly_star@2x.png</key>
+		<data>
+		VKxRdAiFdnUlmBNhga6n0KZ/TWU=
+		</data>
+		<key>images/lcd.png</key>
+		<data>
+		ALoMzUa8q7ZAxhWBFRAj951LzSE=
+		</data>
+		<key>images/lcd.psd</key>
+		<data>
+		DVDLgRA/Bryb2qdAQq3FOhiprdM=
+		</data>
+		<key>images/lcd@2x.png</key>
+		<data>
+		JkZh0lACsTTS6fPM5PFmjfYj6T0=
+		</data>
 		<key>images/levelbar.png</key>
 		<data>
 		VzyWzKEm2wRjq5vrBY+EXJRgPyI=
 		</data>
-		<key>images/levelbar@2.png</key>
+		<key>images/levelbar@2x.png</key>
 		<data>
 		Cy80NnU+L78PRBjwfy82/HWRfEo=
 		</data>
@@ -1172,19 +1536,19 @@
 		<data>
 		DX+JxDXxrsr9jG9SEREACA5tChE=
 		</data>
-		<key>images/oreo1000@2.png</key>
+		<key>images/oreo1000@2x.png</key>
 		<data>
 		ELvidtS7KuGJKVymef4GR1BmIH4=
 		</data>
-		<key>images/oreo100@2.png</key>
+		<key>images/oreo100@2x.png</key>
 		<data>
 		I/lvH1jPqaboxqTPe8NWQy/6POw=
 		</data>
-		<key>images/oreo10@2.png</key>
+		<key>images/oreo10@2x.png</key>
 		<data>
 		isLnju1ecUHgTL7gUAA2pubB5zE=
 		</data>
-		<key>images/oreo1@2.png</key>
+		<key>images/oreo1@2x.png</key>
 		<data>
 		yvsp8xvFqFrRdk06smmgzCqi5ic=
 		</data>
@@ -1204,19 +1568,27 @@
 		<data>
 		yiXh2B2b14/tKM5/TvTBL9b9njI=
 		</data>
-		<key>images/oreo2000@2.png</key>
+		<key>images/oreo20000.png</key>
+		<data>
+		G54i+CSxtZT447bOWpRpvEPnsvw=
+		</data>
+		<key>images/oreo20000@2.png</key>
+		<data>
+		jbxmsTtWFQ7IOeIeCEL76Ost4mw=
+		</data>
+		<key>images/oreo2000@2x.png</key>
 		<data>
 		Xy9xsSsSzoi/90kVSVGSoDa4cjs=
 		</data>
-		<key>images/oreo200@2.png</key>
+		<key>images/oreo200@2x.png</key>
 		<data>
 		GHxjdmb8c/23y1PvLRmF1caRbAU=
 		</data>
-		<key>images/oreo20@2.png</key>
+		<key>images/oreo20@2x.png</key>
 		<data>
 		NZ9JRMMp78C2XtMoxoAoZIUFdyM=
 		</data>
-		<key>images/oreo2@2.png</key>
+		<key>images/oreo2@2x.png</key>
 		<data>
 		1kEvP7JwNbeSxIwKLskDIPIjvRY=
 		</data>
@@ -1236,19 +1608,27 @@
 		<data>
 		66XTx9hy8xXrAWam16Wn2oRh04c=
 		</data>
-		<key>images/oreo3000@2.png</key>
+		<key>images/oreo30000.png</key>
+		<data>
+		XpbgWGya6WOsGhNODVjsBxriZ8Q=
+		</data>
+		<key>images/oreo30000@2.png</key>
+		<data>
+		mNBmzGq0vPzEsOaINN3xSNq7bms=
+		</data>
+		<key>images/oreo3000@2x.png</key>
 		<data>
 		WstXlAIhLj5seLnLtYS350wxMcQ=
 		</data>
-		<key>images/oreo300@2.png</key>
+		<key>images/oreo300@2x.png</key>
 		<data>
 		Qr4k5GbV7N8LYR2NJC0H0I2Hj4Q=
 		</data>
-		<key>images/oreo30@2.png</key>
+		<key>images/oreo30@2x.png</key>
 		<data>
 		nSFOHdtFfpaXm7eEoMcy9j5jyEs=
 		</data>
-		<key>images/oreo3@2.png</key>
+		<key>images/oreo3@2x.png</key>
 		<data>
 		TFNB7xONuaKDr4XHNPpN/ECJ7tk=
 		</data>
@@ -1268,19 +1648,27 @@
 		<data>
 		5IkthXgfvJ82FiowIqnzpPiceaI=
 		</data>
-		<key>images/oreo4000@2.png</key>
+		<key>images/oreo40000.png</key>
+		<data>
+		wBtyBrfm0b6xWVSu7rCOrKExa+A=
+		</data>
+		<key>images/oreo40000@2.png</key>
+		<data>
+		gP476PTJluNXA4XeYelb3UtfN3k=
+		</data>
+		<key>images/oreo4000@2x.png</key>
 		<data>
 		CVIshPZLXtrSAG/VZ6o2frzIvGQ=
 		</data>
-		<key>images/oreo400@2.png</key>
+		<key>images/oreo400@2x.png</key>
 		<data>
 		7+gny6rDiY9qG7/SczVivSqj7oM=
 		</data>
-		<key>images/oreo40@2.png</key>
+		<key>images/oreo40@2x.png</key>
 		<data>
 		HBZNObfHqpJeevqGRAMQIfK2Znk=
 		</data>
-		<key>images/oreo4@2.png</key>
+		<key>images/oreo4@2x.png</key>
 		<data>
 		v5pqonEAlntrGPn8b3BfkXRjX3Y=
 		</data>
@@ -1300,19 +1688,27 @@
 		<data>
 		sBGnPbXs/pThE6N8BbG2I62wm/I=
 		</data>
-		<key>images/oreo5000@2.png</key>
+		<key>images/oreo50000.png</key>
+		<data>
+		zGOSF/6bG0aXNHDhR/PqWsDYQ1A=
+		</data>
+		<key>images/oreo50000@2.png</key>
+		<data>
+		J/FUj7VwiYYZKHNtcci7UouzqPM=
+		</data>
+		<key>images/oreo5000@2x.png</key>
 		<data>
 		pjaLAWpMXx78057H9Bx5FmC0XiA=
 		</data>
-		<key>images/oreo500@2.png</key>
+		<key>images/oreo500@2x.png</key>
 		<data>
 		Ni7OxaBb0VWjItFdSWaENrhvVjU=
 		</data>
-		<key>images/oreo50@2.png</key>
+		<key>images/oreo50@2x.png</key>
 		<data>
 		wGAacjwz5xR7o9kr9/9oMQHzOcM=
 		</data>
-		<key>images/oreo5@2.png</key>
+		<key>images/oreo5@2x.png</key>
 		<data>
 		hoetJAiTGoIM9psvBttiDSN/TFc=
 		</data>
@@ -1332,19 +1728,27 @@
 		<data>
 		jDZm0EVDHUL2zpeqJHEWO66VpvU=
 		</data>
-		<key>images/oreo6000@2.png</key>
+		<key>images/oreo60000.png</key>
+		<data>
+		fatXLsopafIPD0EgWfKNiJ2c3/I=
+		</data>
+		<key>images/oreo60000@2.png</key>
+		<data>
+		16hZZxHdzxOoibd/Wx/BHHQJq34=
+		</data>
+		<key>images/oreo6000@2x.png</key>
 		<data>
 		Rd1d/DUBJXdf+W0QQWTRkz72kCk=
 		</data>
-		<key>images/oreo600@2.png</key>
+		<key>images/oreo600@2x.png</key>
 		<data>
 		5vah5YDaDpCo5HYvqJDZ4zf48zU=
 		</data>
-		<key>images/oreo60@2.png</key>
+		<key>images/oreo60@2x.png</key>
 		<data>
 		aZOysTzAz9zK9eos8tRGCUX3ZAw=
 		</data>
-		<key>images/oreo6@2.png</key>
+		<key>images/oreo6@2x.png</key>
 		<data>
 		lpsuJF+7tDLqTsqgN4NL1I+Fne0=
 		</data>
@@ -1364,19 +1768,27 @@
 		<data>
 		BAPhh7TsDJ5p0+KmETIGgNsc6vY=
 		</data>
-		<key>images/oreo7000@2.png</key>
+		<key>images/oreo70000.png</key>
+		<data>
+		GUgzJM+h7Jk7WIper5ao2PL7bjs=
+		</data>
+		<key>images/oreo70000@2.png</key>
+		<data>
+		MEyLGw0VlfJ9SoiQYI8CWh2/nFo=
+		</data>
+		<key>images/oreo7000@2x.png</key>
 		<data>
 		l1S5uj1l5yzzkFv3h+wJ+enA/A0=
 		</data>
-		<key>images/oreo700@2.png</key>
+		<key>images/oreo700@2x.png</key>
 		<data>
 		v8SVvrSC50dqD5NlCo++KoE+7yc=
 		</data>
-		<key>images/oreo70@2.png</key>
+		<key>images/oreo70@2x.png</key>
 		<data>
 		v1gFIQJVPxiPuf8zGykahIujSGs=
 		</data>
-		<key>images/oreo7@2.png</key>
+		<key>images/oreo7@2x.png</key>
 		<data>
 		x54l0Xwp4iPNCLtemrhfi9cYqXU=
 		</data>
@@ -1396,19 +1808,27 @@
 		<data>
 		fown9inZA3r/oDAKXTznv6Kyi88=
 		</data>
-		<key>images/oreo8000@2.png</key>
+		<key>images/oreo80000.png</key>
+		<data>
+		VpiyDJCifmGVkYC9D32Fc2ELzio=
+		</data>
+		<key>images/oreo80000@2.png</key>
+		<data>
+		ANvA5J8qieFm0DFL/WalmRNqN28=
+		</data>
+		<key>images/oreo8000@2x.png</key>
 		<data>
 		B2cJzUHC3Qp3XApi7sYSK/ONNTw=
 		</data>
-		<key>images/oreo800@2.png</key>
+		<key>images/oreo800@2x.png</key>
 		<data>
 		JvEyf+h6KCdLO8ie44azl/S2FUo=
 		</data>
-		<key>images/oreo80@2.png</key>
+		<key>images/oreo80@2x.png</key>
 		<data>
 		sk76eoq2JO5Z+iqM9UpIh3Z4hZU=
 		</data>
-		<key>images/oreo8@2.png</key>
+		<key>images/oreo8@2x.png</key>
 		<data>
 		TtnnXWvgoBZ9ABdilKVg2/EtlmY=
 		</data>
@@ -1428,21 +1848,37 @@
 		<data>
 		r6Mko8iq5d7jTXoM0qrJSc39+Rc=
 		</data>
-		<key>images/oreo9000@2.png</key>
+		<key>images/oreo90000.png</key>
+		<data>
+		fXo1F9Lcdg/UCtgF8zXC6b5ZB0I=
+		</data>
+		<key>images/oreo90000@2.png</key>
+		<data>
+		zWYc/s69d6uRLchg6NQPxIr3kTk=
+		</data>
+		<key>images/oreo9000@2x.png</key>
 		<data>
 		+LlsWYBkHIPfKd2K8ribwk2DhtU=
 		</data>
-		<key>images/oreo900@2.png</key>
+		<key>images/oreo900@2x.png</key>
 		<data>
 		RLDtBUPvg3cc4G5dyRtjdimKH6Y=
 		</data>
-		<key>images/oreo90@2.png</key>
+		<key>images/oreo90@2x.png</key>
 		<data>
 		caqIfkfHJm1aUm0RxPXcrhNI/mE=
 		</data>
-		<key>images/oreo9@2.png</key>
+		<key>images/oreo9@2x.png</key>
 		<data>
 		z8NUmKiOEUzbJTb+hu2Mxu+lOOA=
+		</data>
+		<key>images/oreo_star.png</key>
+		<data>
+		ZM6QUKrClqsLuxShmY+FNkhh8P0=
+		</data>
+		<key>images/oreo_star@2x.png</key>
+		<data>
+		ByxLShFtyVgNWFtq4jSg8BJwEv8=
 		</data>
 		<key>images/packChocBars.png</key>
 		<data>
@@ -1480,23 +1916,23 @@
 		<data>
 		oCxUYcZCmMiS2b1Q8I4uZx+bVgk=
 		</data>
-		<key>images/pb10000@2.png</key>
+		<key>images/pb10000@2x.png</key>
 		<data>
 		avEpWIp+zyBlF8+7VOlckmSZJN8=
 		</data>
-		<key>images/pb1000@2.png</key>
+		<key>images/pb1000@2x.png</key>
 		<data>
 		ChqGSzjGRZYoy2yUs2Hk3baDePQ=
 		</data>
-		<key>images/pb100@2.png</key>
+		<key>images/pb100@2x.png</key>
 		<data>
 		YWeGaCi6zL8rI9hH5R1W4EKoJXA=
 		</data>
-		<key>images/pb10@2.png</key>
+		<key>images/pb10@2x.png</key>
 		<data>
 		OvBSOeYwFelyxmfHRswPm/mQ/v0=
 		</data>
-		<key>images/pb1@2.png</key>
+		<key>images/pb1@2x.png</key>
 		<data>
 		fKiCgMjWWySYWQsYHPThoorbvMk=
 		</data>
@@ -1516,19 +1952,27 @@
 		<data>
 		R12/hqW16AD3QC8FKd4aZ1/IKvI=
 		</data>
-		<key>images/pb2000@2.png</key>
+		<key>images/pb20000.png</key>
+		<data>
+		3WQmy027pYNYvR1Fl7v572nxD9Q=
+		</data>
+		<key>images/pb20000@2.png</key>
+		<data>
+		6av4zvkMHt+7TYJsQAgJOjTwCHo=
+		</data>
+		<key>images/pb2000@2x.png</key>
 		<data>
 		dNwKXwKrUmqTc4ed0gHy1P6vbzo=
 		</data>
-		<key>images/pb200@2.png</key>
+		<key>images/pb200@2x.png</key>
 		<data>
 		oF1VZMu9dKP7I0O79+JlbfbFDbQ=
 		</data>
-		<key>images/pb20@2.png</key>
+		<key>images/pb20@2x.png</key>
 		<data>
 		5tFmlF/qnLYyNrIQKdFs2jeR5N4=
 		</data>
-		<key>images/pb2@2.png</key>
+		<key>images/pb2@2x.png</key>
 		<data>
 		jHUU+B3T4lMZNbEnWoqH57UFxZM=
 		</data>
@@ -1548,19 +1992,27 @@
 		<data>
 		GKcUVqpyI9EVx+Wk8N/qP96jR5k=
 		</data>
-		<key>images/pb3000@2.png</key>
+		<key>images/pb30000.png</key>
+		<data>
+		mNbfGzu+MBO2Kbg8yg2bjfizvFM=
+		</data>
+		<key>images/pb30000@2.png</key>
+		<data>
+		QMWZkPNDP7NPYLvo1MTNT2iLYjo=
+		</data>
+		<key>images/pb3000@2x.png</key>
 		<data>
 		9TfKhwyL+XAq4AGJqizWHLIus4o=
 		</data>
-		<key>images/pb300@2.png</key>
+		<key>images/pb300@2x.png</key>
 		<data>
 		TnsK/7KDLAb2qeVGbr9LxXRDCuk=
 		</data>
-		<key>images/pb30@2.png</key>
+		<key>images/pb30@2x.png</key>
 		<data>
 		rpXfWIhVfsCNXlV8CQasm6f5Mtw=
 		</data>
-		<key>images/pb3@2.png</key>
+		<key>images/pb3@2x.png</key>
 		<data>
 		b/urmyZ4HWrByoLMmrbuHBN9ggo=
 		</data>
@@ -1580,19 +2032,27 @@
 		<data>
 		rFcstQAvM4jCBDDCi3DpadHBH1w=
 		</data>
-		<key>images/pb4000@2.png</key>
+		<key>images/pb40000.png</key>
+		<data>
+		sEDnPMToNs7JLyjD4c5PUNHPcGA=
+		</data>
+		<key>images/pb40000@2.png</key>
+		<data>
+		Bqi0QphVXjTGGaaPe4pZbZB9ub4=
+		</data>
+		<key>images/pb4000@2x.png</key>
 		<data>
 		XlWmCMi9Xe5l0+cBY+btIic6RF4=
 		</data>
-		<key>images/pb400@2.png</key>
+		<key>images/pb400@2x.png</key>
 		<data>
 		X3V7z3YiRm18t2SOKNxiI8X7/2k=
 		</data>
-		<key>images/pb40@2.png</key>
+		<key>images/pb40@2x.png</key>
 		<data>
 		zihj4rM16Yl0UGyHOBE9pjrwVi4=
 		</data>
-		<key>images/pb4@2.png</key>
+		<key>images/pb4@2x.png</key>
 		<data>
 		maLtthU7iyHjIDMILth9a76AVdU=
 		</data>
@@ -1612,19 +2072,27 @@
 		<data>
 		B7tgZpCaQpcekbiJZdDDI4bHXkQ=
 		</data>
-		<key>images/pb5000@2.png</key>
+		<key>images/pb50000.png</key>
+		<data>
+		EpPIYsCUa1QiK/fIeIyoYCewfxU=
+		</data>
+		<key>images/pb50000@2.png</key>
+		<data>
+		94Spbtnvs1DdEbkmSzxZVc24isM=
+		</data>
+		<key>images/pb5000@2x.png</key>
 		<data>
 		ATUlT7yG3C74t72UakkNm077F3g=
 		</data>
-		<key>images/pb500@2.png</key>
+		<key>images/pb500@2x.png</key>
 		<data>
 		h8iYniUsHR2WPkazEUlNHR9dhUE=
 		</data>
-		<key>images/pb50@2.png</key>
+		<key>images/pb50@2x.png</key>
 		<data>
 		/v40Se0SyD1sUwuu6+xCVwWT69Q=
 		</data>
-		<key>images/pb5@2.png</key>
+		<key>images/pb5@2x.png</key>
 		<data>
 		2KDo25B6kPdQ4XWkUDuUjrUOyzc=
 		</data>
@@ -1644,19 +2112,27 @@
 		<data>
 		hgXMXR5eIlL0AHhqL5zktBIR/g8=
 		</data>
-		<key>images/pb6000@2.png</key>
+		<key>images/pb60000.png</key>
+		<data>
+		/tlh/heXySJr5or/NMkBjvC510E=
+		</data>
+		<key>images/pb60000@2.png</key>
+		<data>
+		J5U6scGmgP3W1B+NxoZMb6brAK4=
+		</data>
+		<key>images/pb6000@2x.png</key>
 		<data>
 		j4HqLlGSOza3nobSulg6et6anTM=
 		</data>
-		<key>images/pb600@2.png</key>
+		<key>images/pb600@2x.png</key>
 		<data>
 		zRxGkBbpKmjf8Ydvf7T3kz6r/oA=
 		</data>
-		<key>images/pb60@2.png</key>
+		<key>images/pb60@2x.png</key>
 		<data>
 		jpG5TWmpfNEEYTt0u4XH5/e9LPg=
 		</data>
-		<key>images/pb6@2.png</key>
+		<key>images/pb6@2x.png</key>
 		<data>
 		5p3WIVm/67BZxIrmKGrxZCOOvvI=
 		</data>
@@ -1676,19 +2152,27 @@
 		<data>
 		GYOnZPcxk/+rcQW1f7bxU7bM4FQ=
 		</data>
-		<key>images/pb7000@2.png</key>
+		<key>images/pb70000.png</key>
+		<data>
+		ds4qzBckRiY5SRIUUGTVav0dBRQ=
+		</data>
+		<key>images/pb70000@2.png</key>
+		<data>
+		AynLwGUsdoEOT6jc72SIoyLOTbY=
+		</data>
+		<key>images/pb7000@2x.png</key>
 		<data>
 		BnJrGiWiB6sP2kedTAuA/wzVwbc=
 		</data>
-		<key>images/pb700@2.png</key>
+		<key>images/pb700@2x.png</key>
 		<data>
 		YgvDU2xqt2kY8oOwk7i5AEABJog=
 		</data>
-		<key>images/pb70@2.png</key>
+		<key>images/pb70@2x.png</key>
 		<data>
 		Gwv4fPSsTATnkfYF2ewhWi2JAlQ=
 		</data>
-		<key>images/pb7@2.png</key>
+		<key>images/pb7@2x.png</key>
 		<data>
 		q4NedrKtEkVd1l09wlbtn77iLQA=
 		</data>
@@ -1708,19 +2192,27 @@
 		<data>
 		sBWgw3bchDgnWbdxuf9qW5G5P0E=
 		</data>
-		<key>images/pb8000@2.png</key>
+		<key>images/pb80000.png</key>
+		<data>
+		yxKdFyEpxxd6610nbbLD8lC7Gd4=
+		</data>
+		<key>images/pb80000@2.png</key>
+		<data>
+		75bzfGZL8W0cF4qfMzCoLuPCcpM=
+		</data>
+		<key>images/pb8000@2x.png</key>
 		<data>
 		RVGtFNYEhdcqFiGCx0/EYiBgHbA=
 		</data>
-		<key>images/pb800@2.png</key>
+		<key>images/pb800@2x.png</key>
 		<data>
 		lP2rAcZXTAgR0wttPJCZpmKBCmk=
 		</data>
-		<key>images/pb80@2.png</key>
+		<key>images/pb80@2x.png</key>
 		<data>
 		+dU3zUCCUBtBcCrAqGpJEIL9m7Y=
 		</data>
-		<key>images/pb8@2.png</key>
+		<key>images/pb8@2x.png</key>
 		<data>
 		2aN5klup2SmHDDcrAFzg9Bwwspg=
 		</data>
@@ -1740,19 +2232,27 @@
 		<data>
 		gimdINEOIK7CRruNftv9uYc6rDs=
 		</data>
-		<key>images/pb9000@2.png</key>
+		<key>images/pb90000.png</key>
+		<data>
+		cvUXw7SJ21SnPONLjC/uJtue/to=
+		</data>
+		<key>images/pb90000@2.png</key>
+		<data>
+		PK4TSALHy0cqSXqSkX2um5EYaLM=
+		</data>
+		<key>images/pb9000@2x.png</key>
 		<data>
 		Hpz2zTxNkEaIM9ajhoWigm8xHf8=
 		</data>
-		<key>images/pb900@2.png</key>
+		<key>images/pb900@2x.png</key>
 		<data>
 		t1YhPeLG6UNzHY21ajPzO70tc30=
 		</data>
-		<key>images/pb90@2.png</key>
+		<key>images/pb90@2x.png</key>
 		<data>
 		uF6kv1070tNIwSzpW7woVIpH01o=
 		</data>
-		<key>images/pb9@2.png</key>
+		<key>images/pb9@2x.png</key>
 		<data>
 		VYNk0z/OnknjE1/yV9Isc8VgUnM=
 		</data>
@@ -1764,35 +2264,19 @@
 		<data>
 		J572z3GEaiC5bar/ADQykBB+E6g=
 		</data>
-		<key>images/starBlack.png</key>
+		<key>images/pb_star.png</key>
 		<data>
-		o7a3f5epfnuT7bNM+hC9yzjg6Zk=
+		BVegWtVbeA7ebubym0EsFEPBLRo=
 		</data>
-		<key>images/starBlack@2.png</key>
+		<key>images/pb_star@2x.png</key>
 		<data>
-		PONwlIgd0FO34dvF4HB7dwk0hW0=
-		</data>
-		<key>images/starChocbar.png</key>
-		<data>
-		7MTswRaR+qIgrBM6qCRU7goah70=
-		</data>
-		<key>images/starChocbar@2.png</key>
-		<data>
-		Kt725V87fbmQEzBibb5TJBo2c/I=
-		</data>
-		<key>images/starChocchip.png</key>
-		<data>
-		8AeftKlWz0qo4ps6LTKlQvW+t+Y=
-		</data>
-		<key>images/starChocchip@2.png</key>
-		<data>
-		fCqhMVazwyJKz8TbNN5IMM9iAUg=
+		Zo62+ZAMij75O2/KblKqZcH5vmo=
 		</data>
 		<key>images/starDivideHun.png</key>
 		<data>
 		dL/MR8ovU5sI7OpOEJ9Vq9QcVS0=
 		</data>
-		<key>images/starDivideHun@2.png</key>
+		<key>images/starDivideHun@2x.png</key>
 		<data>
 		E3dzG3N5L5O0oYo5JtDLYuHXrCw=
 		</data>
@@ -1800,39 +2284,15 @@
 		<data>
 		ZsGjvtIQEkAoLwcnvkrsA4StXAM=
 		</data>
-		<key>images/starDivideTen@2.png</key>
+		<key>images/starDivideTen@2x.png</key>
 		<data>
 		f2GHz84UbJZExhhNK9OY0L80gN8=
-		</data>
-		<key>images/starJelly.png</key>
-		<data>
-		6/EVIqMHRv/qH9+MLPxRHskiqto=
-		</data>
-		<key>images/starJelly@2.png</key>
-		<data>
-		VKxRdAiFdnUlmBNhga6n0KZ/TWU=
-		</data>
-		<key>images/starOreo.png</key>
-		<data>
-		ZM6QUKrClqsLuxShmY+FNkhh8P0=
-		</data>
-		<key>images/starOreo@2.png</key>
-		<data>
-		ByxLShFtyVgNWFtq4jSg8BJwEv8=
-		</data>
-		<key>images/starPb.png</key>
-		<data>
-		BVegWtVbeA7ebubym0EsFEPBLRo=
-		</data>
-		<key>images/starPb@2.png</key>
-		<data>
-		Zo62+ZAMij75O2/KblKqZcH5vmo=
 		</data>
 		<key>images/starTimesHun.png</key>
 		<data>
 		CVfCxwi1qplp2is8OMZJ3JMPnSc=
 		</data>
-		<key>images/starTimesHun@2.png</key>
+		<key>images/starTimesHun@2x.png</key>
 		<data>
 		/KMsngloRTgyD6Wz/pHw1OzIzSM=
 		</data>
@@ -1840,7 +2300,7 @@
 		<data>
 		CIECoN2vVvG21Sn/p9Vowl3X4q4=
 		</data>
-		<key>images/starTimesTen@2.png</key>
+		<key>images/starTimesTen@2x.png</key>
 		<data>
 		1It//+TZSYUR5GUz8fgX++SqLVk=
 		</data>
@@ -1848,7 +2308,7 @@
 		<data>
 		hwEI07NE1/ct8XtGGkGRyi3t81Y=
 		</data>
-		<key>images/starWhitechoc@2.png</key>
+		<key>images/starWhitechoc@2x.png</key>
 		<data>
 		oYZx/Z7E1Chw5v6mBGJiJdiz/oc=
 		</data>
@@ -1903,14 +2363,6 @@
 		<key>images/trainingModeOVER@2x.png</key>
 		<data>
 		7Bf1dIm9wOxg1TmPskUTF5wVet4=
-		</data>
-		<key>images/truckTemp.png</key>
-		<data>
-		mdmj6J3XVIMa58Y1epxM7Xi7j4E=
-		</data>
-		<key>images/truckTemp@2.png</key>
-		<data>
-		SOw34VoQEyo6whFT0YqCPRyWaZQ=
 		</data>
 		<key>images/white10000.png</key>
 		<data>
@@ -2034,7 +2486,11 @@
 		</data>
 		<key>resource.car</key>
 		<data>
-		gqHjC1FSAn1ePDvgA5V0dmqkWfg=
+		X0DfG0Uhy32jFGu+Jw7U5k3sT1g=
+		</data>
+		<key>scoreboard.ttf</key>
+		<data>
+		UvV/ZwWnaYr3RSQIDzmJJjpubbw=
 		</data>
 		<key>sr_free_icon.png</key>
 		<data>
