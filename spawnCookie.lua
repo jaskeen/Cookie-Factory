@@ -125,7 +125,7 @@ function disappear(x,y,obj1, obj2)
 	cloud.y = -200
 	--closure for passing arguments in a fcn inside of a timer 
 	local closure = function() return comboItem(x,y,remainder,newItems,newValue,units) end
-	disappearTimer = timer.performWithDelay(300,closure,1)
+	disappearTimer = timer.performWithDelay(100,closure,1)
 end
 
 --handler for when boxes collide
@@ -137,7 +137,7 @@ function itemHit(x,y, obj1, obj2)
 	cloud.y = y
 	--wrap the fcn I really want to run inside of a closure so that I can pass it an argument
 	local closure = function() return disappear(x,y,obj1, obj2) end
-	itemHitTimer = timer.performWithDelay(300, closure, 1)
+	itemHitTimer = timer.performWithDelay(100, closure, 1)
 end
 
 
@@ -149,7 +149,7 @@ function onLocalCollision(self, event)
 	if event.phase == "began" then
 		if ((obj1.units == obj2.units) and (obj1.y > 300) and (obj2.y >300)) then--units are the same
 			--check to see if this is the 10,000 units hitting each other, b/c we don't have a graphic for that
-			if (obj1.value + obj2.value > 100000) then--too big so exit fcn
+			if (obj1.value + obj2.value >= 100000) then--too big so exit fcn
 				--TODO: play "bonk!" sound and exit
 				print ("sorry, crates can't combine")
 				return false
@@ -209,8 +209,8 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	cookie:setReferencePoint(display.BottomRightReferencePoint)
 	cookie.name = name
 	cookie.value = value or 1
-	cookie.x = x or(_W)
-	cookie.y = y or 300
+	cookie.x = x or(_W+30)
+	cookie.y = y or 270
 	cookie.units = units
 	physics.addBody(cookie, {radius=radius, shape=shape})
 	cookie.isFixedRotation = true

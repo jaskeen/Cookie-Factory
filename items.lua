@@ -30,7 +30,7 @@ dimensions[60] = {w = 208, h =101}
 dimensions[70] = {w = 238, h =101}
 dimensions[80] = {w = 269, h =101}
 dimensions[90] = {w = 295, h =101}
-dimensions[100] = {w = 152, h =135}
+dimensions[100] = {w = 76, h =67}
 dimensions[200] = {w = 161, h =76}
 dimensions[300] = {w = 160, h =88}
 dimensions[400] = {w = 173, h =87}
@@ -40,14 +40,14 @@ dimensions[700] = {w = 185, h =112}
 dimensions[800] = {w = 198, h =112}
 dimensions[900] = {w = 198, h =124}
 dimensions[1000] = {w = 207, h =124}
-dimensions[2000] = {w = 127,h = 45}
-dimensions[3000] = {w = 127, h =67}
-dimensions[4000] =  {w = 127, h =68}
-dimensions[5000] = {w = 127, h =90}
-dimensions[6000] = {w = 127, h =91}
-dimensions[7000] = {w = 127, h =113}
-dimensions[8000] = {w = 127, h =112}
-dimensions[9000] = {w = 127, h =134}
+dimensions[2000] = {w = 207,h = 73.35}
+dimensions[3000] = {w = 207, h =109}
+dimensions[4000] =  {w = 207, h =111}
+dimensions[5000] = {w = 207, h =147}
+dimensions[6000] = {w = 207, h =148}
+dimensions[7000] = {w = 207, h =184}
+dimensions[8000] = {w = 207, h =183}
+dimensions[9000] = {w = 207, h =218}
 dimensions[10000] = {w = 127, h =134}
 dimensions[20000] = {w = 120, h =75}
 dimensions[30000] = {w = 172, h =79}
@@ -61,8 +61,8 @@ dimensions[90000] = {w = 172, h =190}
 function createItemsForThisLevel(theme)
 	local items = {}
 	items[1] = {name = theme, value = 1, w=48, h=48, units = 1, radius=24}
-	items[10] = {name=theme, value = 111, w=134, h=95, units=10, radius=0, shape= shapes[10]}
-	items[100] = {name=theme, value = 100, w=152,h=135, units=100, radius=0, shape=shapes[100]}
+	items[10] = {name=theme, value = 10, w=134, h=95, units=10, radius=0, shape= shapes[10]}
+	items[100] = {name=theme, value = 100, w=76,h=67, units=100, radius=0, shape=shapes[100]}
 	items[1000] = {name=theme,value=1000, w=207,h=124, units=1000, radius=0, shape= shapes[1000]}
 	items[10000] = {name=theme,value = 10000, w=127,h= 134, units=10000, radius=0, shape = shapes[10000] }
 	for i=9,1.9, -1 do 
@@ -78,8 +78,7 @@ function createItemsForThisLevel(theme)
 		items[i] = {name=theme,value = i, w=dimensions[i].w, h=dimensions[i].h, units=1000, radius=0, shape = shapes[10000]}
 	end
 	for i = 90000,19999, -10000 do 
-		print (i)
-		--items[i] = {name=theme,value = i, w=dimensions[i].w, h=dimensions[i].h, units=10000, radius=0, shape = shapes[100000]}
+		items[i] = {name=theme,value = i, w=dimensions[i].w, h=dimensions[i].h, units=10000, radius=0, shape = shapes[100000]}
 	end
 	return items
 end

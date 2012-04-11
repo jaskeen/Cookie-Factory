@@ -7,14 +7,14 @@ module(..., package.seeall)
 
 --to generate a random # for each level
 ----note: # should have level +1 digits.  hence, level 1 = 2 digits, level 2 has 3 digits, etc.
-function genRandNum(level)
+function genRandNum(digits)
 	 local places = {1}
-     for i=1,level do
+     for i=1,digits do
            table.insert(places, places[#places]*10)
      end
 	
 	local numberT = {}
-	for i=1, level do 
+	for i=1, digits do 
 		table.insert(numberT,math.random(1,9))
 	end
 	local num = tonumber(table.concat(numberT))--concatentate all the items in the table to one string

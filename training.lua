@@ -31,9 +31,19 @@ system.activate("multitouch")
 _H = display.contentHeight
 _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
-local level = 4; local thisLevel
+local thisLevel
 
-local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, questionText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay --forward reference fcns
+local currLevel = 6
+local levels = {}
+levels[1] = { digits= 2, theme = "oreo", unlock = "next level" }
+levels[2] = { digits = 3, theme= "pb", unlock = "next level"}
+levels[3] = { digits = 3, theme= "jelly", unlock = "multiplier"}
+levels[4] = { digits = 4, theme= "jelly", unlock= "next level"}
+levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor" }
+levels[6] = { digits = 5, theme= "chocchip", unlock = "next level"}
+print ("current digits: "..levels[currLevel].digits)
+
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup --forward reference fcns
 
 
 
@@ -66,10 +76,17 @@ end
 --generate a question
 function genQ()
 	-- gen random #
-	-- convert # to textual format
+	local newNum = generate.genRandNum(levels[currLevel].digits);
+	print ("new num: "..newNum.number)
 	--place textual # in marquee
+	lcdText.text = convert.convertNumToText(newNum.number)
+	lcdText:setReferencePoint(display.TopLeftReferencePoint)
+	lcdText.x = 135; lcdText.y = 30
 	-- iterate over omitted # array (in itemInfo object) and create the trays
-	  -- if the item value is "_" make the tray a sensor
+	for i=1, #newNum.omittedReversedArray do 
+		numDisplay[i].text:setText(tostring(newNum.omittedReversedArray[i]))
+		-- if the item value is "_" make the tray a sensor
+	end
 end
 
 --check user's answer
@@ -89,6 +106,7 @@ end
 function scene:createScene( event ) 
 	
 	local group = self.view  --insert all display objects into this
+	trayGroup = display.newGroup()
 	
 	local bg = display.newImageRect("images/BG.png",1024,768)
 	bg.x = _W/2; bg.y = _H/2
@@ -104,7 +122,24 @@ function scene:createScene( event )
 	
 	
 	---------------------------------------- Number BOXES ----------------------------------------
-	
+	values = {1,10,100,1000,10000}
+	numDisplay = {}
+	local digTextX = 630
+	for i=1, levels[currLevel].digits do 
+		numDisplay[i] = {}
+		numDisplay[i].value = values[i]
+		numDisplay[i].text = display.newEmbossedText("0",digTextX,40,"BellGothicStd-Black",48)
+		print (i,numDisplay[i].text.text)
+		numDisplay[i].text:setTextColor(255)
+		digTextX = digTextX - 140
+		trayGroup:insert(numDisplay[i].text)
+	end
+	--empty one of the number fields to begin with
+	if numDisplay[2] then
+		numDisplay[2].text:setText("__")
+	else 
+		numDisplay[1].text:setText("__")
+	end
 	--10,000s
 	local tenThousandsTray = display.newRect(0,0, 140, 40)
 	tenThousandsTray:setFillColor(182,61,91)
@@ -112,6 +147,10 @@ function scene:createScene( event )
 	tenThousandsText:setTextColor(255,255,255)
 	tenThousandsText:setReferencePoint(display.CenterReferencePoint)
 	tenThousandsText.x = 70
+	local tenThousandsPalette = display.newRect(0,0,140,40)
+	tenThousandsPalette:setFillColor(140)
+	tenThousandsPalette:setReferencePoint(display.TopLeftReferencePoint)
+	tenThousandsPalette.x = 0; tenThousandsPalette.y = -40;
 	--1,000s
 	local thousandsTray = display.newRect(140,0, 140, 40)
 	thousandsTray:setFillColor(216,101,88)
@@ -119,6 +158,10 @@ function scene:createScene( event )
 	thousandsText:setTextColor(255,255,255)
 	thousandsText:setReferencePoint(display.CenterReferencePoint)
 	thousandsText.x = 210
+	local thousandsPalette = display.newRect(0,0,140,40)
+	thousandsPalette:setFillColor(140)
+	thousandsPalette:setReferencePoint(display.TopLeftReferencePoint)
+	thousandsPalette.x = 140; thousandsPalette.y = -40;
 	--100s
 	local hundredsTray = display.newRect(280, 0, 140, 40)
 	hundredsTray:setFillColor(225,203,60)
@@ -126,6 +169,10 @@ function scene:createScene( event )
 	hundredsText:setTextColor(255,255,255)
 	hundredsText:setReferencePoint(display.CenterReferencePoint)
 	hundredsText.x = 355
+	local hundredsPalette = display.newRect(0,0,140,40)
+	hundredsPalette:setFillColor(140)
+	hundredsPalette:setReferencePoint(display.TopLeftReferencePoint)
+	hundredsPalette.x = 280; hundredsPalette.y = -40;
 	--10s
 	local tensTray = display.newRect(420, 0, 140, 40)
 	tensTray:setFillColor(82,148,100)
@@ -133,6 +180,10 @@ function scene:createScene( event )
 	tensText:setTextColor(255,255,255)
 	tensText:setReferencePoint(display.CenterReferencePoint)
 	tensText.x = 495
+	local tensPalette = display.newRect(0,0,140,40)
+	tensPalette:setFillColor(140)
+	tensPalette:setReferencePoint(display.TopLeftReferencePoint)
+	tensPalette.x = 420; tensPalette.y = -40;
 	--1s
 	local onesTray = display.newRect(560, 0, 140, 40)
 	onesTray:setFillColor(54, 158,251)
@@ -140,9 +191,17 @@ function scene:createScene( event )
 	onesText:setTextColor(255,255,255)
 	onesText:setReferencePoint(display.CenterReferencePoint)
 	onesText.x = 635
+	local onesPalette = display.newRect(0,0,140,40)
+	onesPalette:setFillColor(140)
+	onesPalette:setReferencePoint(display.TopLeftReferencePoint)
+	onesPalette.x = 560; onesPalette.y = -40;
 
 	--now put them all into a group so you can move the group around with ease
-	local trayGroup = display.newGroup()
+	trayGroup:insert(tenThousandsPalette)
+	trayGroup:insert(thousandsPalette)
+	trayGroup:insert(hundredsPalette)
+	trayGroup:insert(tensPalette)
+	trayGroup:insert(onesPalette)
 	trayGroup:insert(tenThousandsTray)
 	trayGroup:insert(thousandsTray)
 	trayGroup:insert(hundredsTray)
@@ -156,20 +215,20 @@ function scene:createScene( event )
 	trayGroup.x = 240; trayGroup.y = 665
 
 
-	local themes= {"oreo", "pb","chocchip","jelly"}
-	local theme = themes[level]
-	items=itemInfo.createItemsForThisLevel(theme)
+	items=itemInfo.createItemsForThisLevel(levels[currLevel].theme)
 	
 	--list which cookies are available on each level
 	local levelObjects = {
 		{items[1], items[1], items[1], items[10]},
 		{items[1], items[10],items[1], items[1], items[100], items[10]},
 		{items[1], items[10],items[100], items[1], items[1], items[1000]},
+		{items[1], items[10],items[100], items[1], items[10], items[1], items[1000]},
+		{items[1], items[10],items[100], items[1], items[10], items[1], items[1000], items[10000]},
 		{items[1], items[10],items[100], items[1], items[10], items[1], items[1000], items[10000]},
 	}
-	thisLevel = levelObjects[level]
+	thisLevel = levelObjects[currLevel]
 		
-		--[[
+		
 		--create an intro message
 		local intro = display.newGroup()
 		local introBg = display.newRoundedRect(0,0,640,400,5)
@@ -179,14 +238,15 @@ function scene:createScene( event )
 		intro:insert(introBg)
 		local message = "Welcome to our factory. We need help packaging cookies for delivery, but someone seems to have forgotten to fill one of the places in each order.  Please help us by combining cookies to the right amount.  After combining them, drag the cookie to the empty spot below and they'll be packaged."
 		local introText = display.newRetinaText(message,20,20,600,400, "Helvetica", 30)
+		--
 		
 		intro:insert(introText)
 		intro:setReferencePoint(display.CenterReferencePoint)
 		intro.x = _W/2; intro.y = _H/2
-]]
+
 	 --marquee
-		questionText = "seven million, seven hundred seventy-seven thousand, seven hundred seventy-seven"
-		lcdText = display.newRetinaText(questionText,135, 30, "BellGothicStd-Black", 19,{255,0,0})
+		lcdText = display.newRetinaText("",135, 30, "BellGothicStd-Black", 28)
+		lcdText:setReferencePoint(display.TopLeftReferencePoint)
 		lcdText:setTextColor(0,255,0)
 		
 		-- time display 
@@ -207,14 +267,16 @@ function scene:createScene( event )
 		countBox:setStrokeColor(0,255,0)		
 		countDisplay = display.newText("Orders: ",5,75, "BellGothicStd-Black",24)
 		countDisplay:setTextColor(0,255,0)
-		
+
 		--insert them all into one group
 		feedbackGroup:insert(timeBox)
 		feedbackGroup:insert(timeDisplay)
 		feedbackGroup:insert(countBox)
 		feedbackGroup:insert(countDisplay)
 		feedbackGroup.x = 30; feedbackGroup.y = _H-135
-		--orders display (i.e., count)
+
+	
+	
 	
 	--insert everything into group in the desired order
 	group:insert(lcdText)
@@ -254,7 +316,8 @@ function scene:enterScene( event )
 		--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
 	function generator()
 		-- make sure to move this code to a question controlling 
-		local randNum = generate.genRandNum(level)
+		print ("digits: "..levels[currLevel].digits)
+		local randNum = generate.genRandNum(levels[currLevel].digits)
 		--print (randNum.n`umber,randNum.omittedNum)
 		--print (convert.convertNumToText(randNum.number))
 		local newCookie = math.random(#thisLevel)
@@ -262,6 +325,7 @@ function scene:enterScene( event )
 		local cookieSpawn = spawn.spawnCookie(c.name,c.value, c.w,c.h,c.units, c.radius, c.shape)
 		group:insert(cookieSpawn)
 		group:insert(levelBar)
+		genQ()
 	end
 	-----------------------------------------------------------------------------
 	
