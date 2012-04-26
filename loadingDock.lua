@@ -135,7 +135,7 @@ function scene:createScene( event )
 local themes= {"creme", "pb","jelly","chocchip"}
 local theme = themes[level]
 
-items=itemInfo.createItemsForThisLevel(theme)
+items=spawn.createItemsForThisLevel(theme)
 
 	--the omitted# from the trucks (with the exception of 1) will determine the cookie to appear
 
@@ -289,7 +289,6 @@ for i=1, #newList-1 do
 	pallet.collision=onLocalCollision
 	pallet:addEventListener( "collision", pallet)
 	pallet:addEventListener("touch", startDrag)
-
 end
 
 
