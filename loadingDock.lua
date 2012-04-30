@@ -118,14 +118,14 @@ function scene:createScene( event )
 	 
 	function onLocalCollision( self, touch )
 		if ( touch.phase == "began" ) then
-			print( self.value.."collision BEGAN with" .. touch.other.value )
-				if self.value==touch.other.value then
+			print( self.myName.."collision BEGAN with" .. touch.other.myName )
+				if self.myName==touch.other.myName then
 					print("MATCH")
 				else 
 					print("No Match")
 				end
 		elseif ( touch.phase == "ended" ) then
-			print( self.value .. " ended a collision with " .. touch.other.value )
+			print( self.myName .. " ended a collision with " .. touch.other.myName )
 			return true
 		end
 	end
@@ -228,14 +228,14 @@ function createTruck(truckX,truckY, numObj)
 		numberText:setTextColor(75)
 		truck:insert(numberText)
 	truck.value=numObj.omittedValue
-	TV=truck.value
-		--print("TV: "..TV)
+	truck.myName="Truck Number: "..truck.value
+		print(truck.myName)
 	key=createKey(createdItems)
 	truck.key=key
 	createdItems[key]=truck
 	truck.x=truckX
 	truck.y=truckY
-	physics.addBody(truck, "static", {friction=0.7})
+	physics.addBody(truck, "static", {isSensor=true})
 	truck.collision=onLocalCollision
 	truck:addEventListener( "collision", truck )
 end
@@ -246,10 +246,8 @@ truckY=250 --increase by 125
 for i=1, #newList do
 	createTruck(truckX, truckY, newList[i])
 	truckX=truckX+80
-	truckY=truckY+125
-	
+	truckY=truckY+125	
 	--truck:addEventListener("touch", truck)
-	
 end
 	
 --2 Generate 3 of the 4 cookie objects 		
@@ -274,8 +272,8 @@ function createPallet(palletY, numObj)
 		pallet.key=key
 		createdItems[key]=pallet
 	pallet.value=numObj.omittedValue--should this actually be the omittedValue so it can be compared to the truck?
-		PV=pallet.value
-		--print("PV: "..PV)
+		pallet.myName="Palette Number:"..pallet.value
+		print(pallet.myName)
 	pallet.x=120
 	pallet.y=palletY
 	physics.addBody(pallet,"kinetic", {friction=0.7})
@@ -286,19 +284,17 @@ for i=1, #newList-1 do
 	createPallet(palletPositions[i], newList[i], items[i])
 	print(palletPositions[i])
 	print(items[i])
-	pallet.collision=onLocalCollision
+	pallet.collision=onLocalCollision --these collision events must go in here to be applied to all pallets
 	pallet:addEventListener( "collision", pallet)
 	pallet:addEventListener("touch", startDrag)
-
 end
 
 
-	
 
 
 --Create a Function that will check that the numObjects are the same for the Pallets and Trucks (matching omitted numbers)
 function checkForMatchingValues(TV, PV)
-	if PV==TV then
+	if truck.myName==pallet.myName then
 	print("match")
 	else
 	print("try again")
