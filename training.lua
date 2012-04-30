@@ -24,8 +24,6 @@ local spawn = require ("spawnCookie")
 local physics = require("physics")
 physics.start()
 physics.setGravity(0,0)
---physics.setDrawMode("hybrid")
---local gameUI = require("gameUI")
 system.activate("multitouch")
 ----------------- VARIABLES --------------------------
 _H = display.contentHeight
@@ -33,18 +31,22 @@ _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
 local thisLevel
 
-local currLevel = 6
+local currLevel = 6 --remember to get this from the user's personal data at some point
+local currMode = "timed" -- or count; also switch this per user request
+
+
 local levels = {}
-levels[1] = { digits= 2, theme = "oreo", unlock = "next level", stars=1 }
-levels[2] = { digits = 3, theme= "pb", unlock = "next level", stars = 2}
-levels[3] = { digits = 3, theme= "jelly", unlock = "multiplier", stars = 2}
-levels[4] = { digits = 4, theme= "jelly", unlock= "next level", stars = 3}
-levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor", stars = 4 }
-levels[6] = { digits = 5, theme= "chocchip", unlock = "next level", stars = 4}
+levels[1] = { digits= 2, theme = "oreo", unlock = "next level", stars=1, count = 10, timed = 3 }
+levels[2] = { digits = 3, theme= "pb", unlock = "next level", stars = 2, count = 15, timed = 3}
+levels[3] = { digits = 3, theme= "jelly", unlock = "multiplier", stars = 2, count = 20, timed = 3}
+levels[4] = { digits = 4, theme= "jelly", unlock= "next level", stars = 3, count = 25, timed = 3}
+levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor", stars = 4, count = 30, timed = 3 }
+levels[6] = { digits = 5, theme= "chocchip", unlock = "next level", stars = 4, count = 35, timed = 3}
 
-local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup, genStars,generatedBlocks,spawnBlock,inArray,genKey --forward reference fcns
+--forward references
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup, genStars,generatedBlocks,spawnBlock,inArray,genKey, dropZone, itemSensor, cookieGroup, currNum, correct, attempted, timerDisplay, ordersDisplay, correctDisplay, timeCount, timeCounter,orderCount, orderCounter, correctCount, correctCounter
 
-
+local font = "Helvetica"
 
 -- 'onRelease' event listener for return to main menu
 function onBtnRelease(event)
@@ -55,8 +57,17 @@ function onBtnRelease(event)
 end
 
 --generate the list of questions in the list per the current condition
-function startSession(mode, timeLimit, totalQuestions)
+function startSession(mode)
+	orderCount = 0
+	timeCount = levels[currLevel].timed*60
+	orderCounter.text = tostring(orderCount)
 	--first, determine what mode this is 
+	if currMode == "timed" then
+		countdown = timer.performWithDelay(1000, function()
+			timeCount = timeCount -1
+			timeCounter.text = tostring(timeCount)
+		end, 60*levels[currLevel].timed)
+	end --count elseif
 	--then, start timer 
 	--then, start counter 
     -- if mode == counter then
@@ -67,9 +78,9 @@ function startSession(mode, timeLimit, totalQuestions)
 	      --report session data to ACCEL
     -- if mode == timer then
     	-- start a count-down (i.e., initiate another time )
-	if mode=="time" then -- as many qs as can be answered in a fixed amount of time 
-		local timedGame = timer.performWithDelay()
-	end
+    currNum = genQ()
+	generator()
+	spawnTimer = timer.performWithDelay(createRate, generator,0)	
 end
 
 --check if a value is in an array (http://developer.anscamobile.com/forum/2011/08/21/urgent-custom-fonts-ios-31)
@@ -115,6 +126,7 @@ function spawnBlock(x)
 	trayGroup:insert(block)
 	return block
 end
+
 --generate a question
 function genQ()
 	-- gen random #
@@ -128,7 +140,7 @@ function genQ()
 	local reverseNumT = table.invert(newNum.numberT,1)
   --clear out all the old blocks
 		for k, v in pairs(generatedBlocks) do 
-			print ("removing: "..k)
+			--print ("removing: "..k)
 			generatedBlocks[k] = nil
 			v:removeSelf()
 			v = nil
@@ -142,21 +154,27 @@ function genQ()
 				spawnBlock(startingX)
 				startingX = startingX - 14
 			else 	-- if the item value is "_" make the tray a sensor
-				
+				dropZone.x = startingX + 240
+				dropZone.y = 620
+				cookieGroup:insert(dropZone)
 			end
 		end
 	end
+	return newNum
 end
 
+
 --check user's answer
-function checkQ(mode, correctAnswer)
+function checkAnswer(self, event)	
 	--if the item is over a sensor
-	    -- highlight the tray with a border (or something else to call attention to it)
-	  -- if the event is  an ended event on the item, then animate it to the tray (reduce its size)
-	  -- then change the # to the value of what was placed in the tray
-	  -- mark the answer
-	  --check the answer against the correct answer
-	  --update the count accordingly (either up or down depending on  mode)
+	if event.phase == "began" then
+		dropZone.alpha = 1
+		spawn.touchingOnRelease = true
+	elseif event.phase == "ended" then
+		dropZone.alpha = 0	
+		spawn.touchingOnRelease = false
+	end	
+	return true
 end
 
 
@@ -166,6 +184,8 @@ function scene:createScene( event )
 	
 	local group = self.view  --insert all display objects into this
 	trayGroup = display.newGroup()
+	--create group to put cookies into
+	cookieGroup = display.newGroup()
 	
 	local bg = display.newImageRect("images/BG.png",1024,768)
 	bg.x = _W/2; bg.y = _H/2
@@ -177,7 +197,6 @@ function scene:createScene( event )
 	levelBar = display.newImageRect("images/levelbar.png",90,_H)
 	levelBar:setReferencePoint(display.TopRightReferencePoint)
 	levelBar.x = _W; levelBar.y=0
-	
 	
 	
 	---------------------------------------- Number BOXES ----------------------------------------
@@ -198,6 +217,7 @@ function scene:createScene( event )
 	else 
 		numDisplay[1].text:setText("__")
 	end
+	local paletteColor = 180
 	--10,000s
 	local tenThousandsTray = display.newRect(0,0, 140, 40)
 	tenThousandsTray:setFillColor(182,61,91)
@@ -206,7 +226,7 @@ function scene:createScene( event )
 	tenThousandsText:setReferencePoint(display.CenterReferencePoint)
 	tenThousandsText.x = 70
 	local tenThousandsPalette = display.newRect(0,0,140,40)
-	tenThousandsPalette:setFillColor(140)
+	tenThousandsPalette:setFillColor(paletteColor)
 	tenThousandsPalette:setReferencePoint(display.TopLeftReferencePoint)
 	tenThousandsPalette.x = 0; tenThousandsPalette.y = -40;
 	--1,000s
@@ -217,7 +237,7 @@ function scene:createScene( event )
 	thousandsText:setReferencePoint(display.CenterReferencePoint)
 	thousandsText.x = 210
 	local thousandsPalette = display.newRect(0,0,140,40)
-	thousandsPalette:setFillColor(140)
+	thousandsPalette:setFillColor(paletteColor)
 	thousandsPalette:setReferencePoint(display.TopLeftReferencePoint)
 	thousandsPalette.x = 140; thousandsPalette.y = -40;
 	--100s
@@ -228,7 +248,7 @@ function scene:createScene( event )
 	hundredsText:setReferencePoint(display.CenterReferencePoint)
 	hundredsText.x = 355
 	local hundredsPalette = display.newRect(0,0,140,40)
-	hundredsPalette:setFillColor(140)
+	hundredsPalette:setFillColor(paletteColor)
 	hundredsPalette:setReferencePoint(display.TopLeftReferencePoint)
 	hundredsPalette.x = 280; hundredsPalette.y = -40;
 	--10s
@@ -239,7 +259,7 @@ function scene:createScene( event )
 	tensText:setReferencePoint(display.CenterReferencePoint)
 	tensText.x = 495
 	local tensPalette = display.newRect(0,0,140,40)
-	tensPalette:setFillColor(140)
+	tensPalette:setFillColor(paletteColor)
 	tensPalette:setReferencePoint(display.TopLeftReferencePoint)
 	tensPalette.x = 420; tensPalette.y = -40;
 	--1s
@@ -250,10 +270,24 @@ function scene:createScene( event )
 	onesText:setReferencePoint(display.CenterReferencePoint)
 	onesText.x = 635
 	local onesPalette = display.newRect(0,0,140,40)
-	onesPalette:setFillColor(140)
+	onesPalette:setFillColor(paletteColor)
 	onesPalette:setReferencePoint(display.TopLeftReferencePoint)
 	onesPalette.x = 560; onesPalette.y = -40;
 
+
+	--create a target block (i.e. "dropzone") for delivering the packaged cookies
+	dropZone = display.newRect(0,0, 140,130)
+	dropZone:setFillColor(255,255,255,30)
+	dropZone.strokeWidth = 4
+	dropZone.alpha = 0 -- make invisible to begin with
+	dropZone:setStrokeColor(255,0,0)
+	dropZone:setReferencePoint(display.TopRightReferencePoint)
+	physics.addBody(dropZone)
+	dropZone.isSensor = true
+	dropZone.collision = checkAnswer
+	dropZone:addEventListener("collision",dropZone)
+	dropZone.y = -45
+	
 	--now put them all into a group so you can move the group around with ease
 	trayGroup:insert(tenThousandsPalette)
 	trayGroup:insert(thousandsPalette)
@@ -270,7 +304,9 @@ function scene:createScene( event )
 	trayGroup:insert(hundredsText)
 	trayGroup:insert(tensText)
 	trayGroup:insert(onesText)
+	trayGroup:insert(dropZone)
 	trayGroup.x = 240; trayGroup.y = 665
+
 
 
 	items=itemInfo.createItemsForThisLevel(levels[currLevel].theme)
@@ -317,6 +353,10 @@ function scene:createScene( event )
 		timeBox:setStrokeColor(0,255,0)
 		timeDisplay = display.newText("Time: ",5,10, "BellGothicStd-Black",24 )
 		timeDisplay:setTextColor(0,255,0)
+		
+		timeCounter = display.newRetinaText(tostring(timeCount),110,5,font,28)
+		timeCounter:setTextColor(0,255,0)
+		
 		local countBox = display.newRect(0,0,200,50)
 		countBox:setReferencePoint(display.TopLeftReferencePoint)
 		countBox.x = 0; countBox.y = 65;
@@ -325,12 +365,16 @@ function scene:createScene( event )
 		countBox:setStrokeColor(0,255,0)		
 		countDisplay = display.newText("Orders: ",5,75, "BellGothicStd-Black",24)
 		countDisplay:setTextColor(0,255,0)
-
+	
+		orderCounter = display.newRetinaText(tostring(orderCount),110,70,font,28)
+		orderCounter:setTextColor(0,255,0)
 		--insert them all into one group
 		feedbackGroup:insert(timeBox)
 		feedbackGroup:insert(timeDisplay)
 		feedbackGroup:insert(countBox)
 		feedbackGroup:insert(countDisplay)
+		feedbackGroup:insert(timeCounter)
+		feedbackGroup:insert(orderCounter)
 		feedbackGroup.x = 30; feedbackGroup.y = _H-135
 
 	
@@ -345,6 +389,8 @@ function scene:createScene( event )
 		end
 	end
 	
+
+	
 	--insert everything into group in the desired order
 	group:insert(lcdText)
 	group:insert(bg)
@@ -352,7 +398,9 @@ function scene:createScene( event )
 	group:insert(feedbackGroup)
 	--group:insert(intro)
 	group:insert(trayGroup)
+	group:insert(cookieGroup)
 	group:insert(levelBar)
+	--group:insert(testGroup)
 
 end
 
@@ -360,12 +408,15 @@ end
 function scene:enterScene( event )
 	local group = self.view
 	
+
+		
+		
 		leftGroup = display.newGroup()
 		--left  wall slice is not part of the storyboard group so that it remains on top of everything.  Have to remove and add it when you leave/enter the screen
 		leftSlice = display.newImageRect("images/BGsliceLeft.png",35,413)
 		leftSlice:setReferencePoint(display.TopLeftReferencePoint)
 		leftSlice.x = 0; leftSlice.y = 0;		
-		
+
 		homeBtn=widget.newButton{
 		default="images/homeBtn.png",
 		width=80,
@@ -387,17 +438,13 @@ function scene:enterScene( event )
 		local newCookie = math.random(#thisLevel)
 		local c = thisLevel[newCookie]
 		local cookieSpawn = spawn.spawnCookie(c.name,c.value, c.w,c.h,c.units, c.radius, c.shape)
-		group:insert(cookieSpawn)
-		group:insert(levelBar)
-		genQ()
+		cookieGroup:insert(cookieSpawn)
+		--group:insert(levelBar)
 	end
 	-----------------------------------------------------------------------------
 	
 	--run the function right at the beginning so we don't have to wait for the first timer to go off
-	genQ()
-	generator()
-	spawnTimer = timer.performWithDelay(createRate, generator,0)	
-	
+	startSession(currMode)
 	
 	function reset()
 		timer.pause(spawnTimer)
@@ -412,7 +459,20 @@ function scene:enterScene( event )
 		--garbage.text = "Garbage collected:  "..collectgarbage("count")
 		--texture.text = "Texture memory: "..system.getInfo("textureMemoryUsed")
 		collectgarbage("collect")
-		--second, look for collisions (code from http://omnigeek.robmiracle.com/2011/12/14/collision-detection-without-physics/)
+		if spawn.answerSent == true then
+			spawn.answerSent = false
+			local userAnswer = spawn.sentValue
+			--check answer and register stats
+			if currNum.omitttedValue == userAnswer  then--got it right
+				correct = correct +1
+			end
+			timer.performWithDelay(300,function()
+				currNum = genQ()
+				dropZone.alpha = 0		
+				orderCount = orderCount+1
+				orderCounter.text = tostring(orderCount)
+				end, 1)
+		end
 	end
 	
 	Runtime:addEventListener("enterFrame",enterFrame)

@@ -5,6 +5,9 @@ module(..., package.seeall)
 
 --public variables
 moveRate = 2 -- how fast the cookie moves across the screen
+touchingOnRelease = false
+answerSent = false
+sentValue = 0
 
 --forward declarations
 local disappear, itemHit, onLocalCollision, cookieGroup
@@ -23,6 +26,13 @@ local function inArray(array, value)
         	is = true; break end
     end
     return is
+end
+	
+--send an answer with its value
+local function sendAnswer(value)
+	sentValue = value
+	answerSent = true
+	touchingOnRelease = false --just to be safe
 end
 	
 --handler for making a new item appear
@@ -151,7 +161,7 @@ function onLocalCollision(self, event)
 			--check to see if this is the 10,000 units hitting each other, b/c we don't have a graphic for that
 			if (obj1.value + obj2.value >= 100000) then--too big so exit fcn
 				--TODO: play "bonk!" sound and exit
-				print ("sorry, crates can't combine")
+				print ("sorry, haven't got anything higher")
 				return false
 			else
 				--commence transformation
@@ -256,6 +266,23 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 				showValue.y = -200
 				display.getCurrentStage():setFocus(self,nil)
 				self.isFocus=false
+				if touchingOnRelease == true then
+					--package is in the dropzone and ready to be delivered
+					transition.to(self, {time=300, yScale = .01, xScale = .01, x = self.x, y = 665, alpha = 0})
+					--store item info to check if it's right or not
+					local checkedVal = self.value
+					print(checkedVal)
+					timer.performWithDelay(500, function()  
+							Runtime:removeEventListener("enterFrame",self)
+							generatedItems[self.key] = nil
+							collectgarbage("collect")
+							self:removeSelf()
+							self = nil
+						end, 1)
+					--send a notification to a runtime event that's listening for 
+					sendAnswer(checkedVal)
+						touchingOnRelease = false -- if you don't set this back to false, all future items get "sucked in"
+				end
 				return true
 			end
 		end
