@@ -418,14 +418,14 @@ function scene:enterScene( event )
 		leftSlice.x = 0; leftSlice.y = 0;		
 
 		homeBtn=widget.newButton{
-		default="images/homeBtn.png",
+		default="images/btnHome.png",
 		width=80,
 		height=80,
 		onRelease = onBtnRelease	-- event listener function
 		}
 		homeBtn:setReferencePoint(display.CenterReferencePoint)
-		homeBtn.x = 35
-		homeBtn.y = 40
+		homeBtn.x = 40
+		homeBtn.y = 45
 		homeBtn.scene="menu"
 		
 		leftGroup:insert(leftSlice)
