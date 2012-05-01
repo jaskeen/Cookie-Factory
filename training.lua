@@ -31,17 +31,17 @@ _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
 local thisLevel
 
-local currLevel = 6 --remember to get this from the user's personal data at some point
+local currLevel = 5 --remember to get this from the user's personal data at some point
 local currMode = "timed" -- or count; also switch this per user request
 
 
 local levels = {}
-levels[1] = { digits= 2, theme = "oreo", unlock = "next level", stars=1, count = 10, timed = 3 }
-levels[2] = { digits = 3, theme= "pb", unlock = "next level", stars = 2, count = 15, timed = 3}
-levels[3] = { digits = 3, theme= "jelly", unlock = "multiplier", stars = 2, count = 20, timed = 3}
-levels[4] = { digits = 4, theme= "jelly", unlock= "next level", stars = 3, count = 25, timed = 3}
-levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor", stars = 4, count = 30, timed = 3 }
-levels[6] = { digits = 5, theme= "chocchip", unlock = "next level", stars = 4, count = 35, timed = 3}
+levels[1] = { digits= 2, theme = "oreo", unlock = "next level", stars=1, starImg = "oreo_star.png", count = 10, timed = 3 }
+levels[2] = { digits = 3, theme= "pb", unlock = "next level", stars = 2, starImg = "pb_star.png", count = 15, timed = 3}
+levels[3] = { digits = 3, theme= "jelly", unlock = "multiplier", stars = 2, starImg = "jelly_star.png",  count = 20, timed = 3}
+levels[4] = { digits = 4, theme= "jelly", unlock= "next level", stars = 3,  starImg = "timesTen.png", count = 25, timed = 3}
+levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor", stars = 4,  starImg = "chocchip_star.png", count = 30, timed = 3 }
+levels[6] = { digits = 5, theme= "chocchip", unlock = "next level", stars = 4,  starImg = "mallet.png", count = 35, timed = 3}
 
 --forward references
 local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup, genStars,generatedBlocks,spawnBlock,inArray,genKey, dropZone, itemSensor, cookieGroup, currNum, correct, attempted, timerDisplay, ordersDisplay, correctDisplay, timeCount, timeCounter,orderCount, orderCounter, correctCount, correctCounter
@@ -194,9 +194,6 @@ function scene:createScene( event )
 	conveyor.x = 35; conveyor.y = 200;
 	--	physics.addBody(conveyor, "static", {shape=-360, 632,   360, 632,   456, 527,   456, 474,   -456, 474,   -456, 527})
 	
-	levelBar = display.newImageRect("images/levelbar.png",90,_H)
-	levelBar:setReferencePoint(display.TopRightReferencePoint)
-	levelBar.x = _W; levelBar.y=0
 	
 	
 	---------------------------------------- Number BOXES ----------------------------------------
@@ -377,15 +374,38 @@ function scene:createScene( event )
 		feedbackGroup:insert(orderCounter)
 		feedbackGroup.x = 30; feedbackGroup.y = _H-135
 
+	local sideBar = display.newGroup()
+	levelBar = display.newImageRect("images/levelbar.png",90,_H)
+	levelBar:setReferencePoint(display.TopRightReferencePoint)
+	levelBar.x = 0; levelBar.y=0
+	sideBar:insert(levelBar)
+	sideBar.x = _W; sideBar.y =0
 	
-	local stars = {"black"}
-	local starY = _H - 50
+	--generate stars on levelBar
 	function genStars()
-		for i=1, #stars do 
-			local star = display.newImageRect("images/"..stars[i].."_star.png",66,67)
-			star.x = _W-41; star.y = starY;
+		local gradient = graphics.newGradient(
+			{134,10,200},{100, 0},"down"
+		)
+		-- first, put the black stars on the screen
+		local starY = _H - 50
+		for i=1, #levels do 
+			local star = display.newImageRect("images/black_star.png",66,67)
+			star.x = -41; star.y = starY;
 			starY = starY - 90
-			group:insert(star)
+			sideBar:insert(star)
+		end
+		starY = _H - 50 -- return and fill in the completed levels
+		--now, generate the levels the user has accomplished so far, greying out the last one
+		for i=1, currLevel do 
+			local star = display.newImageRect("images/"..levels[i].starImg,66,67)
+			star.x = -41; star.y = starY
+			starY = starY-90
+			--check if this is the level they're currently working on.  If so, put a gradient on the image, or change it's opacity
+			if i == currLevel then
+				--star:setFillColor(gradient) -- for some reason I get an error "gradients cannot be applied to image objects"
+				star.alpha = .3
+			end
+			sideBar:insert(star)
 		end
 	end
 	
@@ -399,7 +419,7 @@ function scene:createScene( event )
 	--group:insert(intro)
 	group:insert(trayGroup)
 	group:insert(cookieGroup)
-	group:insert(levelBar)
+	group:insert(sideBar)
 	--group:insert(testGroup)
 
 end
@@ -439,7 +459,6 @@ function scene:enterScene( event )
 		local c = thisLevel[newCookie]
 		local cookieSpawn = spawn.spawnCookie(c.name,c.value, c.w,c.h,c.units, c.radius, c.shape)
 		cookieGroup:insert(cookieSpawn)
-		--group:insert(levelBar)
 	end
 	-----------------------------------------------------------------------------
 	
