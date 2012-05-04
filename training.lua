@@ -18,6 +18,7 @@ storyboard.currentScene = "training"
 ---------------------------------------------------------------------------------
 display.setStatusBar( display.HiddenStatusBar )  -- hide the status bar
 --import physics,  gameUI, activate multitouch
+local proxy = require "proxy"
 local convert = require ("convertNumToText")
 local generate = require ("generateNumInfo")
 local spawn = require ("spawnCookie")
@@ -31,7 +32,7 @@ _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
 local thisLevel
 
-local currLevel = 5 --remember to get this from the user's personal data at some point
+local currLevel = 2 --remember to get this from the user's personal data at some point
 local currMode = "timed" -- or count; also switch this per user request
 
 
@@ -353,6 +354,8 @@ function scene:createScene( event )
 		
 		timeCounter = display.newRetinaText(tostring(timeCount),110,5,font,28)
 		timeCounter:setTextColor(0,255,0)
+				
+		
 		
 		local countBox = display.newRect(0,0,200,50)
 		countBox:setReferencePoint(display.TopLeftReferencePoint)
@@ -409,29 +412,7 @@ function scene:createScene( event )
 		end
 	end
 	
-
-	
-	--insert everything into group in the desired order
-	group:insert(lcdText)
-	group:insert(bg)
-	group:insert(conveyor)
-	group:insert(feedbackGroup)
-	--group:insert(intro)
-	group:insert(trayGroup)
-	group:insert(cookieGroup)
-	group:insert(sideBar)
-	--group:insert(testGroup)
-
-end
-
--- Called immediately after scene has moved onscreen:
-function scene:enterScene( event )
-	local group = self.view
-	
-
-		
-		
-		leftGroup = display.newGroup()
+	leftGroup = display.newGroup()
 		--left  wall slice is not part of the storyboard group so that it remains on top of everything.  Have to remove and add it when you leave/enter the screen
 		leftSlice = display.newImageRect("images/BGsliceLeft.png",35,413)
 		leftSlice:setReferencePoint(display.TopLeftReferencePoint)
@@ -450,6 +431,37 @@ function scene:enterScene( event )
 		
 		leftGroup:insert(leftSlice)
 		leftGroup:insert(homeBtn)
+	
+	--insert everything into group in the desired order
+	group:insert(lcdText)
+	group:insert(bg)
+	group:insert(conveyor)
+	group:insert(feedbackGroup)
+	--group:insert(intro)
+	group:insert(trayGroup)
+	group:insert(cookieGroup)
+	group:insert(leftGroup)
+	group:insert(sideBar)
+	--group:insert(testGroup)
+
+end
+
+-- Called immediately after scene has moved onscreen:
+function scene:enterScene( event )
+	local group = self.view
+--[[
+--turn timeCounter into proxy so that it can listen for property updates
+		timeCounter = proxy.get_proxy_for(timeCounter)
+
+		
+		function timeCounter:propertyUpdate(event)
+			if event.key == "text" then
+				print "text updated"
+			end
+		end
+
+		timeCounter:addEventListener("propertyUpdate")
+	]]
 	
 		--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
 	function generator()
