@@ -32,7 +32,7 @@ _W = display.contentWidth
 local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
 local thisLevel
 
-local currLevel = 2 --remember to get this from the user's personal data at some point
+local currLevel = 6 --remember to get this from the user's personal data at some point
 local currMode = "timed" -- or count; also switch this per user request
 
 
@@ -117,7 +117,7 @@ function spawnBlock(x)
 	local block = display.newGroup()
 	local image = display.newRect(0, 0, 14,40)
 	image:setReferencePoint(display.TopRightReferencePoint)
-	image.y = -42; image.x = x;
+	image.y = -40; image.x = x;
 	image:setFillColor(255)
 	image:setStrokeColor(0)
 	image.strokeWidth=2
@@ -134,9 +134,10 @@ function genQ()
 	local newNum = generate.genRandNum(levels[currLevel].digits);
 	print ("new num: "..newNum.number)
 	--place textual # in marquee
+	lcdText.align = "right"
 	lcdText.text = convert.convertNumToText(newNum.number)
-	lcdText:setReferencePoint(display.TopLeftReferencePoint)
-	lcdText.x = 135; lcdText.y = 30
+	lcdText:setReferencePoint(display.TopRightReferencePoint)
+	lcdText.x = _W-100; lcdText.y = _H-30
 	-- iterate over omitted # array (in itemInfo object) and create the trays
 	local reverseNumT = table.invert(newNum.numberT,1)
   --clear out all the old blocks
@@ -156,7 +157,7 @@ function genQ()
 				startingX = startingX - 14
 			else 	-- if the item value is "_" make the tray a sensor
 				dropZone.x = startingX + 240
-				dropZone.y = 620
+				dropZone.y = 595
 				cookieGroup:insert(dropZone)
 			end
 		end
@@ -188,11 +189,11 @@ function scene:createScene( event )
 	--create group to put cookies into
 	cookieGroup = display.newGroup()
 	
-	local bg = display.newImageRect("images/BG.png",1024,768)
+	local bg = display.newImageRect("images/newBG.png",1024,768)
 	bg.x = _W/2; bg.y = _H/2
-	local conveyor = display.newImageRect("images/conveyor.png",912, 158)
+	local conveyor = display.newImageRect("images/conveyor.png",932, 158)
 	conveyor:setReferencePoint(display.TopLeftReferencePoint)
-	conveyor.x = 35; conveyor.y = 200;
+	conveyor.x = 35; conveyor.y = 180;
 	--	physics.addBody(conveyor, "static", {shape=-360, 632,   360, 632,   456, 527,   456, 474,   -456, 474,   -456, 527})
 	
 	
@@ -204,7 +205,7 @@ function scene:createScene( event )
 	for i=1, levels[currLevel].digits do 
 		numDisplay[i] = {}
 		numDisplay[i].value = values[i]
-		numDisplay[i].text = display.newEmbossedText("0",digTextX,40,"BellGothicStd-Black",48)
+		numDisplay[i].text = display.newEmbossedText("0",digTextX,45,"BellGothicStd-Black",36)
 		numDisplay[i].text:setTextColor(255)
 		digTextX = digTextX - 140
 		trayGroup:insert(numDisplay[i].text)
@@ -219,7 +220,7 @@ function scene:createScene( event )
 	--10,000s
 	local tenThousandsTray = display.newRect(0,0, 140, 40)
 	tenThousandsTray:setFillColor(182,61,91)
-	local tenThousandsText = display.newEmbossedText("ten thousands",5,10,"BellGothicStd-Black", 22)
+	local tenThousandsText = display.newEmbossedText("ten thousands",5,10,"BellGothicStd-Black", 21)
 	tenThousandsText:setTextColor(255,255,255)
 	tenThousandsText:setReferencePoint(display.CenterReferencePoint)
 	tenThousandsText.x = 70
@@ -230,7 +231,7 @@ function scene:createScene( event )
 	--1,000s
 	local thousandsTray = display.newRect(140,0, 140, 40)
 	thousandsTray:setFillColor(216,101,88)
-	local thousandsText = display.newEmbossedText("thousands",145,10,"BellGothicStd-Black", 22)
+	local thousandsText = display.newEmbossedText("thousands",145,10,"BellGothicStd-Black", 21)
 	thousandsText:setTextColor(255,255,255)
 	thousandsText:setReferencePoint(display.CenterReferencePoint)
 	thousandsText.x = 210
@@ -241,7 +242,7 @@ function scene:createScene( event )
 	--100s
 	local hundredsTray = display.newRect(280, 0, 140, 40)
 	hundredsTray:setFillColor(225,203,60)
-	local hundredsText = display.newEmbossedText("hundreds",285,10,"BellGothicStd-Black", 22)
+	local hundredsText = display.newEmbossedText("hundreds",285,10,"BellGothicStd-Black", 21)
 	hundredsText:setTextColor(255,255,255)
 	hundredsText:setReferencePoint(display.CenterReferencePoint)
 	hundredsText.x = 355
@@ -252,7 +253,7 @@ function scene:createScene( event )
 	--10s
 	local tensTray = display.newRect(420, 0, 140, 40)
 	tensTray:setFillColor(82,148,100)
-	local tensText = display.newEmbossedText("tens",425,10,"BellGothicStd-Black", 22)
+	local tensText = display.newEmbossedText("tens",425,10,"BellGothicStd-Black", 21)
 	tensText:setTextColor(255,255,255)
 	tensText:setReferencePoint(display.CenterReferencePoint)
 	tensText.x = 495
@@ -263,7 +264,7 @@ function scene:createScene( event )
 	--1s
 	local onesTray = display.newRect(560, 0, 140, 40)
 	onesTray:setFillColor(54, 158,251)
-	local onesText = display.newEmbossedText("ones",565,10,"BellGothicStd-Black", 22)
+	local onesText = display.newEmbossedText("ones",565,10,"BellGothicStd-Black", 21)
 	onesText:setTextColor(255,255,255)
 	onesText:setReferencePoint(display.CenterReferencePoint)
 	onesText.x = 635
@@ -274,7 +275,7 @@ function scene:createScene( event )
 
 
 	--create a target block (i.e. "dropzone") for delivering the packaged cookies
-	dropZone = display.newRect(0,0, 140,130)
+	dropZone = display.newRect(0,0, 140,125)
 	dropZone:setFillColor(255,255,255,30)
 	dropZone.strokeWidth = 4
 	dropZone.alpha = 0 -- make invisible to begin with
@@ -303,7 +304,7 @@ function scene:createScene( event )
 	trayGroup:insert(tensText)
 	trayGroup:insert(onesText)
 	trayGroup:insert(dropZone)
-	trayGroup.x = 240; trayGroup.y = 665
+	trayGroup.x = 235;trayGroup.y = 640
 
 
 
@@ -337,8 +338,8 @@ function scene:createScene( event )
 		intro.x = _W/2; intro.y = _H/2
 ]]
 	 --marquee
-		lcdText = display.newRetinaText("",135, 30, "BellGothicStd-Black", 28)
-		lcdText:setReferencePoint(display.TopLeftReferencePoint)
+		lcdText = display.newRetinaText("",135, _H-30, "BellGothicStd-Black", 28)
+		lcdText:setReferencePoint(display.TopRightReferencePoint)
 		lcdText:setTextColor(0,255,0)
 		
 		-- time display 
@@ -349,7 +350,7 @@ function scene:createScene( event )
 		timeBox:setFillColor(0)
 		timeBox.strokeWidth = 3
 		timeBox:setStrokeColor(0,255,0)
-		timeDisplay = display.newText("Time: ",5,10, "BellGothicStd-Black",24 )
+		timeDisplay = display.newText("Time: ",5,0, "BellGothicStd-Black",24 )
 		timeDisplay:setTextColor(0,255,0)
 		
 		timeCounter = display.newRetinaText(tostring(timeCount),110,5,font,28)
@@ -359,14 +360,14 @@ function scene:createScene( event )
 		
 		local countBox = display.newRect(0,0,200,50)
 		countBox:setReferencePoint(display.TopLeftReferencePoint)
-		countBox.x = 0; countBox.y = 65;
+		countBox.x = 200; countBox.y = 0;
 		countBox:setFillColor(0)
 		countBox.strokeWidth = 3
 		countBox:setStrokeColor(0,255,0)		
-		countDisplay = display.newText("Orders: ",5,75, "BellGothicStd-Black",24)
+		countDisplay = display.newText("Orders: ",205,0, "BellGothicStd-Black",24)
 		countDisplay:setTextColor(0,255,0)
 	
-		orderCounter = display.newRetinaText(tostring(orderCount),110,70,font,28)
+		orderCounter = display.newRetinaText(tostring(orderCount),310,5,font,28)
 		orderCounter:setTextColor(0,255,0)
 		--insert them all into one group
 		feedbackGroup:insert(timeBox)
@@ -375,7 +376,7 @@ function scene:createScene( event )
 		feedbackGroup:insert(countDisplay)
 		feedbackGroup:insert(timeCounter)
 		feedbackGroup:insert(orderCounter)
-		feedbackGroup.x = 30; feedbackGroup.y = _H-135
+		feedbackGroup.x = 250; feedbackGroup.y = 30
 
 	local sideBar = display.newGroup()
 	levelBar = display.newImageRect("images/levelbar.png",90,_H)
@@ -414,7 +415,7 @@ function scene:createScene( event )
 	
 	leftGroup = display.newGroup()
 		--left  wall slice is not part of the storyboard group so that it remains on top of everything.  Have to remove and add it when you leave/enter the screen
-		leftSlice = display.newImageRect("images/BGsliceLeft.png",35,413)
+		leftSlice = display.newImageRect("images/BGsliceLeft.png",30,380)
 		leftSlice:setReferencePoint(display.TopLeftReferencePoint)
 		leftSlice.x = 0; leftSlice.y = 0;		
 
@@ -425,7 +426,7 @@ function scene:createScene( event )
 		onRelease = onBtnRelease	-- event listener function
 		}
 		homeBtn:setReferencePoint(display.CenterReferencePoint)
-		homeBtn.x = 40
+		homeBtn.x = 150
 		homeBtn.y = 45
 		homeBtn.scene="menu"
 		
@@ -520,9 +521,7 @@ function scene:exitScene( event )
 	
 	--get rid of all the cookies that were created
 	spawn.cleanUp()
-	--have to remove the leftSlice b/c it's not actually part of the storyboard group so that it always remains on top
-	leftGroup:removeSelf()
-	leftGroup = nil
+
 	-----------------------------------------------------------------------------
 	
 	--	INSERT code here (e.g. stop timers, remove listeners, unload sounds, etc.)

@@ -220,7 +220,7 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	cookie.name = name
 	cookie.value = value or 1
 	cookie.x = x or(_W+30)
-	cookie.y = y or 270
+	cookie.y = y or 240
 	cookie.units = units
 	physics.addBody(cookie, {radius=radius, shape=shape})
 	cookie.isFixedRotation = true
@@ -291,9 +291,9 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	
 	--make the cookie move across the screen
 	function cookie:enterFrame(event)
-		if cookie.y < 250 - cookie.height/2 then -- cookie is in the marquee area
-			cookie.y = 250 - cookie.height/2
-		elseif cookie.y < 300-cookie.height/3 then --cookie is in conveyor area, so start it moving again
+		if cookie.y < 200 - cookie.height/2 then -- cookie is in the marquee area
+			cookie.y = 200 - cookie.height/2
+		elseif cookie.y < 275-cookie.height/3 then --cookie is in conveyor area, so start it moving again
 			cookie.moved = "no"
 		end
 		if (cookie.moved ~= "yes") then
