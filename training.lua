@@ -45,7 +45,9 @@ levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor", stars = 4,  star
 levels[6] = { digits = 5, theme= "chocchip", unlock = "next level", stars = 4,  starImg = "mallet.png", count = 35, timed = 3}
 
 --forward references
-local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup, genStars,generatedBlocks,spawnBlock,inArray,genKey, dropZone, itemSensor, cookieGroup, currNum, correct, attempted, timerDisplay, ordersDisplay, correctDisplay, timeCount, timeCounter,orderCount, orderCounter, correctCount, correctCounter
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup, genStars,generatedBlocks,spawnBlock,inArray,genKey, dropZone, itemSensor, cookieGroup, correct, attempted, timerDisplay, ordersDisplay, correctDisplay, timeCount, timeCounter,orderCount, orderCounter, correctCount, correctCounter, trayColors
+local trayWidth = 133
+local trayHeight = 44
 
 local font = "Helvetica"
 
@@ -79,7 +81,7 @@ function startSession(mode)
 	      --report session data to ACCEL
     -- if mode == timer then
     	-- start a count-down (i.e., initiate another time )
-    currNum = genQ()
+    _G.currNum = genQ()
 	generator()
 	spawnTimer = timer.performWithDelay(createRate, generator,0)	
 end
@@ -113,13 +115,13 @@ end
 
 generatedBlocks = {}
 
-function spawnBlock(x)
+function spawnBlock(x,colorIndex)
 	local block = display.newGroup()
 	local image = display.newRect(0, 0, 14,40)
 	image:setReferencePoint(display.TopRightReferencePoint)
 	image.y = -40; image.x = x;
 	image:setFillColor(255)
-	image:setStrokeColor(0)
+	image:setStrokeColor(trayColors[colorIndex][1],trayColors[colorIndex][2],trayColors[colorIndex][3])
 	image.strokeWidth=2
 	block:insert(image)
 	block.key = genKey(generatedBlocks)
@@ -149,14 +151,16 @@ function genQ()
 		end
 	for i=1, #newNum.omittedReversedArray do 
 		numDisplay[i].text:setText(tostring(newNum.omittedReversedArray[i]))
-		--generate counting blocks (starting at x=700?)
-		local startingX = 700 - (i-1)*140
+		--generate counting blocks 
+		local startingX = 930 - (i-1)*133
+		--figure out what the places are so you can match the color
+		local colorValue = 10^(i-1)
 		for j=1, reverseNumT[i] do 
 			if (newNum.omittedReversedArray[i] ~= "_") then
-				spawnBlock(startingX)
-				startingX = startingX - 14
+				spawnBlock(startingX,colorValue)
+				startingX = startingX - 13.3
 			else 	-- if the item value is "_" make the tray a sensor
-				dropZone.x = startingX + 240
+				dropZone.x = startingX 
 				dropZone.y = 595
 				cookieGroup:insert(dropZone)
 			end
@@ -201,13 +205,13 @@ function scene:createScene( event )
 	---------------------------------------- Number BOXES ----------------------------------------
 	values = {1,10,100,1000,10000}
 	numDisplay = {}
-	local digTextX = 630
+	local digTextX = 867
 	for i=1, levels[currLevel].digits do 
 		numDisplay[i] = {}
 		numDisplay[i].value = values[i]
 		numDisplay[i].text = display.newEmbossedText("0",digTextX,45,"BellGothicStd-Black",36)
 		numDisplay[i].text:setTextColor(255)
-		digTextX = digTextX - 140
+		digTextX = digTextX - trayWidth
 		trayGroup:insert(numDisplay[i].text)
 	end
 	--empty one of the number fields to begin with
@@ -217,65 +221,95 @@ function scene:createScene( event )
 		numDisplay[1].text:setText("__")
 	end
 	local paletteColor = 180
+	trayColors = {}
+	trayColors[1000000] = {100,100,180}
+	trayColors[100000] = {112,61,191}
+	trayColors[10000] = {182,61,91}
+	trayColors[1000] = {216,101,88}
+	trayColors[100] = {225,203,60}
+	trayColors[10] = {82,148,100}
+	trayColors[1] = {54, 158,251}
+	--1,000,000s
+	local millionsTray = display.newRect(0,0, trayWidth, 40)
+	millionsTray:setFillColor(trayColors[1000000][1],trayColors[1000000][2],trayColors[1000000][3])
+	local millionsText = display.newEmbossedText("millions",trayWidth+5,10,trayWidth-10,40,"BellGothicStd-Black", 21)
+	millionsText:setTextColor(255,255,255)
+	millionsText:setReferencePoint(display.CenterReferencePoint)
+	millionsText.x = 67
+	local millionsPalette = display.newRect(0,0,133,40)
+	millionsPalette:setFillColor(paletteColor)
+	millionsPalette:setReferencePoint(display.TopLeftReferencePoint)
+	millionsPalette.x = 0; millionsPalette.y = -40;
+	--100,000s
+	local hundredThousandsTray = display.newRect(trayWidth,0, trayWidth, trayHeight)
+	hundredThousandsTray:setFillColor(trayColors[100000][1],trayColors[100000][2],trayColors[100000][3])
+	local hundredThousandsText = display.newEmbossedText("hundred thousands",trayWidth+5,0,trayWidth-10,40,"BellGothicStd-Black", 21)
+	hundredThousandsText:setTextColor(255,255,255)
+	hundredThousandsText:setReferencePoint(display.CenterReferencePoint)
+	hundredThousandsText.x = trayWidth+67
+	local hundredThousandsPalette = display.newRect(133,0,133,trayHeight)
+	hundredThousandsPalette:setFillColor(paletteColor)
+	hundredThousandsPalette:setReferencePoint(display.TopLeftReferencePoint)
+	hundredThousandsPalette.x = trayWidth; hundredThousandsPalette.y = -40;
 	--10,000s
-	local tenThousandsTray = display.newRect(0,0, 140, 40)
-	tenThousandsTray:setFillColor(182,61,91)
-	local tenThousandsText = display.newEmbossedText("ten thousands",5,10,"BellGothicStd-Black", 21)
+	local tenThousandsTray = display.newRect(trayWidth*2, 0, trayWidth, trayHeight)
+	tenThousandsTray:setFillColor(trayColors[10000][1],trayColors[10000][2],trayColors[10000][3])
+	local tenThousandsText = display.newEmbossedText("ten thousands",trayWidth*2+5,0,trayWidth-10,40,"BellGothicStd-Black", 21)
 	tenThousandsText:setTextColor(255,255,255)
 	tenThousandsText:setReferencePoint(display.CenterReferencePoint)
-	tenThousandsText.x = 70
-	local tenThousandsPalette = display.newRect(0,0,140,40)
+	tenThousandsText.x = trayWidth*2+67
+	local tenThousandsPalette = display.newRect(0,0,133,trayHeight)
 	tenThousandsPalette:setFillColor(paletteColor)
 	tenThousandsPalette:setReferencePoint(display.TopLeftReferencePoint)
-	tenThousandsPalette.x = 0; tenThousandsPalette.y = -40;
+	tenThousandsPalette.x = trayWidth*2; tenThousandsPalette.y = -40;
 	--1,000s
-	local thousandsTray = display.newRect(140,0, 140, 40)
-	thousandsTray:setFillColor(216,101,88)
-	local thousandsText = display.newEmbossedText("thousands",145,10,"BellGothicStd-Black", 21)
+	local thousandsTray = display.newRect(trayWidth*3,0, trayWidth, trayHeight)
+	thousandsTray:setFillColor(trayColors[1000][1],trayColors[1000][2],trayColors[1000][3])
+	local thousandsText = display.newEmbossedText("thousands",trayWidth*3+5,10,"BellGothicStd-Black", 21)
 	thousandsText:setTextColor(255,255,255)
 	thousandsText:setReferencePoint(display.CenterReferencePoint)
-	thousandsText.x = 210
-	local thousandsPalette = display.newRect(0,0,140,40)
+	thousandsText.x = trayWidth*3+67
+	local thousandsPalette = display.newRect(0,0,133,trayHeight)
 	thousandsPalette:setFillColor(paletteColor)
 	thousandsPalette:setReferencePoint(display.TopLeftReferencePoint)
-	thousandsPalette.x = 140; thousandsPalette.y = -40;
+	thousandsPalette.x = trayWidth*3; thousandsPalette.y = -40;
 	--100s
-	local hundredsTray = display.newRect(280, 0, 140, 40)
-	hundredsTray:setFillColor(225,203,60)
-	local hundredsText = display.newEmbossedText("hundreds",285,10,"BellGothicStd-Black", 21)
+	local hundredsTray = display.newRect(trayWidth*4, 0, trayWidth, trayHeight)
+	hundredsTray:setFillColor(trayColors[100][1],trayColors[100][2],trayColors[100][3])
+	local hundredsText = display.newEmbossedText("hundreds",trayWidth*4+5,10,"BellGothicStd-Black", 21)
 	hundredsText:setTextColor(255,255,255)
 	hundredsText:setReferencePoint(display.CenterReferencePoint)
-	hundredsText.x = 355
-	local hundredsPalette = display.newRect(0,0,140,40)
+	hundredsText.x = trayWidth*4+67
+	local hundredsPalette = display.newRect(0,0,133,trayHeight)
 	hundredsPalette:setFillColor(paletteColor)
 	hundredsPalette:setReferencePoint(display.TopLeftReferencePoint)
-	hundredsPalette.x = 280; hundredsPalette.y = -40;
+	hundredsPalette.x = trayWidth*4; hundredsPalette.y = -40;
 	--10s
-	local tensTray = display.newRect(420, 0, 140, 40)
-	tensTray:setFillColor(82,148,100)
-	local tensText = display.newEmbossedText("tens",425,10,"BellGothicStd-Black", 21)
+	local tensTray = display.newRect(trayWidth*5, 0, trayWidth*2, trayHeight)
+	tensTray:setFillColor(trayColors[10][1],trayColors[10][2],trayColors[10][3])
+	local tensText = display.newEmbossedText("tens",trayWidth*5+5,10,"BellGothicStd-Black", 21)
 	tensText:setTextColor(255,255,255)
 	tensText:setReferencePoint(display.CenterReferencePoint)
-	tensText.x = 495
-	local tensPalette = display.newRect(0,0,140,40)
+	tensText.x = trayWidth*5+67
+	local tensPalette = display.newRect(0,0,133,trayHeight)
 	tensPalette:setFillColor(paletteColor)
 	tensPalette:setReferencePoint(display.TopLeftReferencePoint)
-	tensPalette.x = 420; tensPalette.y = -40;
+	tensPalette.x = trayWidth*5; tensPalette.y = -40;
 	--1s
-	local onesTray = display.newRect(560, 0, 140, 40)
-	onesTray:setFillColor(54, 158,251)
-	local onesText = display.newEmbossedText("ones",565,10,"BellGothicStd-Black", 21)
+	local onesTray = display.newRect(trayWidth*6, 0, trayWidth, trayHeight)
+	onesTray:setFillColor(trayColors[1][1],trayColors[1][2],trayColors[1][3])
+	local onesText = display.newEmbossedText("ones",trayWidth*6+5,10,"BellGothicStd-Black", 21)
 	onesText:setTextColor(255,255,255)
 	onesText:setReferencePoint(display.CenterReferencePoint)
-	onesText.x = 635
-	local onesPalette = display.newRect(0,0,140,40)
+	onesText.x = trayWidth*6+67
+	local onesPalette = display.newRect(0,0,133,trayHeight)
 	onesPalette:setFillColor(paletteColor)
 	onesPalette:setReferencePoint(display.TopLeftReferencePoint)
-	onesPalette.x = 560; onesPalette.y = -40;
+	onesPalette.x = trayWidth*6; onesPalette.y = -40;
 
 
 	--create a target block (i.e. "dropzone") for delivering the packaged cookies
-	dropZone = display.newRect(0,0, 140,125)
+	dropZone = display.newRect(0,0, trayWidth-6,125)
 	dropZone:setFillColor(255,255,255,30)
 	dropZone.strokeWidth = 4
 	dropZone.alpha = 0 -- make invisible to begin with
@@ -288,23 +322,29 @@ function scene:createScene( event )
 	dropZone.y = -45
 	
 	--now put them all into a group so you can move the group around with ease
+	trayGroup:insert(millionsPalette)
+	trayGroup:insert(hundredThousandsPalette)
 	trayGroup:insert(tenThousandsPalette)
 	trayGroup:insert(thousandsPalette)
 	trayGroup:insert(hundredsPalette)
 	trayGroup:insert(tensPalette)
 	trayGroup:insert(onesPalette)
+	trayGroup:insert(millionsTray)
+	trayGroup:insert(hundredThousandsTray)
 	trayGroup:insert(tenThousandsTray)
 	trayGroup:insert(thousandsTray)
 	trayGroup:insert(hundredsTray)
 	trayGroup:insert(tensTray)
 	trayGroup:insert(onesTray)
+	trayGroup:insert(millionsText)
+	trayGroup:insert(hundredThousandsText)
 	trayGroup:insert(tenThousandsText)
 	trayGroup:insert(thousandsText)
 	trayGroup:insert(hundredsText)
 	trayGroup:insert(tensText)
 	trayGroup:insert(onesText)
 	trayGroup:insert(dropZone)
-	trayGroup.x = 235;trayGroup.y = 640
+	trayGroup.x = 0;trayGroup.y = 640
 
 
 
@@ -379,7 +419,7 @@ function scene:createScene( event )
 		feedbackGroup.x = 250; feedbackGroup.y = 30
 
 	local sideBar = display.newGroup()
-	levelBar = display.newImageRect("images/levelbar.png",90,_H)
+	levelBar = display.newImageRect("images/levelbar.png",93,_H)
 	levelBar:setReferencePoint(display.TopRightReferencePoint)
 	levelBar.x = 0; levelBar.y=0
 	sideBar:insert(levelBar)
@@ -494,12 +534,12 @@ function scene:enterScene( event )
 		if spawn.answerSent == true then
 			spawn.answerSent = false
 			local userAnswer = spawn.sentValue
-			--check answer and register stats
+			--check answer and register stats 
 			if currNum.omitttedValue == userAnswer  then--got it right
 				correct = correct +1
 			end
 			timer.performWithDelay(300,function()
-				currNum = genQ()
+				_G.currNum = genQ()
 				dropZone.alpha = 0		
 				orderCount = orderCount+1
 				orderCounter.text = tostring(orderCount)

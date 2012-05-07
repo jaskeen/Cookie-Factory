@@ -201,9 +201,9 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	local badge = display.newGroup()
 	local badgeText = display.newRetinaText(value,5,-2,"Public Gothic Circular",24)
 	badgeText:setTextColor(255,255,255)
-	local badgeRect = display.newRoundedRect(0,0,badgeText.width+10,badgeText.height, 12)
+	local badgeRect = display.newRoundedRect(0,0,badgeText.width+10,badgeText.height, 8)
 	badgeRect:setReferencePoint(display.TopLeftReferencePoint)
-	badgeRect.strokeWidth = 4
+	badgeRect.strokeWidth = 2
 	badgeRect:setFillColor(255,0,0)
 	badgeRect:setStrokeColor(255)
 	
@@ -268,20 +268,25 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 				self.isFocus=false
 				if touchingOnRelease == true then
 					--package is in the dropzone and ready to be delivered
-					transition.to(self, {time=300, yScale = .01, xScale = .01, x = self.x, y = 665, alpha = 0})
-					--store item info to check if it's right or not
-					local checkedVal = self.value
-					print(checkedVal)
-					timer.performWithDelay(500, function()  
-							Runtime:removeEventListener("enterFrame",self)
-							generatedItems[self.key] = nil
-							collectgarbage("collect")
-							self:removeSelf()
-							self = nil
-						end, 1)
-					--send a notification to a runtime event that's listening for 
-					sendAnswer(checkedVal)
-						touchingOnRelease = false -- if you don't set this back to false, all future items get "sucked in"
+					--check the number against the current number
+					if _G.currNum.omittedValue ~= self.value then --values don't match
+						transition.to(self, {time = 500, y = 450})
+					else 
+						transition.to(self, {time=300, yScale = .01, xScale = .01, x = self.x, y = 665, alpha = 0})
+						--store item info to check if it's right or not
+						local checkedVal = self.value
+						print(checkedVal)
+						timer.performWithDelay(500, function()  
+								Runtime:removeEventListener("enterFrame",self)
+								generatedItems[self.key] = nil
+								collectgarbage("collect")
+								self:removeSelf()
+								self = nil
+							end, 1)
+						--send a notification to a runtime event that's listening for 
+						sendAnswer(checkedVal)
+					end
+					touchingOnRelease = false -- if you don't set this back to false, all future items get "sucked in"
 				end
 				return true
 			end

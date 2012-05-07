@@ -7,7 +7,8 @@
 
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
-
+local physics = require "physics"
+physics.start()
 
 -- include Corona's "widget" library
 local widget = require "widget"
@@ -19,12 +20,17 @@ local widget = require "widget"
 local trainingBtn
 local deliveryBtn
 local supervisorBtn
+local onEnterFrame
+local rainTimer, spawnCookieDrop, rain
+local cookieArray = {}
+local cookies = {"chocchip","oreo","jelly","pb"}
 --local onTrainingBtnRelease={}
 
 
 -- 'onRelease' event listener for trainingBtn
 function onBtnRelease(event)
-	
+	--stop raining cookies
+	timer.cancel(rainTimer)
 	-- go to scene1.lua scene
 	storyboard.gotoScene( event.target.scene)
 	print ("width:".._W, "height:".._H)
@@ -38,10 +44,14 @@ end
 --		 unless storyboard.removeScene() is called.
 -- 
 -----------------------------------------------------------------------------------------
+
+	
+	
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local group = self.view
-
+	
+	
 	-- display a background image
 	local background = display.newImageRect( "images/Splash-background.png", _W, _H)
 	background:setReferencePoint( display.CenterReferencePoint )
@@ -79,6 +89,9 @@ function scene:createScene( event )
 	standardsBtn.y = _H/2 + 90
 	standardsBtn.scene= "delivery"
 	
+	--create a floor for cookies to bounce against
+	local menuFloor = display.newRect(0,_H+80,_W, 10)
+	physics.addBody(menuFloor, "static", {friction=1, bounce=.5})
 
 	-- all display objects must be inserted into group
 	group:insert( background )
@@ -90,15 +103,50 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
+	physics.setGravity(0,10)
+
 	local group = self.view
 	-- INSERT code here (e.g. start timers, load audio, start listeners, etc.)
+	function spawnCookieDrop()
+		local index = math.random(1,#cookies)
+		local startX = math.random(0,_W)
+		local cookie = display.newGroup()
+		local image = display.newImageRect("images/"..cookies[index].."1.png",75,68)
+		cookie.x = startX; cookie.y = -50
+		physics.addBody(cookie,"dynamic",{bounce=.1,density=.5, friction=2, radius=34})
+		cookie.key = "cookie_"..math.random(1,1000000000)
+		cookie:insert(image)
+		return cookie
+	end
 	
+function rain(event)
+	local cookie = spawnCookieDrop()
+	cookieArray[cookie.key] = cookie
+	group:insert(cookie)
+end
+	--rain decadent cookies from above
+	rainTimer = timer.performWithDelay(500,rain,0)
 end
 
 -- Called when scene is about to move offscreen:
 function scene:exitScene( event )
 	local group = self.view
-	
+	physics.setGravity(0,0)
+	function cleanUp()
+		for k, v in pairs(cookieArray) do 
+			print (k)
+		end
+		--delete all the cookies that were generated
+		for k, v in pairs(cookieArray) do 
+			print ("removing: "..k)
+			cookieArray[k] = nil
+			v:removeSelf()
+			v = nil
+		end	
+		--generatedItems = nil
+		--generatedItems = {}
+	end
+	cleanUp()
 	-- INSERT code here (e.g. stop timers, remove listenets, unload sounds, etc.)
 	
 end
@@ -106,7 +154,7 @@ end
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 	local group = self.view
-	
+
 	if playBtn then
 		print "playBtn exists"
 		playBtn:removeSelf( )	-- widgets must be manually removed
