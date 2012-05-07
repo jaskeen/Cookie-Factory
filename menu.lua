@@ -98,6 +98,7 @@ function scene:createScene( event )
 	group:insert( packagingBtn )
 	group:insert( loadingDockBtn )
 	group:insert( standardsBtn )
+	group:insert(menuFloor)
 
 end
 
