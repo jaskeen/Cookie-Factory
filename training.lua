@@ -193,6 +193,18 @@ function scene:createScene( event )
 	--create group to put cookies into
 	cookieGroup = display.newGroup()
 	
+	--[[
+	local ceiling = display.newRect(0,0,_W,10)
+	physics.addBody(ceiling, "static")
+	local bottomFloor = display.newRect(0,_H-100,_W, 10)
+	physics.addBody(bottomFloor, "static")
+	local leftWall = display.newRect(10, _H/2, 0, _H/2)
+	physics.addBody(leftWall, "static")
+	--now, insert all these invisible walls into the cookiegroup so they can interact with the cookies
+	cookieGroup:insert(ceiling)
+	cookieGroup:insert(leftWall)
+	cookieGroup:insert(bottomFloor)
+	]]
 	local bg = display.newImageRect("images/newBG.png",1024,768)
 	bg.x = _W/2; bg.y = _H/2
 	local conveyor = display.newImageRect("images/conveyor.png",932, 158)
@@ -384,39 +396,41 @@ function scene:createScene( event )
 		
 		-- time display 
 		local feedbackGroup = display.newGroup()
-		local timeBox = display.newRect(0,0,200,50)
-		timeBox:setReferencePoint(display.TopLeftReferencePoint)
-		timeBox.x = 0; timeBox.y = 0;
-		timeBox:setFillColor(0)
-		timeBox.strokeWidth = 3
-		timeBox:setStrokeColor(0,255,0)
-		timeDisplay = display.newText("Time: ",5,0, "BellGothicStd-Black",24 )
-		timeDisplay:setTextColor(0,255,0)
+		local chalkBoard = display.newImageRect("images/chalkBoard.png",756,92)
+		chalkBoard:setReferencePoint(display.TopLeftReferencePoint)
+		chalkBoard.x = 0; chalkBoard.y = 0;
+		physics.addBody(chalkBoard, "static", {shape={-378, -40,  378,-40, 378, 40,  -378,40}})
 		
-		timeCounter = display.newRetinaText(tostring(timeCount),110,5,font,28)
-		timeCounter:setTextColor(0,255,0)
-				
+		timeDisplay = display.newText("Time: ",305,30, "BellGothicStd-Black",38 )
+		timeDisplay:setTextColor(255, 150)
 		
+		timeCounter = display.newRetinaText(tostring(timeCount),415,30,"BellGothicStd-Black",38)
+		timeCounter:setTextColor(255, 150)
 		
-		local countBox = display.newRect(0,0,200,50)
-		countBox:setReferencePoint(display.TopLeftReferencePoint)
-		countBox.x = 200; countBox.y = 0;
-		countBox:setFillColor(0)
-		countBox.strokeWidth = 3
-		countBox:setStrokeColor(0,255,0)		
-		countDisplay = display.newText("Orders: ",205,0, "BellGothicStd-Black",24)
-		countDisplay:setTextColor(0,255,0)
+		countDisplay = display.newText("Orders: ",535,30, "BellGothicStd-Black",38)
+		countDisplay:setTextColor(255, 150)
 	
-		orderCounter = display.newRetinaText(tostring(orderCount),310,5,font,28)
-		orderCounter:setTextColor(0,255,0)
+		orderCounter = display.newRetinaText(tostring(orderCount),655,30,"BellGothicStd-Black",38)
+		orderCounter:setTextColor(255, 150)
+		
+		homeBtn=widget.newButton{
+		default="images/btnHome.png",
+		width=60,
+		height=54,
+		onRelease = onBtnRelease	-- event listener function
+		}
+		homeBtn:setReferencePoint(display.CenterReferencePoint)
+		homeBtn.x = 60
+		homeBtn.y = 40
+		homeBtn.scene="menu"
 		--insert them all into one group
-		feedbackGroup:insert(timeBox)
+		feedbackGroup:insert(chalkBoard)
 		feedbackGroup:insert(timeDisplay)
-		feedbackGroup:insert(countBox)
 		feedbackGroup:insert(countDisplay)
 		feedbackGroup:insert(timeCounter)
 		feedbackGroup:insert(orderCounter)
-		feedbackGroup.x = 250; feedbackGroup.y = 30
+		feedbackGroup:insert(homeBtn)
+		feedbackGroup.x = 104; feedbackGroup.y = 0
 
 	local sideBar = display.newGroup()
 	levelBar = display.newImageRect("images/levelbar.png",93,_H)
@@ -459,19 +473,8 @@ function scene:createScene( event )
 		leftSlice:setReferencePoint(display.TopLeftReferencePoint)
 		leftSlice.x = 0; leftSlice.y = 0;		
 
-		homeBtn=widget.newButton{
-		default="images/btnHome.png",
-		width=80,
-		height=80,
-		onRelease = onBtnRelease	-- event listener function
-		}
-		homeBtn:setReferencePoint(display.CenterReferencePoint)
-		homeBtn.x = 150
-		homeBtn.y = 45
-		homeBtn.scene="menu"
 		
 		leftGroup:insert(leftSlice)
-		leftGroup:insert(homeBtn)
 	
 	--insert everything into group in the desired order
 	group:insert(lcdText)
