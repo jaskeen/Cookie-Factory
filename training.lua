@@ -65,12 +65,14 @@ function startSession(mode)
 	timeCount = levels[currLevel].timed*60
 	orderCounter.text = tostring(orderCount)
 	--first, determine what mode this is 
-	if currMode == "timed" then
+	
+	--[[if currMode == "timed" then
 		countdown = timer.performWithDelay(1000, function()
 			timeCount = timeCount -1
 			timeCounter.text = tostring(timeCount)
 		end, 60*levels[currLevel].timed)
-	end --count elseif
+	end 
+	]]--count elseif
 	--then, start timer 
 	--then, start counter 
     -- if mode == counter then
@@ -401,16 +403,17 @@ function scene:createScene( event )
 		chalkBoard.x = 0; chalkBoard.y = 0;
 		physics.addBody(chalkBoard, "static", {shape={-378, -40,  378,-40, 378, 40,  -378,40}})
 		
+		--[[
 		timeDisplay = display.newText("Time: ",305,30, "BellGothicStd-Black",38 )
 		timeDisplay:setTextColor(255, 150)
 		
 		timeCounter = display.newRetinaText(tostring(timeCount),415,30,"BellGothicStd-Black",38)
 		timeCounter:setTextColor(255, 150)
-		
-		countDisplay = display.newText("Orders: ",535,30, "BellGothicStd-Black",38)
+		]]
+		countDisplay = display.newText("Orders: ",505,30, "BellGothicStd-Black",38)
 		countDisplay:setTextColor(255, 150)
 	
-		orderCounter = display.newRetinaText(tostring(orderCount),655,30,"BellGothicStd-Black",38)
+		orderCounter = display.newRetinaText(tostring(orderCount).." / "..levels[currLevel].count,635,30,"BellGothicStd-Black",38)
 		orderCounter:setTextColor(255, 150)
 		
 		homeBtn=widget.newButton{
@@ -425,9 +428,9 @@ function scene:createScene( event )
 		homeBtn.scene="menu"
 		--insert them all into one group
 		feedbackGroup:insert(chalkBoard)
-		feedbackGroup:insert(timeDisplay)
+		--feedbackGroup:insert(timeDisplay)
 		feedbackGroup:insert(countDisplay)
-		feedbackGroup:insert(timeCounter)
+		--feedbackGroup:insert(timeCounter)
 		feedbackGroup:insert(orderCounter)
 		feedbackGroup:insert(homeBtn)
 		feedbackGroup.x = 104; feedbackGroup.y = 0
@@ -540,12 +543,24 @@ function scene:enterScene( event )
 			--check answer and register stats 
 			if currNum.omitttedValue == userAnswer  then--got it right
 				correct = correct +1
+				--check to see if they've reached the goal for this level
+				if correct == levels[currLevel].count then
+					currLevel = currLevel +1
+					if currLevel > #levels then 
+						currLevel = #levels
+						correct = 0 -- set it back to 0 for this level so they can never finish.  Mwah ha aha a ha ha ha ha!
+					else 
+						--reload page?
+						storyboard.reload(storyboard.getScene())
+					end
+				end
+				
 			end
 			timer.performWithDelay(300,function()
 				_G.currNum = genQ()
 				dropZone.alpha = 0		
 				orderCount = orderCount+1
-				orderCounter.text = tostring(orderCount)
+				orderCounter.text = tostring(orderCount).." / "..levels[currLevel].count
 				end, 1)
 		end
 	end

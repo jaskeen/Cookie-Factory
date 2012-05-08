@@ -1,1 +1,1 @@
---Cookie Factory Build Settingssettings =	{	orientation=	{		default = "landscape"	},	plist = {		UIAppFonts = {			"scoreboard.ttf",			"Gothis 45.ttf",			"BellGothicStd-Black.otf"		}	}}
+--Cookie Factory Build Settingssettings =	{	orientation=	{		default = "landscape",		supported = {"landscapeLeft","landscapeRight"}	},	plist = {		UIAppFonts = {			"BellGothicStd-Black.otf"		}	}}
