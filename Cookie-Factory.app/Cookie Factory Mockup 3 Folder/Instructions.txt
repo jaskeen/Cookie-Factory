@@ -1,0 +1,88 @@
+ADOBE INDESIGN PRINTING INSTRUCTIONS FOR SERVICE PROVIDER REPORT
+
+PUBLICATION NAME: Cookie Factory Mockup 3.indd
+
+PACKAGE DATE: 5/3/12 2:09 PM
+Creation Date: 5/3/12
+Modification Date: 5/3/12
+
+CONTACT INFORMATION
+
+Company Name: 
+Contact: 
+Address: 
+
+
+
+
+
+Phone: 
+Fax: 
+Email: 
+
+SPECIAL INSTRUCTIONS AND OTHER NOTES
+
+
+
+
+
+
+External Plug-ins 0
+Non Opaque Objects :On PagePB, 1
+
+FONTS
+3 Fonts Used; 0 Missing, 0 Embedded, 0 Incomplete, 0 Protected
+
+Fonts Packaged
+- Name: HelveticaNeue-Bold; Type: TrueType, Status: OK
+- Name: PublicGothicCircular; Type: Type 1, Status: OK
+- Name: Times-Roman; Type: TrueType, Status: OK
+
+
+COLORS AND INKS
+4 Process Inks; 0 Spot Inks
+
+- Name and Type: Process Cyan; Angle: 75.000; Lines/Inch: 70.000
+- Name and Type: Process Magenta; Angle: 15.000; Lines/Inch: 70.000
+- Name and Type: Process Yellow; Angle: 0.000; Lines/Inch: 70.000
+- Name and Type: Process Black; Angle: 45.000; Lines/Inch: 70.000
+
+
+LINKS AND IMAGES
+(Missing & Embedded Links Only)
+Links and Images: 10 Links Found; 0 Modified, 0 Missing
+Images: 0 Embedded, 10 use RGB color space
+
+
+PRINT SETTINGS
+PPD: Device Independent, (PostScript¨ File)
+Printing To: Prepress File
+Number of Copies: 1
+Reader Spreads: No
+Even/Odd Pages: Both
+Pages: All
+Proof: No
+Tiling: None
+Scale: 100%, 100%
+Page Position: Upper Left
+Print Layers: Visible & Printable Layers
+Printer's Marks: None
+Bleed: 0 in, 0 in, 0 in, 0 in
+Color: Composite CMYK
+Trapping Mode: None
+Send Image Data: All
+OPI/DCS Image Replacement: No
+Page Size: Custom: 10.24 in x 7.68 in
+Paper Dimensions: 0 in x 0 in
+Orientation: Landscape
+Negative: No
+Flip Mode: Off
+
+
+FILE PACKAGE LIST
+
+1. Cookie Factory Mockup 3.indd; type: Adobe InDesign publication; size: 2520K
+2. HelveticaNeue.dfont; type: Font file; size: 3453K
+3. PubliGotCir; type: Font file; size: 53K
+4. PublicGothicCircular.suit; type: Font file; size: 4K
+5. Times.dfont; type: Font file; size: 1702K

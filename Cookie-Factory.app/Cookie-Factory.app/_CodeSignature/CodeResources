@@ -6,7 +6,7 @@
 	<dict>
 		<key>CoronaSDK3rdPartyLicenses.txt</key>
 		<data>
-		XmeYkh2/EmANVYlSNge3/dFey+Y=
+		U6Y1xFLEaF51UqG0EfdtVXw5EF8=
 		</data>
 		<key>FBDialog.bundle/images/close.png</key>
 		<data>
@@ -22,83 +22,19 @@
 		</data>
 		<key>MainWindow-iPad.nib</key>
 		<data>
-		J7UN5+7vUPCLdQWTwG4wM2BGeFo=
+		O9HKJFeydmw6Daw9OjSSp7BqveA=
 		</data>
 		<key>MainWindow.nib</key>
 		<data>
-		7+fHBMbkk5b6vqYBuoz5tGA81K4=
+		uZF9A3hPR5HS//aB8ywYG0+bMfU=
 		</data>
 		<key>PkgInfo</key>
 		<data>
 		n57qDP4tZfLD1rCS43W0B4LQjzE=
 		</data>
-		<key>SRCustomCell.nib</key>
-		<data>
-		iLw1Q10STZIo6h50KPClLW1gWLE=
-		</data>
-		<key>SRCustomCellOffer.nib</key>
-		<data>
-		9puD+21XIgDzHbLyMGVrjphv/P0=
-		</data>
-		<key>SRInstallSectionHeader.nib</key>
-		<data>
-		4Vrzy0JBS+7u4WPECSE2dRRneIs=
-		</data>
-		<key>SROfferScrollView.nib</key>
-		<data>
-		auGB7fQaifE7GGvxMKBDedBQhsw=
-		</data>
-		<key>SROfferWebView.nib</key>
-		<data>
-		em6lDEW8yjKJvcH0K8mZLOJ+6O8=
-		</data>
 		<key>embedded.mobileprovision</key>
 		<data>
-		Yr3lHNgtrZX1mAGmaJOYmeTdNQo=
-		</data>
-		<key>sr_free_icon.png</key>
-		<data>
-		0EBn5hE1E3BY/idgzu/X05rHwFI=
-		</data>
-		<key>sr_gradient_gray_bg.png</key>
-		<data>
-		N48JAaPWRI5pwnOMdgcTgUBqucY=
-		</data>
-		<key>sr_gradient_gray_bg_wide.png</key>
-		<data>
-		Gk4DjGHIbeJTl0SGrMGeZgL+ZS8=
-		</data>
-		<key>sr_green_btn.png</key>
-		<data>
-		gfJnGDifG0NC/yq4rOWVJPdZP58=
-		</data>
-		<key>sr_green_btn_blank.png</key>
-		<data>
-		Ng+GgqsulCaf7iY7x1t3wcswSWc=
-		</data>
-		<key>sr_listicon_placeholder120x60.png</key>
-		<data>
-		RHGhK9W3B8TlgnY88qiEc+pGcUU=
-		</data>
-		<key>sr_listicon_placeholder48x48.png</key>
-		<data>
-		9lYceJNM/h40qnuDLGAZIA2qBB8=
-		</data>
-		<key>sr_paid_icon.png</key>
-		<data>
-		uCs+/dOAr3pjVrxjDtypGrKQrLc=
-		</data>
-		<key>sr_tabicon_172-pricetag.png</key>
-		<data>
-		0mOv0V1r9loN0WN+qUlevLqfdHI=
-		</data>
-		<key>sr_tabicon_40-inbox.png</key>
-		<data>
-		W205XHjQa/RU8I7oMWGOGmALABA=
-		</data>
-		<key>sr_tabicon_support.png</key>
-		<data>
-		SKwITwpunnD00xN8zN25BZ8QUCw=
+		Z1AKDzOP5HremysKib7YM0qdUeY=
 		</data>
 	</dict>
 	<key>rules</key>
