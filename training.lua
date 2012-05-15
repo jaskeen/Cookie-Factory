@@ -7,6 +7,7 @@ local storyboard = require( "storyboard" )
 local widget= require "widget"
 local itemInfo = require ("items")
 local scene = storyboard.newScene()
+local json = require ("json")
 --first, set the name of the current scene, so we can get it later, if needed
 storyboard.currentScene = "training"
 ----------------------------------------------------------------------------------
@@ -20,6 +21,7 @@ display.setStatusBar( display.HiddenStatusBar )  -- hide the status bar
 --import physics,  gameUI, activate multitouch
 local proxy = require "proxy"
 local convert = require ("convertNumToText")
+local fileCheck = require("fileCheck")
 local generate = require ("generateNumInfo")
 local spawn = require ("spawnCookie")
 local physics = require("physics")
@@ -29,20 +31,27 @@ system.activate("multitouch")
 ----------------- VARIABLES --------------------------
 _H = display.contentHeight
 _W = display.contentWidth
-local createRate = 2000 --how often a new cookie is spawned (in milliseconds)
-local thisLevel
 
-local currLevel = 6 --remember to get this from the user's personal data at some point
+--get the info for the current level
+fileCheck.checkForFile("userData.json")
+--now decode the info from the file: 
+userInfo = fileCheck.copyContents("userData.json")
+userInfoTable = json.decode(userInfo)
+print ("Welcome: "..userInfoTable.userName)	
+local currLevel = userInfoTable.data.trainingLevel
+
+local createRate = 1500 --how often a new cookie is spawned (in milliseconds)
+local thisLevel
 local currMode = "timed" -- or count; also switch this per user request
 
 
 local levels = {}
-levels[1] = { digits= 2, theme = "oreo", unlock = "next level", stars=1, starImg = "oreo_star.png", count = 10, timed = 3 }
-levels[2] = { digits = 3, theme= "pb", unlock = "next level", stars = 2, starImg = "pb_star.png", count = 15, timed = 3}
-levels[3] = { digits = 3, theme= "jelly", unlock = "multiplier", stars = 2, starImg = "jelly_star.png",  count = 20, timed = 3}
-levels[4] = { digits = 4, theme= "jelly", unlock= "next level", stars = 3,  starImg = "timesTen.png", count = 25, timed = 3}
-levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor", stars = 4,  starImg = "chocchip_star.png", count = 30, timed = 3 }
-levels[6] = { digits = 5, theme= "chocchip", unlock = "next level", stars = 4,  starImg = "mallet.png", count = 35, timed = 3}
+levels[1] = { digits= 2, theme = "oreo", unlock = "next level", stars=1, starImg = "oreo_star.png", count = 3, timed = 3 }
+levels[2] = { digits = 3, theme= "pb", unlock = "next level", stars = 2, starImg = "pb_star.png", count = 5, timed = 3}
+levels[3] = { digits = 3, theme= "jelly", unlock = "multiplier", stars = 2, starImg = "jelly_star.png",  count = 5, timed = 3}
+levels[4] = { digits = 4, theme= "jelly", unlock= "next level", stars = 3,  starImg = "starTimesTen.png", count = 5, timed = 3}
+levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor", stars = 4,  starImg = "chocchip_star.png", count = 5, timed = 3 }
+levels[6] = { digits = 5, theme= "chocchip", unlock = "next level", stars = 4,  starImg = "StarHammer.png", count = 5, timed = 3}
 
 --forward references
 local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup, genStars,generatedBlocks,spawnBlock,inArray,genKey, dropZone, itemSensor, cookieGroup, correct, attempted, timerDisplay, ordersDisplay, correctDisplay, timeCount, timeCounter,orderCount, orderCounter, correctCount, correctCounter, trayColors
@@ -64,25 +73,6 @@ function startSession(mode)
 	orderCount = 0
 	timeCount = levels[currLevel].timed*60
 	orderCounter.text = tostring(orderCount)
-	--first, determine what mode this is 
-	
-	--[[if currMode == "timed" then
-		countdown = timer.performWithDelay(1000, function()
-			timeCount = timeCount -1
-			timeCounter.text = tostring(timeCount)
-		end, 60*levels[currLevel].timed)
-	end 
-	]]--count elseif
-	--then, start timer 
-	--then, start counter 
-    -- if mode == counter then
-	      -- show total number
-	      -- on each question answered, reduce total by 1
-	      -- when total reaches 0, end session
-	      -- on session end, show how many they got right and how many they got wrong
-	      --report session data to ACCEL
-    -- if mode == timer then
-    	-- start a count-down (i.e., initiate another time )
     _G.currNum = genQ()
 	generator()
 	spawnTimer = timer.performWithDelay(createRate, generator,0)	
@@ -173,7 +163,7 @@ end
 
 
 --check user's answer
-function checkAnswer(self, event)	
+	function checkAnswer(self, event)	
 	--if the item is over a sensor
 	if event.phase == "began" then
 		dropZone.alpha = 1
@@ -401,7 +391,7 @@ function scene:createScene( event )
 		local chalkBoard = display.newImageRect("images/chalkBoard.png",756,92)
 		chalkBoard:setReferencePoint(display.TopLeftReferencePoint)
 		chalkBoard.x = 0; chalkBoard.y = 0;
-		physics.addBody(chalkBoard, "static", {shape={-378, -40,  378,-40, 378, 40,  -378,40}})
+		--physics.addBody(chalkBoard, "static", {shape={-378, -40,  378,-40, 378, 40,  -378,40}})
 		
 		--[[
 		timeDisplay = display.newText("Time: ",305,30, "BellGothicStd-Black",38 )
@@ -496,21 +486,9 @@ end
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	local group = self.view
---[[
---turn timeCounter into proxy so that it can listen for property updates
-		timeCounter = proxy.get_proxy_for(timeCounter)
 
-		
-		function timeCounter:propertyUpdate(event)
-			if event.key == "text" then
-				print "text updated"
-			end
-		end
-
-		timeCounter:addEventListener("propertyUpdate")
-	]]
 	
-		--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
+	--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
 	function generator()
 		-- make sure to move this code to a question controlling 
 		local randNum = generate.genRandNum(levels[currLevel].digits)
@@ -539,6 +517,7 @@ function scene:enterScene( event )
 		collectgarbage("collect")
 		if spawn.answerSent == true then
 			spawn.answerSent = false
+			print ("answer sent")
 			local userAnswer = spawn.sentValue
 			--check answer and register stats 
 			if currNum.omitttedValue == userAnswer  then--got it right
@@ -561,6 +540,13 @@ function scene:enterScene( event )
 				dropZone.alpha = 0		
 				orderCount = orderCount+1
 				orderCounter.text = tostring(orderCount).." / "..levels[currLevel].count
+				
+				if orderCount >= levels[currLevel].count then -- reached limit, so advance a level
+					userInfoTable.data.trainingLevel = userInfoTable.data.trainingLevel +1
+					fileCheck.replaceContents("userData.json",userInfoTable)
+					storyboard.gotoScene("menu")
+				end
+				
 				end, 1)
 		end
 	end

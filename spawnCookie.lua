@@ -12,7 +12,6 @@ sentValue = 0
 --forward declarations
 local disappear, itemHit, onLocalCollision, cookieGroup
 cookieGroup = display.newGroup()
-local showValue = display.newRetinaText("",-200,-200, "Arial",48) --for showing value of the dragged item
 local cloud = display.newImageRect("images/cloud.png",256,256) --cloud for transformations
 cloud.x = -200
 cloud.y = -200 
@@ -30,6 +29,7 @@ end
 	
 --send an answer with its value
 local function sendAnswer(value)
+	print ("Answer sent from SendAnswer fcn")
 	sentValue = value
 	answerSent = true
 	touchingOnRelease = false --just to be safe
@@ -199,7 +199,7 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	
 	--cookie badge (needs text and a rounded rectangle grouped together)
 	local badge = display.newGroup()
-	local badgeText = display.newRetinaText(value,5,-2,"Public Gothic Circular",24)
+	local badgeText = display.newRetinaText(value,5,-2,"Arial",24)
 	badgeText:setTextColor(255,255,255)
 	local badgeRect = display.newRoundedRect(0,0,badgeText.width+10,badgeText.height, 8)
 	badgeRect:setReferencePoint(display.TopLeftReferencePoint)
@@ -212,7 +212,11 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	cookie:insert(badge)
 	badge.x=-25; badge.y = h*.3
 	
+	--create num to be displayed above cookie when dragged
+	local dragNumDisp = display.newRetinaText(cookie,value,-w/4,-image.height,"Arial",48)
+	dragNumDisp.alpha = 0
 	--cookie properties
+	cookie.dragNumDisp = dragNumDisp
 	cookie.image = image
 	cookie.badgeText = badgeText
 	cookie.badgeRect = badgeRect
@@ -240,10 +244,7 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 			offset = self.height/2 + 20
 		
 			--show the value of the cookie on top of the cookie
-			cookieGroup:insert(showValue)
-			showValue.text = value
-			showValue.x = self.x 
-			showValue.y = self.y - offset
+			self.dragNumDisp.alpha = 1
 			
 			display.getCurrentStage():setFocus( self, event.id)
 			self.isFocus = true
@@ -257,13 +258,11 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 				--move the cookie around the screen
 				self.x = event.x-event.xStart+self.markX 
 				self.y = event.y - event.yStart+self.markY
-				showValue.x = event.target.x 
-				showValue.y = event.target.y - offset 
+
 				return true
 			elseif event.phase == "ended"  or event.phase == "cancelled" then
 				--hide the item's value
-				showValue.x = -200
-				showValue.y = -200
+				self.dragNumDisp.alpha = 0
 				display.getCurrentStage():setFocus(self,nil)
 				self.isFocus=false
 				if touchingOnRelease == true then

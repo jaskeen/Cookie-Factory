@@ -6,6 +6,7 @@
 
 
 local storyboard = require( "storyboard" )
+storyboard.purgeOnSceneChange = true
 local scene = storyboard.newScene()
 local physics = require "physics"
 physics.start()
@@ -114,7 +115,7 @@ function scene:enterScene( event )
 		local cookie = display.newGroup()
 		local image = display.newImageRect("images/"..cookies[index].."1.png",75,68)
 		cookie.x = startX; cookie.y = -50
-		physics.addBody(cookie,"dynamic",{bounce=.1,density=.5, friction=2, radius=34})
+		physics.addBody(cookie,"dynamic",{bounce=.1,density=.9, friction=2, radius=34})
 		cookie.key = "cookie_"..math.random(1,1000000000)
 		cookie:insert(image)
 		return cookie
