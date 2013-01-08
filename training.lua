@@ -3,7 +3,6 @@
 -- note: uses official scenetemplate.lua
 ----------------------------------------------------------------------------------
 
-local storyboard = require( "storyboard" )
 local widget= require "widget"
 local itemInfo = require ("items")
 local scene = storyboard.newScene()
@@ -24,9 +23,7 @@ local convert = require ("convertNumToText")
 local fileCheck = require("fileCheck")
 local generate = require ("generateNumInfo")
 local spawn = require ("spawnCookie")
-local physics = require("physics")
-physics.start()
-physics.setGravity(0,0)
+--local physics = require("physics")
 system.activate("multitouch")
 ----------------- VARIABLES --------------------------
 _H = display.contentHeight
@@ -40,9 +37,10 @@ userInfoTable = json.decode(userInfo)
 print ("Welcome: "..userInfoTable.userName)	
 local currLevel = userInfoTable.data.trainingLevel
 
-local createRate = 1500 --how often a new cookie is spawned (in milliseconds)
+local createRate = 1000 --how often a new cookie is spawned (in milliseconds)
 local thisLevel
 local currMode = "timed" -- or count; also switch this per user request
+
 
 
 local levels = {}
@@ -54,7 +52,7 @@ levels[5] = { digits = 5, theme= "chocchip", unlock= "divisor", stars = 4,  star
 levels[6] = { digits = 5, theme= "chocchip", unlock = "next level", stars = 4,  starImg = "StarHammer.png", count = 5, timed = 3}
 
 --forward references
-local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup, genStars,generatedBlocks,spawnBlock,inArray,genKey, dropZone, itemSensor, cookieGroup, correct, attempted, timerDisplay, ordersDisplay, correctDisplay, timeCount, timeCounter,orderCount, orderCounter, correctCount, correctCounter, trayColors
+local spawnCookie, onLocalCollision, itemHit, itemDisappear, itemCombo, generator, createItemsForThisLevel, spawnTimer, disappearTimer, onLocalCollisionTimer, itemHitTimer,onBtnRelease, factoryBG, homeBtn, levelBar, nextQuestion, lcdText, startSession, genQ, leftSlice,leftGroup, timeDisplay, countDisplay, numDisplay, trayGroup, genStars,generatedBlocks,spawnBlock,inArray,genKey, dropZone, itemSensor, cookieGroup, correct, attempted, timerDisplay, ordersDisplay, correctDisplay, timeCount, timeCounter,orderCount, orderCounter, correctCount, correctCounter, trayColors, leftWall,rightWall, bottomFloor, top, conveyorFloor, packingFloor
 local trayWidth = 133
 local trayHeight = 44
 
@@ -122,6 +120,7 @@ function spawnBlock(x,colorIndex)
 	return block
 end
 
+
 --generate a question
 function genQ()
 	-- gen random #
@@ -179,24 +178,13 @@ end
 ---------------------  CREATE SCENE: Called when the scene's view does not exist: ---------------------
 	--	CREATE display objects and add them to 'group' here.
 function scene:createScene( event ) 
-	
+	physics.start()
 	local group = self.view  --insert all display objects into this
 	trayGroup = display.newGroup()
 	--create group to put cookies into
 	cookieGroup = display.newGroup()
 	
-	--[[
-	local ceiling = display.newRect(0,0,_W,10)
-	physics.addBody(ceiling, "static")
-	local bottomFloor = display.newRect(0,_H-100,_W, 10)
-	physics.addBody(bottomFloor, "static")
-	local leftWall = display.newRect(10, _H/2, 0, _H/2)
-	physics.addBody(leftWall, "static")
-	--now, insert all these invisible walls into the cookiegroup so they can interact with the cookies
-	cookieGroup:insert(ceiling)
-	cookieGroup:insert(leftWall)
-	cookieGroup:insert(bottomFloor)
-	]]
+		
 	local bg = display.newImageRect("images/newBG.png",1024,768)
 	bg.x = _W/2; bg.y = _H/2
 	local conveyor = display.newImageRect("images/conveyor.png",932, 158)
@@ -213,7 +201,7 @@ function scene:createScene( event )
 	for i=1, levels[currLevel].digits do 
 		numDisplay[i] = {}
 		numDisplay[i].value = values[i]
-		numDisplay[i].text = display.newEmbossedText("0",digTextX,45,"BellGothicStd-Black",36)
+		numDisplay[i].text = display.newEmbossedText("0",digTextX,45,mainFont,36)
 		numDisplay[i].text:setTextColor(255)
 		digTextX = digTextX - trayWidth
 		trayGroup:insert(numDisplay[i].text)
@@ -224,6 +212,8 @@ function scene:createScene( event )
 	else 
 		numDisplay[1].text:setText("__")
 	end
+	
+	-- trays
 	local paletteColor = 180
 	trayColors = {}
 	trayColors[1000000] = {100,100,180}
@@ -233,10 +223,11 @@ function scene:createScene( event )
 	trayColors[100] = {225,203,60}
 	trayColors[10] = {82,148,100}
 	trayColors[1] = {54, 158,251}
+	
 	--1,000,000s
 	local millionsTray = display.newRect(0,0, trayWidth, 40)
 	millionsTray:setFillColor(trayColors[1000000][1],trayColors[1000000][2],trayColors[1000000][3])
-	local millionsText = display.newEmbossedText("millions",trayWidth+5,10,trayWidth-10,40,"BellGothicStd-Black", 21)
+	local millionsText = display.newEmbossedText("millions",trayWidth+5,10,trayWidth-10,40,mainFont, 21)
 	millionsText:setTextColor(255,255,255)
 	millionsText:setReferencePoint(display.CenterReferencePoint)
 	millionsText.x = 67
@@ -247,7 +238,7 @@ function scene:createScene( event )
 	--100,000s
 	local hundredThousandsTray = display.newRect(trayWidth,0, trayWidth, trayHeight)
 	hundredThousandsTray:setFillColor(trayColors[100000][1],trayColors[100000][2],trayColors[100000][3])
-	local hundredThousandsText = display.newEmbossedText("hundred thousands",trayWidth+5,0,trayWidth-10,40,"BellGothicStd-Black", 21)
+	local hundredThousandsText = display.newEmbossedText("hundred thousands",trayWidth+5,0,trayWidth-10,40,mainFont, 21)
 	hundredThousandsText:setTextColor(255,255,255)
 	hundredThousandsText:setReferencePoint(display.CenterReferencePoint)
 	hundredThousandsText.x = trayWidth+67
@@ -258,7 +249,7 @@ function scene:createScene( event )
 	--10,000s
 	local tenThousandsTray = display.newRect(trayWidth*2, 0, trayWidth, trayHeight)
 	tenThousandsTray:setFillColor(trayColors[10000][1],trayColors[10000][2],trayColors[10000][3])
-	local tenThousandsText = display.newEmbossedText("ten thousands",trayWidth*2+5,0,trayWidth-10,40,"BellGothicStd-Black", 21)
+	local tenThousandsText = display.newEmbossedText("ten thousands",trayWidth*2+5,0,trayWidth-10,40,mainFont, 21)
 	tenThousandsText:setTextColor(255,255,255)
 	tenThousandsText:setReferencePoint(display.CenterReferencePoint)
 	tenThousandsText.x = trayWidth*2+67
@@ -269,7 +260,7 @@ function scene:createScene( event )
 	--1,000s
 	local thousandsTray = display.newRect(trayWidth*3,0, trayWidth, trayHeight)
 	thousandsTray:setFillColor(trayColors[1000][1],trayColors[1000][2],trayColors[1000][3])
-	local thousandsText = display.newEmbossedText("thousands",trayWidth*3+5,10,"BellGothicStd-Black", 21)
+	local thousandsText = display.newEmbossedText("thousands",trayWidth*3+5,10,mainFont, 21)
 	thousandsText:setTextColor(255,255,255)
 	thousandsText:setReferencePoint(display.CenterReferencePoint)
 	thousandsText.x = trayWidth*3+67
@@ -280,7 +271,7 @@ function scene:createScene( event )
 	--100s
 	local hundredsTray = display.newRect(trayWidth*4, 0, trayWidth, trayHeight)
 	hundredsTray:setFillColor(trayColors[100][1],trayColors[100][2],trayColors[100][3])
-	local hundredsText = display.newEmbossedText("hundreds",trayWidth*4+5,10,"BellGothicStd-Black", 21)
+	local hundredsText = display.newEmbossedText("hundreds",trayWidth*4+5,10,mainFont, 21)
 	hundredsText:setTextColor(255,255,255)
 	hundredsText:setReferencePoint(display.CenterReferencePoint)
 	hundredsText.x = trayWidth*4+67
@@ -291,7 +282,7 @@ function scene:createScene( event )
 	--10s
 	local tensTray = display.newRect(trayWidth*5, 0, trayWidth*2, trayHeight)
 	tensTray:setFillColor(trayColors[10][1],trayColors[10][2],trayColors[10][3])
-	local tensText = display.newEmbossedText("tens",trayWidth*5+5,10,"BellGothicStd-Black", 21)
+	local tensText = display.newEmbossedText("tens",trayWidth*5+5,10,mainFont, 21)
 	tensText:setTextColor(255,255,255)
 	tensText:setReferencePoint(display.CenterReferencePoint)
 	tensText.x = trayWidth*5+67
@@ -302,7 +293,7 @@ function scene:createScene( event )
 	--1s
 	local onesTray = display.newRect(trayWidth*6, 0, trayWidth, trayHeight)
 	onesTray:setFillColor(trayColors[1][1],trayColors[1][2],trayColors[1][3])
-	local onesText = display.newEmbossedText("ones",trayWidth*6+5,10,"BellGothicStd-Black", 21)
+	local onesText = display.newEmbossedText("ones",trayWidth*6+5,10,mainFont, 21)
 	onesText:setTextColor(255,255,255)
 	onesText:setReferencePoint(display.CenterReferencePoint)
 	onesText.x = trayWidth*6+67
@@ -319,7 +310,7 @@ function scene:createScene( event )
 	dropZone.alpha = 0 -- make invisible to begin with
 	dropZone:setStrokeColor(255,0,0)
 	dropZone:setReferencePoint(display.TopRightReferencePoint)
-	physics.addBody(dropZone)
+	physics.addBody(dropZone, "static")
 	dropZone.isSensor = true
 	dropZone.collision = checkAnswer
 	dropZone:addEventListener("collision",dropZone)
@@ -382,7 +373,7 @@ function scene:createScene( event )
 		intro.x = _W/2; intro.y = _H/2
 ]]
 	 --marquee
-		lcdText = display.newRetinaText("",135, _H-30, "BellGothicStd-Black", 28)
+		lcdText = display.newRetinaText("",135, _H-30, mainFont, 28)
 		lcdText:setReferencePoint(display.TopRightReferencePoint)
 		lcdText:setTextColor(0,255,0)
 		
@@ -394,16 +385,16 @@ function scene:createScene( event )
 		--physics.addBody(chalkBoard, "static", {shape={-378, -40,  378,-40, 378, 40,  -378,40}})
 		
 		--[[
-		timeDisplay = display.newText("Time: ",305,30, "BellGothicStd-Black",38 )
+		timeDisplay = display.newText("Time: ",305,30, mainFont,38 )
 		timeDisplay:setTextColor(255, 150)
 		
-		timeCounter = display.newRetinaText(tostring(timeCount),415,30,"BellGothicStd-Black",38)
+		timeCounter = display.newRetinaText(tostring(timeCount),415,30,mainFont,38)
 		timeCounter:setTextColor(255, 150)
 		]]
-		countDisplay = display.newText("Orders: ",505,30, "BellGothicStd-Black",38)
+		countDisplay = display.newText("Orders: ",505,30, mainFont,38)
 		countDisplay:setTextColor(255, 150)
 	
-		orderCounter = display.newRetinaText(tostring(orderCount).." / "..levels[currLevel].count,635,30,"BellGothicStd-Black",38)
+		orderCounter = display.newRetinaText(tostring(orderCount).." / "..levels[currLevel].count,635,30,mainFont,38)
 		orderCounter:setTextColor(255, 150)
 		
 		homeBtn=widget.newButton{
@@ -460,6 +451,7 @@ function scene:createScene( event )
 		end
 	end
 	
+
 	leftGroup = display.newGroup()
 		--left  wall slice is not part of the storyboard group so that it remains on top of everything.  Have to remove and add it when you leave/enter the screen
 		leftSlice = display.newImageRect("images/BGsliceLeft.png",30,380)
@@ -486,8 +478,83 @@ end
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	local group = self.view
+	physics.setGravity(0,10)
 
+	--for some reason my physics objects will not be recreated if I put them in the createScene handler
+	leftWall = display.newRect(0,0, 100, .65*_H)
+	leftWall:setReferencePoint(display.TopRightReferencePoint)
+	leftWall.x = 0
+	leftWall.y = .35*_H
+	leftWall:setFillColor(255,0,0)
+	leftWall.alpha = 0
+	physics.addBody(leftWall, "static")
+	cookieGroup:insert(leftWall)
 	
+	rightWall = display.newRect(0,0, 95, .65*_H)
+	rightWall:setReferencePoint(display.TopRightReferencePoint)
+	rightWall.x = _W
+	rightWall.y = .35*_H
+	rightWall:setFillColor(255,0,0)
+	rightWall.alpha = 0
+	physics.addBody(rightWall, "static")
+	cookieGroup:insert(rightWall)
+	
+	bottomFloor = display.newRect(0,_H,_W,100)
+	bottomFloor:setReferencePoint(display.TopLeftReferencePoint)
+	bottomFloor.x = 0
+	bottomFloor.y = _H
+	physics.addBody(bottomFloor,"static")
+	cookieGroup:insert(bottomFloor)
+	
+	top = display.newRect(0,0,_W,100)
+	top:setReferencePoint(display.BottomLeftReferencePoint)
+	top.x = 0
+	top.y = 0
+	physics.addBody(top, "static")
+	cookieGroup:insert(top)
+	
+	conveyorFloor = display.newRoundedRect(100,240,850,70,35)
+	conveyorFloor:setReferencePoint(display.TopLeftReferencePoint)
+	conveyorFloor.x = 85
+	conveyorFloor.y = 255
+	conveyorFloor:setFillColor(0,0,255)
+	conveyorFloor.alpha = .0
+	physics.addBody(conveyorFloor, "static", {friction = 0})
+	cookieGroup:insert(conveyorFloor)
+	
+	packingFloor = display.newRect(0,600,_W,10)
+	packingFloor:setReferencePoint(display.TopLeftReferencePoint)
+	packingFloor.x = 0
+	packingFloor.y = 600
+	packingFloor:setFillColor(0,255,0)
+	physics.addBody(packingFloor, "static")
+	cookieGroup:insert(packingFloor)
+	
+
+	--for testing purposes, I'm creating a physics body and placing it on the stage to see why kinematic bodies are affected by gravity
+	local testItem = display.newRect(_W/2,_H/2, 100,100)
+	testItem:setFillColor(0,0,255)
+	physics.addBody(testItem,"kinematic")
+	cookieGroup:insert(testItem)
+	
+	function testItem:touch(event)
+		--set focus to the currently touched object
+		if event.phase == "began" then		
+			display.getCurrentStage():setFocus( self, event.id)
+			self.isFocus = true
+			self.markX = self.x 
+			self.markY = self.y 
+		elseif event.phase == "moved" then
+			self.x = event.x - event.xStart+self.markX
+			self.y = event.y - event.yStart+self.markY
+			return true
+		elseif event.phase == "ended" or event.phase == "cancelled" then
+			display.getCurrentStage():setFocus(self, nil)
+			self.isFocus = false
+		end
+	end
+	testItem:addEventListener("touch",testItem)
+
 	--set up a timer to generate cookies (NOTE: allow users to increase the speed of the cookies across the screen and the rate at which cookies are generated)
 	function generator()
 		-- make sure to move this code to a question controlling 
@@ -514,6 +581,7 @@ function scene:enterScene( event )
 		--first, check for and clean up the garbage
 		--garbage.text = "Garbage collected:  "..collectgarbage("count")
 		--texture.text = "Texture memory: "..system.getInfo("textureMemoryUsed")
+				
 		collectgarbage("collect")
 		if spawn.answerSent == true then
 			spawn.answerSent = false
@@ -565,9 +633,14 @@ function scene:exitScene( event )
 	
 	--get rid of all the cookies that were created
 	spawn.cleanUp()
-
 	-----------------------------------------------------------------------------
-	
+	physics.removeBody(leftWall)
+	physics.removeBody(rightWall)
+	physics.removeBody(bottomFloor)
+	physics.removeBody(top)
+	physics.removeBody(packingFloor)
+	physics.removeBody(conveyorFloor)
+	physics.pause()
 	--	INSERT code here (e.g. stop timers, remove listeners, unload sounds, etc.)
 	timer.cancel(spawnTimer)
 	Runtime:removeEventListener("enterFrame",enterFrame)

@@ -4,7 +4,7 @@
 module(..., package.seeall)
 
 --public variables
-moveRate = 2 -- how fast the cookie moves across the screen
+moveRate = 4 -- how fast the cookie moves across the screen
 touchingOnRelease = false
 answerSent = false
 sentValue = 0
@@ -29,7 +29,6 @@ end
 	
 --send an answer with its value
 local function sendAnswer(value)
-	print ("Answer sent from SendAnswer fcn")
 	sentValue = value
 	answerSent = true
 	touchingOnRelease = false --just to be safe
@@ -223,11 +222,11 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	cookie:setReferencePoint(display.BottomRightReferencePoint)
 	cookie.name = name
 	cookie.value = value or 1
-	cookie.x = x or(_W+30)
+	cookie.x = x or(_W+100)
 	cookie.y = y or 240
 	cookie.units = units
-	physics.addBody(cookie, {radius=radius, shape=shape})
-	cookie.isFixedRotation = true
+	physics.addBody(cookie, "dymamic", {radius=radius, shape=shape})
+	cookie.isFixedRotation = false
 	cookie.linearDamping = 9
 	cookie.collision = onLocalCollision
 	cookie:addEventListener("collision",cookie)
@@ -242,7 +241,10 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 		if event.phase == "began" then
 			cookie:setReferencePoint(display.CenterReferencePoint)
 			offset = self.height/2 + 20
-		
+			self.isFixedRotation = true
+			self.isBodyActive = false
+			self.bodyType = "kinematic"
+			self.isBodyActive = true
 			--show the value of the cookie on top of the cookie
 			self.dragNumDisp.alpha = 1
 			
@@ -250,6 +252,10 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 			self.isFocus = true
 			self.markX = self.x 
 			self.markY = self.y 
+			
+			-- Create a temporary touch joint and store it in the object for later reference
+            self.tempJoint = physics.newJoint( "touch", self, event.x, event.y )
+            
 			--return true
 		elseif self.isFocus then
 			if event.phase == "moved" then
@@ -259,12 +265,25 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 				self.x = event.x-event.xStart+self.markX 
 				self.y = event.y - event.yStart+self.markY
 
+				 -- Update the joint to track the touch
+	            self.tempJoint:setTarget( event.x, event.y )
+	            
 				return true
 			elseif event.phase == "ended"  or event.phase == "cancelled" then
+				self.isBodyActive = false
+				if self.y > 275 and self.y < 600 then
+					self.bodyType = "kinematic"
+				else 
+					self.bodyType = "dynamic"
+				end
+				self.isBodyActive = true
 				--hide the item's value
 				self.dragNumDisp.alpha = 0
 				display.getCurrentStage():setFocus(self,nil)
 				self.isFocus=false
+				--get rid of temporary physics joint
+				self.tempJoint:removeSelf()
+				self.tempJoint = nil
 				if touchingOnRelease == true then
 					--package is in the dropzone and ready to be delivered
 					--check the number against the current number
@@ -295,8 +314,16 @@ function spawnCookie(name, value,w,h, units, radius, shape,x,y)
 	
 	--make the cookie move across the screen
 	function cookie:enterFrame(event)
+		if cookie.y < 200-cookie.height/2 then --cookie is in top area
+			cookie.y = 244-cookie.height/3
+			self.isFixedRotation = false
+		end
 		if cookie.y < 275-cookie.height/3 then --cookie is in conveyor area, so start it moving again
 			cookie.moved = "no"
+			self.isFixedRotation = false
+			self.isBodyActive = false
+			self.bodyType = "dynamic"
+			self.isBodyActive = true			
 		end
 		if (cookie.moved ~= "yes") then
 			cookie.x = cookie.x - moveRate

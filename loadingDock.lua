@@ -8,8 +8,6 @@ local spawn= require "spawnCookie"
 local storyboard = require "storyboard" 
 local widget= require "widget"
 local scene = storyboard.newScene()
-local physics = require "physics"
-physics.start()
 physics.setGravity(0,0)
 
 _H = display.contentHeight
@@ -177,6 +175,8 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
+physics.start()
+
 	local group = self.view
 -----------------------------------------------------------------------------
 -------ENTER SCENE----------

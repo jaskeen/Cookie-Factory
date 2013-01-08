@@ -5,11 +5,9 @@
 -----------------------------------------------------------------------------------------
 
 
-local storyboard = require( "storyboard" )
-storyboard.purgeOnSceneChange = true
 local scene = storyboard.newScene()
-local physics = require "physics"
 physics.start()
+physics.setDrawMode("hybrid")
 
 -- include Corona's "widget" library
 local widget = require "widget"
@@ -51,7 +49,7 @@ end
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local group = self.view
-	
+
 	
 	-- display a background image
 	local background = display.newImageRect( "images/Splash-background.png", _W, _H)
@@ -105,6 +103,7 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
+	physics.start()
 	physics.setGravity(0,10)
 
 	local group = self.view
@@ -118,6 +117,22 @@ function scene:enterScene( event )
 		physics.addBody(cookie,"dynamic",{bounce=.1,density=.9, friction=2, radius=34})
 		cookie.key = "cookie_"..math.random(1,1000000000)
 		cookie:insert(image)
+		
+		--insert into array for cleanup
+		cookieArray[cookie.key] = cookie
+		function cookie:enterFrame(event)
+			if self.x < -50 or self.x > _W+50 then
+				--destroy cookie
+				print ("destroying cookie "..self.key)
+				physics.removeBody(cookieArray[self.key])
+				cookieArray[self.key]= nil
+				Runtime:removeEventListener("enterFrame",self)
+				self:removeSelf()
+				self = nil
+			end
+		end
+		
+		Runtime:addEventListener("enterFrame",cookie)
 		return cookie
 	end
 	
@@ -135,12 +150,11 @@ function scene:exitScene( event )
 	local group = self.view
 	physics.setGravity(0,0)
 	function cleanUp()
-		for k, v in pairs(cookieArray) do 
-			print (k)
-		end
+		physics.pause()
 		--delete all the cookies that were generated
 		for k, v in pairs(cookieArray) do 
 			print ("removing: "..k)
+			physics.removeBody(cookieArray[k])
 			cookieArray[k] = nil
 			v:removeSelf()
 			v = nil

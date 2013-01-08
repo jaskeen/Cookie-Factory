@@ -3,8 +3,8 @@
 -- scenetemplate.lua
 --
 ----------------------------------------------------------------------------------
+physics.start()
 
-local storyboard = require( "storyboard" )
 local widget= require"widget"
 local scene = storyboard.newScene()
 local onBtnRelease
